@@ -283,7 +283,7 @@ const mapStateToProps = ({auth}) => {
         loginError: loginError,
         error: error,
         loading: loading,
-        pushToken: 'f6apOP30iZU:APA91bFpm8kYl4JmyGb9tgklKuIpolS8DYIqGa1nnnk9r_a-_yFInR_kEsQ39_rZ96Z1cQ6ZwK_V7jf7bIxtEg_6UDcpfa4i-UUz3x61ZxCA_RhAb9i-2BtYZ09sOqLDrQGmnsgPTX36'
+        pushToken: pushToken
     }
 }
 
