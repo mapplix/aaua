@@ -1,0 +1,45 @@
+{
+  "name": "AAUA",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "querystring": "^0.2.0",
+    "react": "16.2.0",
+    "react-native": "0.52.0",
+    "react-native-button": "^2.2.0",
+    "react-native-fcm": "^13.3.3",
+    "react-native-flexi-radio-button": "^0.2.2",
+    "react-native-hide-show-password-input": "^1.0.7",
+    "react-native-image-slider": "git+https://github.com/PaulBGD/react-native-image-slider.git",
+    "react-native-keyboard-aware-scroll-view": "^0.4.3",
+    "react-native-maps": "^0.20.0",
+    "react-native-masked-input": "^1.0.3",
+    "react-native-modalbox": "^1.4.2",
+    "react-native-router-flux": "^4.0.0-beta.28",
+    "react-native-slideshow": "^1.0.1",
+    "react-native-tabs": "^1.0.9",
+    "react-native-text-input-mask": "^0.5.2",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-jest": "22.1.0",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "22.1.1",
+    "react-test-renderer": "16.2.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  }
+}
