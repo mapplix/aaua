@@ -216,7 +216,6 @@ console.log('router will unmount');
                 <Router
                     backAndroidHandler={
                         () => {
-                    console.log(Actions.currentScene);
                             if (Actions.currentScene === '_mainScreen') {
                                 return false
                             }

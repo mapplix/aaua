@@ -17,6 +17,7 @@ import {
     Header,
     CreditCardInput
 } from '../common';
+import {showAlert} from '../Modals'
 
 class AddCardComponent extends Component {
 
@@ -25,14 +26,22 @@ class AddCardComponent extends Component {
     }
 
     onPress() {
-        // Actions.my_aaua_cards();
         const validNumber = this.props.card_number.replace(/\-/g,'');
-console.log(validNumber);
         const card = {
             "token" : this.props.token,
             "number" : validNumber
         };
         this.props.addCard(card)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.addCardError != null) {
+            showAlert(
+                'Ошибка',
+                nextProps.addCardError,
+                'Закрыть',
+            )
+        }
     }
 
     render() {
@@ -78,7 +87,8 @@ const mapStateToProps = ({AAUA_Card, auth}) => {
     console.log(auth);
     return {
         token: auth.user.token,
-        card_number: AAUA_Card.card_number
+        card_number: AAUA_Card.card_number,
+        addCardError: AAUA_Card.addCardError
     }
 }
 

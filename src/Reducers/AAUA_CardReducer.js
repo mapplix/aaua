@@ -31,6 +31,7 @@ import {Actions} from 'react-native-router-flux';
 const INITIAL_STATE = {
     myCards: [],
     error: '',
+    addCardError: null,
     loading: false,
     orderCardSuccess: false,
     card_number: '',
@@ -52,14 +53,13 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case AAUA_ORDERING_CHANGE_PHONE:
-            return {...state, phone: action.payload};
+            return {...state, phone: action.payload, addCardError: null};
         case COUNTRY_CHANGE:
-            return {...state, country: action.payload};
+            return {...state, country: action.payload, addCardError: null};
         case CITY_CHANGE:
-            return {...state, city: action.payload};
+            return {...state, city: action.payload, addCardError: null};
         case DELIVERY_CHANGE:
-console.log('DELIVERY_CHANGE', action.payload)
-            if (action.payload == 1) { // Нова пошта
+            if (action.payload == DELIVERY_NP) { // Нова пошта
                 return {...state,
                     orderCardSuccess: false,
                     showCities: 'none',
@@ -67,16 +67,18 @@ console.log('DELIVERY_CHANGE', action.payload)
                     showNPSklads: 'none',
                     showAdress: 'none',
                     city: null,
-                    delivery: action.payload}
+                    delivery: action.payload,
+                    addCardError: null}
             }
-            if (action.payload == 2) { // Курьер
+            if (action.payload == DELIVERY_CURIER) { // Курьер
                 return {...state,
                     orderCardSuccess: false,
                     showCities: 'flex',
                     showNPCities: 'none',
                     showNPSklads: 'none',
                     showAdress: 'flex',
-                    delivery: action.payload}
+                    delivery: action.payload,
+                    addCardError: null}
             }
         case NP_CITY_CHANGE:
             return {
@@ -86,7 +88,7 @@ console.log('DELIVERY_CHANGE', action.payload)
                 showNPCities: 'flex',
                 showNPSklads: 'flex',
                 showAdress: 'none',
-                npCity: action.payload
+                npCity: action.payload, addCardError: null
             }
         case ORDER_CARD_CITY_CHANGE:
             return {
@@ -95,42 +97,41 @@ console.log('DELIVERY_CHANGE', action.payload)
                 showCities: 'flex',
                 showNPCities: 'none',
                 showNPSklads: 'none',
-                showAdress: 'flex'
+                showAdress: 'flex', addCardError: null
             }
         case ADDRESS_CHANGE:
-            return {...state, address: action.payload, orderCardSuccess: false,};
+            return {...state, address: action.payload, orderCardSuccess: false, addCardError: null};
         case CHANGE_NP_SKLAD:
-            return {...state, address: action.payload, orderCardSuccess: false,};
+            return {...state, address: action.payload, orderCardSuccess: false, addCardError: null};
         case COMMENT_CHANGE:
-            return {...state, comment: action.payload, orderCardSuccess: false,};
+            return {...state, comment: action.payload, orderCardSuccess: false, addCardError: null};
         case ADD_CARD:
-            return {...state, orderCardSuccess: false,};
+            return {...state, orderCardSuccess: false, addCardError: null};
         case ADD_CARD_SUCCESS:
             Actions.my_aaua_cards();
-            return {...state};
+            return {...state, addCardError: null};
         case ADD_CARD_FAIL:
-            return {...state, error: 'Ошибка', orderCardSuccess: false,};
+            return {...state, addCardError: action.payload, orderCardSuccess: false,};
         case ORDER_CARD:
-            return {...state, loading: true, orderCardSuccess: false,};
+            return {...state, loading: true, orderCardSuccess: false, addCardError: null};
         case ORDER_AAUA_CARD_SUCCESS:
-console.log('ORDER_AAUA_CARD_SUCCESS');
             // Actions.AAUA_main();
-            return {...state, orderCardSuccess: true};
+            return {...state, orderCardSuccess: true, addCardError: null};
         case ORDER_AAUA_CARD_FAIL:
-            return {...state, error: 'Ошибка', orderCardSuccess: false};
+            return {...state, error: 'Ошибка', orderCardSuccess: false, addCardError: null};
         case DELETE_AAUA_CARD:
             Actions.AAUA_main();
-            return {...state, myCards: [], orderCardSuccess: false,};
+            return {...state, myCards: [], orderCardSuccess: false, addCardError: null};
         case CARD_NUMBER_CHANGE:
-            return {...state, card_number: action.payload};
+            return {...state, card_number: action.payload, addCardError: null};
         case MY_AAUA_CARD:
-            return {...state, loading: true}
+            return {...state, loading: true, addCardError: null}
         case MY_AAUA_CARD_FAIL:
-            return {...state, error: action.payload}
+            return {...state, error: action.payload, addCardError: null}
         case MY_AAUA_CARD_LOADED:
-            return {...state, myCards: action.payload, loading: false}
+            return {...state, myCards: action.payload, loading: false, addCardError: null}
         case AAUA_CARD_NUMBER_CHANGE:
-            return {...state, card_number: action.payload}
+            return {...state, card_number: action.payload, addCardError: null}
         default: return state;
     }
 }

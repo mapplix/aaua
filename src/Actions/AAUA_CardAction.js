@@ -110,15 +110,27 @@ console.log(ADD_AAUA_CARD_URL, data, signature);
 
 export const addCardSuccess = (dispatch, response) => {
 console.log(response)
-    dispatch({
-        type: ADD_CARD_SUCCESS,
-    })
-}
-
-export const addCardFail = () => {
-    return {
-        type: ADD_CARD_FAIL,
+    if (response.error == 0) {
+        dispatch({
+            type: ADD_CARD_SUCCESS,
+        })
+    } else {
+        var errorMsg = 'Произошла ошибка, попробуйте позже'
+        if (response.error == 2) {
+            errorMsg = 'Данные устарели. Пройдите авторизацию'
+        }
+        if (response.error == 3) {
+            errorMsg = 'Не передана карта'
+        }
+        if (response.error == 4) {
+            errorMsg = 'Карта в базе не найдена'
+        }
+        dispatch({
+            type: ADD_CARD_FAIL,
+            payload: errorMsg
+        })
     }
+
 }
 
 export const orderCard = (card) => {
