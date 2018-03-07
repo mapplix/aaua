@@ -7,6 +7,7 @@ import {
     Header} from '../common';
 import {connect} from 'react-redux';
 import {getMessage} from '../../Actions/MessagesActions';
+import {Actions} from 'react-native-router-flux';
 
 class MessageComponent extends Component {
 
@@ -25,6 +26,7 @@ class MessageComponent extends Component {
 
     componentWillMount() {
         const {getMessage, token, messageId} = this.props;
+console.log(token, messageId);
         getMessage(token, messageId)
     }
 
@@ -36,6 +38,7 @@ class MessageComponent extends Component {
             textStyle,
             dateStyle
         } = styles;
+console.log(this.props.loading);
         if (!this.props.loading) {
             const {message} = this.props;
             return (
@@ -87,7 +90,9 @@ class MessageComponent extends Component {
         } = styles;
         return (
             <MainCard>
-                <Header back>
+                <Header back
+                        onPressBack={Actions.messagesList}
+                >
                     уведомление
                 </Header>
                 <CardItem
@@ -158,10 +163,11 @@ const styles = {
 }
 
 const mapStateToProps = ({auth, messages}) => {
+console.log(messages);
     return {
         token: auth.user.token,
         message: messages.message,
-        loading: messages.loading,
+        loading: messages.loadingMessageInfo,
         messageError: messages.messageError,
     }
 }

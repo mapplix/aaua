@@ -53,7 +53,7 @@ class ListComponent extends Component {
                         }}>
                             <View>
                                 <Text style={notReaded}>
-                                    { this.props.viewed ? 'Непрочитанное' : '' }
+                                    { this.props.viewed == 1 ? '' : 'Непрочитанное' }
                                 </Text>
                             </View>
                             <View>

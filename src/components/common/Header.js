@@ -15,7 +15,7 @@ class Header extends Component{
                         alignItems: 'center',
                         // backgroundColor: '#382'
                     }}
-                    onPress={Actions.pop}
+                    onPress={this.props.onPressBack || Actions.pop}
                 >
                     <Icon
                         style={{

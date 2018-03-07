@@ -52,10 +52,12 @@ console.log('handleLoadMore');
     };
 
     componentDidMount() {
+console.log('messages list did mount');
         this.props.loadMessages(this.props.token);
     };
 
     renderRow(item) {
+console.log(item);
         return (
             <ListItem
                 key={item.item.id}
@@ -64,7 +66,7 @@ console.log('handleLoadMore');
                     this.timeConverter(item.item.title.created_at)
                 }
                 viewed = {item.item.title.viewed}
-                id = {item.item.id}
+                id = {item.item.title.id}
             >
                 {
                     item.item.title.text
