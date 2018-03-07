@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Dimensions, ActivityIndicator, AsyncStorage} from 'react-native';
-import {Router, Scene, Stack, Drawer, Tabs} from 'react-native-router-flux';
+import {Router, Scene, Stack, Drawer, Tabs, Actions} from 'react-native-router-flux';
 
 {/* AUTH */}
 import LoginForm from './components/Auth/LoginForm';
@@ -213,7 +213,18 @@ console.log('router will unmount');
             )
         } else {
             return (
-                <Router>
+                <Router
+                    backAndroidHandler={
+                        () => {
+                    console.log(Actions.currentScene);
+                            if (Actions.currentScene === '_mainScreen') {
+                                return false
+                            }
+                            Actions.reset('drawer')
+                            return true;
+                        }
+                    }
+                >
                     <Stack
                         hideNavBar
                         key="root"

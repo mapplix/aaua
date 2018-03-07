@@ -11,6 +11,7 @@ const INITIAL_STATE = {
     messages: [],
     error: null,
     loading: false,
+    loadingMessageInfo: true,
     message: null,
     messageError: null
 }
@@ -31,11 +32,12 @@ export default (state = INITIAL_STATE, action) => {
         case MESSAGES_LOAD:
             return {...state, loading: true};
         case MESSAGE_LOAD:
-            return {...state, loading: true};
+            return {...state, loadingMessageInfo: true};
         case MESSAGE_INFO_LOADED_SUCCESS:
-            return {...state, loading: false, message: action.payload};
+console.log(MESSAGE_INFO_LOADED_SUCCESS, action.payload)
+            return {...state, loadingMessageInfo: false, message: action.payload};
         case MESSAGE_INFO_LOADING_FAIL:
-            return {...state, loading: false, messageError: action.payload};
+            return {...state, loadingMessageInfo: false, messageError: action.payload};
         default: return state;
     }
 }
