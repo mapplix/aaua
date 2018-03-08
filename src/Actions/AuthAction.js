@@ -19,7 +19,7 @@ import {
     getToken,
     removeItem
 } from './constants';
-import {AsyncStorage, Platform} from 'react-native';
+import {AsyncStorage, Platform, Alert} from 'react-native';
 
 import FCM, { FCMEvent,
     NotificationType,
@@ -60,6 +60,10 @@ console.log('getFCMToken', token);
         })
         FCM.on(FCMEvent.RefreshToken, (token) => {
 console.log('RefreshToken', token)
+            dispatch({
+                type: TOKEN_GET_SUCCESS,
+                payload: token
+            })
             // fcm token may not be available on first load, catch it here
         });
     }

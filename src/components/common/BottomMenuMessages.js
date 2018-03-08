@@ -5,6 +5,17 @@ import MapComponent from "../Disconts/MapComponent";
 
 class BottomMenuMessages extends Component {
 
+
+    renderCounter() {
+        if (this.props.counter > 0) {
+            return (
+                <BottomMenuCounter>
+                    {this.props.counter}
+                </BottomMenuCounter>
+            )
+        }
+    }
+
     render() {
         const {counter, imageSrc, onPress} = this.props;
         const {textContainer, textStyle} = styles;
@@ -30,9 +41,7 @@ class BottomMenuMessages extends Component {
                     height: 50,
                     // backgroundColor: '#16ff11',
                 }}>
-                    <BottomMenuCounter>
-                        {counter}
-                    </BottomMenuCounter>
+                    {this.renderCounter()}
                 </View>
             </TouchableOpacity>
         )

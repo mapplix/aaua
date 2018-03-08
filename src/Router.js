@@ -201,7 +201,7 @@ console.log('user = null')
     componentWillUnmount() {
 console.log('router will unmount');
         // stop listening for events
-        this.notificationListener.remove();
+        // this.notificationListener.remove();
     }
 
     render() {
@@ -214,15 +214,21 @@ console.log('router will unmount');
         } else {
             return (
                 <Router
-                    backAndroidHandler={
+                    /*backAndroidHandler={
                         () => {
-                            if (Actions.currentScene === '_mainScreen') {
-                                return false
-                            }
-                            Actions.reset('drawer')
-                            return true;
+                            console.log(Actions.currentScene);
+                            console.log(Actions);
+                            // const authRouts = ['login', 'forgot']
+                            // if (Actions.currentScene == '_mainScreen') {
+                            //     Actions.reset('drawer')
+                            //     return true;
+                            // }
+                            // if (! authRouts.includes(Actions.currentScene)) {
+                            //     Actions.reset('drawer')
+                            //     return true;
+                            // }
                         }
-                    }
+                    }*/
                 >
                     <Stack
                         hideNavBar
@@ -246,7 +252,7 @@ console.log('router will unmount');
                                     key="firstStage"
                                     component={FirstStageComponent}/>
                                 <Scene
-
+                                    initial
                                     hideNavBar
                                     title="Персональные данные"
                                     key="secondStage"

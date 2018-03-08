@@ -21,6 +21,7 @@ import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {setUserFromSession} from '../Actions/AuthAction';
 import {getSliderImages} from '../Actions/CitiesBrands';
+import {countMessages} from '../Actions/MessagesActions';
 
 let listener = null
 
@@ -32,6 +33,7 @@ console.log(user);
             const userObj = JSON.parse(user);
             this.props.setUserFromSession(userObj)
             this.props.getSliderImages(userObj.token)
+            this.props.countMessages(userObj.token)
         })
 
 //         if (Platform.OS == "android" && listener == null) {
@@ -46,10 +48,10 @@ console.log(user);
     }
 
     render() {
-        const images = ["http://aaua.taxi898.com.ua/images/slide/2016-03/26.jpg", "http://aaua.taxi898.com.ua/images/slide/2016-03/28.jpg"];
-        // this.props.images.map( image => {
-        //     images.push(image.url)
-        // })
+        const images = [];
+        this.props.images.map( image => {
+            images.push(image.url)
+        })
 console.log( 'render main component ', this.props.images, images);
         return (
             <MainCard>
@@ -87,7 +89,7 @@ console.log( 'render main component ', this.props.images, images);
                             Бонусы AAUA
                         </BottomMenuItem>
                         <BottomMenuMessages
-                            counter={5}
+                            counter={this.props.messagesCounter}
                             onPress={Actions.messages}
                             imageSrc={require('../images/icons/mail.png')}
                         >
@@ -101,14 +103,15 @@ console.log( 'render main component ', this.props.images, images);
     }
 }
 
-const mapStateToProps = ({auth, citiesBrands}) => {
+const mapStateToProps = ({auth, citiesBrands, messages}) => {
 console.log(citiesBrands.sliderImages);
     return {
         // token: auth.user.token,
         bonus: auth.user ? auth.user.bonus : 0,
         bonus_wog: auth.user ? auth.user.bonus_wog : 0,
-        images: citiesBrands.sliderImages
+        images: citiesBrands.sliderImages,
+        messagesCounter: messages.messagesCounter
     }
 }
 
-export default connect(mapStateToProps, {setUserFromSession, getSliderImages})(MainComponent);
+export default connect(mapStateToProps, {setUserFromSession, getSliderImages, countMessages})(MainComponent);

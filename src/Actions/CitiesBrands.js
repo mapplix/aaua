@@ -172,9 +172,9 @@ const onNPSkladsLoaded = (dispatch, sklads) => {
 export const getSliderImages = (token) => {
     return (dispatch) => {
 
-        AsyncStorage.getItem('sliderImages').then(
+        /*AsyncStorage.getItem('sliderImages').then(
             (cachedImages) => {
-                if (cachedImages == null) {
+                if (cachedImages == null) {*/
 
                     const obj = {
                         "token" : token,
@@ -202,14 +202,14 @@ console.log(IMAGES_LOAD_URL, data, signature);
                                 index++
                             }
 
-                    saveItem('sliderImages', JSON.stringify(imagesArray));
+                    // saveItem('sliderImages', JSON.stringify(imagesArray));
                             console.log(imagesArray);
                             onImagesLoaded(dispatch, imagesArray)
                         })
-                } else {
+                /*} else {
                     onImagesLoaded(dispatch, JSON.parse(cachedImages))
                 }
-            })
+            })*/
     }
 }
 

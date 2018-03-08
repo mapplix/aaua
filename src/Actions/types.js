@@ -135,3 +135,4 @@ export const MESSAGES_LOAD_FAIL = 'messages_load_fail';
 export const MESSAGE_LOAD = 'message_load';
 export const MESSAGE_INFO_LOADED_SUCCESS = 'message_info_load_success';
 export const MESSAGE_INFO_LOADING_FAIL = 'message_info_loading_fail';
+export const MESSAGE_COUNTER_SUCCESS = 'message_counter_loaded_success';

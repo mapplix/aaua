@@ -4,7 +4,8 @@ import {
     MESSAGES_LOAD_FAIL,
     MESSAGE_LOAD,
     MESSAGE_INFO_LOADED_SUCCESS,
-    MESSAGE_INFO_LOADING_FAIL
+    MESSAGE_INFO_LOADING_FAIL,
+    MESSAGE_COUNTER_SUCCESS
 } from '../Actions/types';
 
 const INITIAL_STATE = {
@@ -13,7 +14,8 @@ const INITIAL_STATE = {
     loading: false,
     loadingMessageInfo: true,
     message: null,
-    messageError: null
+    messageError: null,
+    messagesCounter: 0
 }
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
@@ -38,6 +40,8 @@ console.log(MESSAGE_INFO_LOADED_SUCCESS, action.payload)
             return {...state, loadingMessageInfo: false, message: action.payload};
         case MESSAGE_INFO_LOADING_FAIL:
             return {...state, loadingMessageInfo: false, messageError: action.payload};
+        case MESSAGE_COUNTER_SUCCESS:
+            return {...state, messagesCounter: action.payload}
         default: return state;
     }
 }

@@ -72,13 +72,14 @@ class LoginForm extends Component {
         if (Platform.OS == "android" && listener == null) {
             listener = BackHandler.addEventListener("hardwareBackPress", () => {
                 if (this.state.isOpen) {
+        console.log(this.state);
                     this.closeModal();
                     return true;
                 }
                 return false;
             })
         }
-this.props.getPushToken();
+        this.props.getPushToken();
     }
 
     componentWillReceiveProps(nextProps) {

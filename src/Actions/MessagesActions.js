@@ -4,7 +4,8 @@ import {
     MESSAGE_LOAD,
     MESSAGES_LOAD_FAIL,
     MESSAGE_INFO_LOADED_SUCCESS,
-    MESSAGE_INFO_LOADING_FAIL
+    MESSAGE_INFO_LOADING_FAIL,
+    MESSAGE_COUNTER_SUCCESS
 } from '../Actions/types';
 import {
     SECRET_KEY,
@@ -15,6 +16,8 @@ import {
 import axios from 'axios';
 import md5 from 'js-md5'
 
+let MSG_LIMIT = 100;
+
 export const loadMessages = (token, offset = 0) => {
     return (dispatch) => {
 
@@ -23,7 +26,7 @@ export const loadMessages = (token, offset = 0) => {
         })
         const obj = {
             "token": token,
-            "limit" : 10,
+            "limit" : MSG_LIMIT,
             "offset" : offset
         }
 
@@ -117,4 +120,49 @@ const onMessageInfoLoaded = (dispatch, message) => {
             payload: errorText
         })
     }
+}
+
+export const countMessages = (token, offset = 0) => {
+    return (dispatch) => {
+
+        const obj = {
+            "token": token,
+            "limit" : MSG_LIMIT,
+            "offset" : offset,
+            "only_not_views" : 1
+        }
+
+        const data = JSON.stringify(obj);
+        const signature = md5(SECRET_KEY + data)
+
+        console.log(MESSAGES_LOADING_URL, data, obj, signature);
+
+        axios.post(MESSAGES_LOADING_URL, data, {
+                headers: {
+                    'Signature': signature,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+            .then(messages => {
+                console.log('messages count success', messages);
+
+                onMessageCountLoaded(dispatch, messages.data)
+            })
+            .catch( error => {
+                console.log(error)
+            })
+    }
+}
+
+const onMessageCountLoaded = (dispatch, messages) => {
+    console.log('messages count success', messages.data.length)
+    var counter = 0;
+    if (messages.error == 0) {
+        counter = messages.data.length
+    }
+    dispatch({
+        type: MESSAGE_COUNTER_SUCCESS,
+        payload: counter
+    })
 }
