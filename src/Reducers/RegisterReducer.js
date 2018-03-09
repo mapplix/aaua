@@ -21,12 +21,14 @@ import {
     SEND_STEP_2,
     STEP_2_SUCCESS,
     STEP_2_FAIL,
+    CITY_SELECTED
 } from '../Actions/types';
 import {Actions} from 'react-native-router-flux';
 
 const INITIAL_STATE = {
     name: '',
-    city: 4312,
+    cityId: null,
+    city: '',
     car: 1,
     email: '',
     year: '',
@@ -50,7 +52,14 @@ export default (state = INITIAL_STATE, action) => {
         case NAME_CHANGE:
             return {...state, name: action.payload, smsError: false};
         case CITY_CHANGE:
-            return {...state, city: action.payload, smsError: false};
+            return {...state,
+                city: action.payload,
+                smsError: false};
+        case CITY_SELECTED:
+            return {...state,
+                cityId: action.payload.id,
+                city: action.payload.title,
+                smsError: false};
         case CAR_CHANGE:
             return {...state, car: action.payload, smsError: false};
         case EMAIL_CHANGE:

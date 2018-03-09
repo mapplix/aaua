@@ -21,7 +21,8 @@ import {
     STEP_2_SUCCESS,
     STEP_2_FAIL,
     LOGIN_USER_SUCCESS,
-    LOGIN_USER_FAIL
+    LOGIN_USER_FAIL,
+    CITY_SELECTED
 } from '../Actions/types';
 import {
     SECRET_KEY,
@@ -44,10 +45,17 @@ export const changeName = (name) => {
     }
 }
 
-export const changeCity = (city) => {
+export const changeCity = (title) => {
     return {
         type: CITY_CHANGE,
-        payload: city
+        payload: title
+    }
+}
+
+export const selectCity = (cityObj) => {
+    return {
+        type: CITY_SELECTED,
+        payload: cityObj
     }
 }
 

@@ -25,6 +25,7 @@ export const STEP_2_FAIL = 'step_2_fail';
 
 export const NAME_CHANGE = 'name_change';
 export const CITY_CHANGE = 'city_change';
+export const CITY_SELECTED = 'city_selected';
 export const CAR_CHANGE = 'car_change';
 export const EMAIL_CHANGE = 'email_change';
 export const YEAR_CHANGE = 'year_change';

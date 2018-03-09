@@ -29,3 +29,4 @@ export * from './BottomMenuCounter';
 export * from './RightMenu';
 export * from './Checkbox';
 export * from './CreditCardInput';
+export * from './Autocomplete';

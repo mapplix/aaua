@@ -9,7 +9,9 @@ import {
     changeName,
     changeYear,
     changeConfirmPass,
-    sendStep2} from '../../../Actions/RegisterAction'
+    sendStep2,
+    selectCity
+} from '../../../Actions/RegisterAction'
 import {getBrands, getCities} from '../../../Actions/CitiesBrands'
 import {
     MainCard,
@@ -18,7 +20,8 @@ import {
     LabelOnInput,
     DropDown,
     PasswordInput,
-    Header
+    Header,
+    Autocomplete
 } from '../../common';
 import {CITIES} from '../../../Actions/constants';
 
@@ -44,9 +47,12 @@ class SecondStageComponent extends Component {
         console.log(itemValue)
         this.props.changeCar(itemValue);
     }
-    onChangeCity(itemValue){
-        console.log(itemValue)
-        this.props.changeCity(itemValue);
+    onChangeCity(title){
+        this.props.changeCity(title);
+    }
+
+    onSelectCity(cityObj){
+        this.props.selectCity(cityObj);
     }
 
     showAlert() {
@@ -152,8 +158,7 @@ class SecondStageComponent extends Component {
                     <CardItem
                     style={{
                         marginTop: 33,
-                        flex:0,
-                        height:60,
+                        flex:11,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
@@ -168,18 +173,23 @@ class SecondStageComponent extends Component {
                     </CardItem>
                     <CardItem style={{
                         marginTop: 18,
-                        flex:0,
-                        height:60,
+                        flex:11,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
-                        {this.renderCities()}
+                        <Autocomplete
+                            label={'Город'}
+                            placeholder={'Введите город'}
+                            onChangeText={this.onChangeCity.bind(this)}
+                            onSelect={this.onSelectCity.bind(this)}
+                            data={this.props.cities}
+                            value={this.props.city}
+                        />
                     </CardItem>
                     <CardItem style={{
                         marginTop: 18,
-                        flex:0,
-                        height:60,
+                        flex:11,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
@@ -189,8 +199,7 @@ class SecondStageComponent extends Component {
                     <CardItem
                         style={{
                             marginTop: 18,
-                            flex:0,
-                            height:60,
+                            flex:11,
                             flexDirection:'column',
                             justifyContent: 'flex-end',
                             alignItems: 'flex-start'
@@ -208,8 +217,7 @@ class SecondStageComponent extends Component {
                     <CardItem
                         style={{
                             marginTop: 18,
-                            flex:0,
-                            height:60,
+                            flex:11,
                             flexDirection:'column',
                             justifyContent: 'flex-end',
                             alignItems: 'flex-start'
@@ -225,8 +233,7 @@ class SecondStageComponent extends Component {
                     <CardItem
                         style={{
                             marginTop: 18,
-                            flex:0,
-                            height:60,
+                            flex:11,
                             flexDirection:'column',
                             justifyContent: 'flex-end',
                             alignItems: 'flex-start'
@@ -242,8 +249,7 @@ class SecondStageComponent extends Component {
                     <CardItem
                         style={{
                             marginTop: 17,
-                            flex:0,
-                            height:55,
+                            flex:11,
                             flexDirection:'column',
                             justifyContent: 'flex-end',
                             alignItems: 'flex-start'
@@ -284,7 +290,6 @@ const styles = {
 }
 
 const mapStateToProps = ({register, citiesBrands}) => {
-console.log('second stage registration', register)
     return {
         name: register.name,
         city: register.city,
@@ -312,6 +317,6 @@ export default connect(
         changeYear,
         changeConfirmPass,
         sendStep2,
-        // getBrands,
+        selectCity,
         // getCities
     })(SecondStageComponent);
