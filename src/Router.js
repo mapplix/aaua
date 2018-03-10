@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, ActivityIndicator, AsyncStorage} from 'react-native';
+import {Dimensions, ActivityIndicator, AsyncStorage, Platform} from 'react-native';
 import {Router, Scene, Stack, Drawer, Tabs, Actions} from 'react-native-router-flux';
 
 {/* AUTH */}
@@ -55,12 +55,12 @@ import MenuIcon from './images/icons/bar.png';
 
 import {connect} from 'react-redux';
 import {getBrands, getCities, getNPCities, getNPsklads} from './Actions/CitiesBrands';
+import {getPushToken} from './Actions/AuthAction';
 
 import FCM, { FCMEvent,
     NotificationType,
     WillPresentNotificationResult,
     RemoteNotificationResult } from 'react-native-fcm';
-import { Platform } from 'react-native';
 import {CHECK_TOKEN_URL, SECRET_KEY} from './Actions/constants'
 import axios from 'axios';
 import md5 from 'js-md5';
@@ -196,6 +196,8 @@ console.log('user = null')
         FCM.getInitialNotification().then(notif => {
             console.log(notif)
         });
+
+        this.props.getPushToken();
     }
 
     componentWillUnmount() {
@@ -214,21 +216,18 @@ console.log('router will unmount');
         } else {
             return (
                 <Router
-                    /*backAndroidHandler={
+                    backAndroidHandler={
                         () => {
-                            console.log(Actions.currentScene);
-                            console.log(Actions);
-                            // const authRouts = ['login', 'forgot']
-                            // if (Actions.currentScene == '_mainScreen') {
-                            //     Actions.reset('drawer')
-                            //     return true;
-                            // }
-                            // if (! authRouts.includes(Actions.currentScene)) {
-                            //     Actions.reset('drawer')
-                            //     return true;
-                            // }
+                            if (Actions.currentScene == '_mainScreen') {
+                                console.log('tyt')
+                                Actions.reset('drawer')
+                                return true;
+                            } else {
+                                Actions.pop();
+                            }
+                            return false
                         }
-                    }*/
+                    }
                 >
                     <Stack
                         hideNavBar
@@ -252,7 +251,7 @@ console.log('router will unmount');
                                     key="firstStage"
                                     component={FirstStageComponent}/>
                                 <Scene
-                                    initial
+
                                     hideNavBar
                                     title="Персональные данные"
                                     key="secondStage"
@@ -354,4 +353,4 @@ const mapStateToProps = () => {
     return {}
 }
 
-export default connect(mapStateToProps,{getCities, getBrands, getNPCities, getNPsklads})(RouterComponent);
+export default connect(mapStateToProps,{getCities, getBrands, getNPCities, getNPsklads, getPushToken})(RouterComponent);

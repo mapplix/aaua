@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, ListView, TouchableOpacity} from 'react-native';
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-let listHeight = 65;
+let listHeight = 0;
 
 class Autocomplete extends Component {
 
@@ -10,20 +10,23 @@ class Autocomplete extends Component {
         super(props);
 
         this.state = {
+            query: '',
             searchedItems: []
         };
     };
 
     searchedItems = (searchedText) => {
         var searchedItems = this.props.data.filter(function(item) {
-            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) > -1;
+            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) == 0;
         });
-        listHeight = 265;
         if (searchedText.length <= 0) {
-            listHeight = 65;
+            listHeight = 0;
             searchedItems = []
         }
-        this.setState({searchedItems: searchedItems});
+        if (searchedItems.length > 0 ) {
+            listHeight = searchedItems.length * 20;
+        }
+        this.setState({searchedItems: searchedItems.slice(0, 30)});
         this.props.onChangeText(searchedText)
     };
 
@@ -34,7 +37,7 @@ class Autocomplete extends Component {
                     onPress={
                         () => {
                             this.props.onSelect(item)
-                            listHeight = 65;
+                            // containerHeight = 65;
                             this.setState({searchedItems: []});
                         }
                     }
@@ -45,12 +48,32 @@ class Autocomplete extends Component {
         );
     };
 
+    renderList() {
+        console.log(listHeight);
+        if (this.state.searchedItems.length >= 1) {
+            return (
+                <View style={{
+                    height: listHeight,
+                    maxHeight: 200
+                }}>
+                    <ListView
+                        style={{
+                            height: listHeight
+                        }}
+                        enableEmptySections
+                        dataSource={ds.cloneWithRows(this.state.searchedItems)}
+                        renderRow={this.renderItem}/>
+                </View>
+            )
+        }
+    }
+
     render() {
 
         const {inputStyle, labelStyle, containerStyle} = styles;
         const {label, placeholder, value} = this.props;
         return (
-            <View style={[containerStyle, {height: listHeight}]}>
+            <View style={[containerStyle]}>
                 <Text style={[labelStyle, this.props.labelStyle]}>
                     {label}
                 </Text>
@@ -72,17 +95,9 @@ class Autocomplete extends Component {
                         onChangeText={this.searchedItems}
                         style={inputStyle}/>
                 </View>
-                <View style={{
-                    position: 'absolute',
-                    maxHeight: 200,
-                    zIndex: 999,
-                    top:65
-                }}>
-                <ListView
-
-                    dataSource={ds.cloneWithRows(this.state.searchedItems)}
-                    renderRow={this.renderItem} />
-                </View>
+                {
+                    this.renderList()
+                }
             </View>
         )
     }
@@ -90,13 +105,14 @@ class Autocomplete extends Component {
 
 const styles = {
     containerStyle: {
-        height: 65,
         marginLeft: 45,
         marginRight: 45,
-        // flex: 1,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
+        // position: 'absolute',
+        zIndex: 999
     },
     inputStyle: {
         // placeholderTextColor: '#b6b9bf',

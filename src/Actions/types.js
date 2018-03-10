@@ -27,6 +27,7 @@ export const NAME_CHANGE = 'name_change';
 export const CITY_CHANGE = 'city_change';
 export const CITY_SELECTED = 'city_selected';
 export const CAR_CHANGE = 'car_change';
+export const CAR_SELECTED = 'car_selected';
 export const EMAIL_CHANGE = 'email_change';
 export const YEAR_CHANGE = 'year_change';
 export const CONFIRM_PASSWORD_CHANGE = 'confirm_password_change';

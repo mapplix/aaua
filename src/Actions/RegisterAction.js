@@ -22,7 +22,8 @@ import {
     STEP_2_FAIL,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
-    CITY_SELECTED
+    CITY_SELECTED,
+    CAR_SELECTED
 } from '../Actions/types';
 import {
     SECRET_KEY,
@@ -59,10 +60,17 @@ export const selectCity = (cityObj) => {
     }
 }
 
-export const changeCar = (car) => {
+export const onChangeBrand = (title) => {
     return {
         type: CAR_CHANGE,
-        payload: car
+        payload: title
+    }
+}
+
+export const onSelectBrand = (brandObj) => {
+    return {
+        type: CAR_SELECTED,
+        payload: brandObj
     }
 }
 
@@ -254,7 +262,7 @@ console.log(obj, signature);
                 }
             }
         )
-            .then(user => loginUser(userData.phone, userData.password, user, dispatch))
+            .then(user => loginUser(userData.phone, userData.password, userData.pushToken, user, dispatch))
             .catch((error) => {
                 onStep2Fail(dispatch, error)
             })
@@ -280,12 +288,13 @@ const onStep2Fail = (dispatch) => {
 }
 
 /*LOGIN USER*/
-const loginUser = (phone, password, response, dispatch) => {
+const loginUser = (phone, password, pushToken, response, dispatch) => {
 console.log('login user after registration', phone, password, response);
 
         const obj = {
             "device" : DEVICE_OS,
             "username" : phone,
+            "push_token" : pushToken,
             "password" : md5(password),
         };
 

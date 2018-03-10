@@ -79,7 +79,6 @@ class LoginForm extends Component {
                 return false;
             })
         }
-        this.props.getPushToken();
     }
 
     componentWillReceiveProps(nextProps) {

@@ -10,7 +10,9 @@ import {
     changeYear,
     changeConfirmPass,
     sendStep2,
-    selectCity
+    selectCity,
+    onChangeBrand,
+    onSelectBrand
 } from '../../../Actions/RegisterAction'
 import {getBrands, getCities} from '../../../Actions/CitiesBrands'
 import {
@@ -21,11 +23,21 @@ import {
     DropDown,
     PasswordInput,
     Header,
-    Autocomplete
+    Autocomplete,
+    AutocompleteExample
 } from '../../common';
+import {showModal} from '../../Modals';
 import {CITIES} from '../../../Actions/constants';
 
 class SecondStageComponent extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            searchedItems: []
+        };
+    };
 
     onChangeName(val) {
         this.props.changeName(val);
@@ -43,9 +55,12 @@ class SecondStageComponent extends Component {
         this.props.changeConfirmPass(pass);
     }
 
-    onChangeCar(itemValue){
-        console.log(itemValue)
-        this.props.changeCar(itemValue);
+    onChangeBrand(title){
+        this.props.onChangeBrand(title);
+    }
+    onSelectBrand(brandObj){
+console.log(brandObj)
+        this.props.onSelectBrand(brandObj);
     }
     onChangeCity(title){
         this.props.changeCity(title);
@@ -66,23 +81,29 @@ class SecondStageComponent extends Component {
     }
 
     onSubmit() {
-        const {name, city, year, email, password, token, car, confirm_password, phone} = this.props;
+        const {name, city, year, email, password, token, car, confirm_password, phone, brandId, cityId, pushToken} = this.props;
         const userData = {
             token : token,
             name : name,
-            city_id : city,
+            city_id : cityId,
             email : email,
             year : year,
-            brand_id : car,
+            brand_id : brandId,
             password : password,
-            phone: phone
+            phone: phone,
+            pushToken: pushToken
         }
-        if (name.length > 0 && city > 0
+        console.log(userData, this.props);
+        if (name.length > 0 && cityId > 0
             && year.length> 0 && email.length
-            && password.length > 0 && confirm_password > 0) {
+            && password.length > 0 && confirm_password > 0
+            && brandId > 0
+        ) {
             if(this.validate(email)) {
+                console.log(userData);
                 this.props.sendStep2(userData)
             } else {
+                showModal('error', 'email not valid', 'Ok')
                 console.log(' email not valid');
             }
 
@@ -99,53 +120,6 @@ class SecondStageComponent extends Component {
         } else {
             return true
         }
-    }
-
-    // componentWillMount() {
-    //     this.props.getBrands();
-    //     this.props.getCities();
-    // }
-
-    renderBrands() {
-        if(this.props.brands.length) {
-            return (
-                <DropDown
-                    label="Марка авто"
-                    elements={this.props.brands}
-                    selected={this.props.car}
-                    onValueChange={this.onChangeCar.bind(this)}
-                />
-            )
-        }
-        return (
-            <DropDown
-                label="Марка авто"
-                elements={[]}
-                selected={this.props.car}
-                onValueChange={this.onChangeCar.bind(this)}
-            />
-        )
-    }
-
-    renderCities() {
-        if(this.props.cities.length) {
-            return (
-                <DropDown
-                    label="Город"
-                    elements={this.props.cities}
-                    onValueChange={this.onChangeCity.bind(this)}
-                    selected={this.props.city}
-                />
-            )
-        }
-        return (
-            <DropDown
-                label="Город"
-                elements={[]}
-                selected={this.props.city}
-                onValueChange={this.onChangeCity.bind(this)}
-            />
-        )
     }
 
     render() {
@@ -194,7 +168,14 @@ class SecondStageComponent extends Component {
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
-                        {this.renderBrands()}
+                        <Autocomplete
+                            label={"Марка авто"}
+                            placeholder={'Введите марку авто'}
+                            onChangeText={this.onChangeBrand.bind(this)}
+                            onSelect={this.onSelectBrand.bind(this)}
+                            data={this.props.brands}
+                            value={this.props.car}
+                        />
                     </CardItem>
                     <CardItem
                         style={{
@@ -289,11 +270,13 @@ const styles = {
     },
 }
 
-const mapStateToProps = ({register, citiesBrands}) => {
+const mapStateToProps = ({register, citiesBrands, auth}) => {
     return {
         name: register.name,
         city: register.city,
+        cityId: register.cityId,
         car: register.car,
+        brandId: register.carId,
         email: register.email,
         year: register.year,
         password: register.password,
@@ -302,7 +285,8 @@ const mapStateToProps = ({register, citiesBrands}) => {
         username: register.username,
         phone: register.phone,
         brands: citiesBrands.brands,
-        cities: citiesBrands.cities
+        cities: citiesBrands.cities,
+        pushToken: auth.pushToken
     }
 }
 
@@ -318,5 +302,6 @@ export default connect(
         changeConfirmPass,
         sendStep2,
         selectCity,
-        // getCities
+        onChangeBrand,
+        onSelectBrand
     })(SecondStageComponent);
