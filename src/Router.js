@@ -216,18 +216,17 @@ console.log('router will unmount');
         } else {
             return (
                 <Router
-                    backAndroidHandler={
-                        () => {
-                            if (Actions.currentScene == '_mainScreen') {
-                                console.log('tyt')
-                                Actions.reset('drawer')
-                                return true;
-                            } else {
-                                Actions.pop();
-                            }
-                            return false
-                        }
-                    }
+                    // backAndroidHandler={
+                    //     // () => {
+                    //     //     console.log(Actions.state);
+                    //     //     if (Actions.currentScene == '_mainScreen') {
+                    //     //         Actions.reset('drawer')
+                    //     //         return true;
+                    //     //     }
+                    //     //     Actions.pop();
+                    //     //     return true;
+                    //     // }
+                    // }
                 >
                     <Stack
                         hideNavBar
@@ -312,10 +311,8 @@ console.log('router will unmount');
 
                             </Stack>
                             <Stack hideNavBar key="onroadSupport">
-                                <Scene hideNavBar key="onroadCategories" component={OnroadCategoriesComponent}
-                                       title="On road"/>
-                                <Scene hideNavBar key="onroadDetails" component={OnroadCategoriesDetailsComponent}
-                                       title="On road"/>
+                                <Scene hideNavBar key="onroadCategories" component={OnroadCategoriesComponent}/>
+                                <Scene hideNavBar key="onroadDetails" component={OnroadCategoriesDetailsComponent}/>
                                 <Scene hideNavBar key="orderOnRoadSupport" component={OrderSupport}/>
                             </Stack>
                             <Stack key="discounts">

@@ -24,7 +24,9 @@ import {
     AAUA_CARD_NUMBER_CHANGE,
     CHANGE_NP_SKLAD,
     DELIVERY_CURIER,
-    DELIVERY_NP
+    DELIVERY_NP,
+    ORDER_CARD_CITY_SELECTED,
+    ORDER_CARD_SELECT_ADDRESS
 } from '../Actions/types';
 import {Actions} from 'react-native-router-flux';
 
@@ -43,6 +45,7 @@ const INITIAL_STATE = {
     NPskald: null,
     NPskalds: [],
     city: null,
+    cityId: null,
     delivery: DELIVERY_CURIER,
     country: 'Украина',
     sklad: null,
@@ -62,10 +65,10 @@ export default (state = INITIAL_STATE, action) => {
             if (action.payload == DELIVERY_NP) { // Нова пошта
                 return {...state,
                     orderCardSuccess: false,
-                    showCities: 'none',
-                    showNPCities: 'flex',
-                    showNPSklads: 'none',
-                    showAdress: 'none',
+                    // showCities: 'none',
+                    // showNPCities: 'flex',
+                    // showNPSklads: 'none',
+                    // showAdress: 'none',
                     city: null,
                     delivery: action.payload,
                     addCardError: null}
@@ -73,10 +76,11 @@ export default (state = INITIAL_STATE, action) => {
             if (action.payload == DELIVERY_CURIER) { // Курьер
                 return {...state,
                     orderCardSuccess: false,
-                    showCities: 'flex',
-                    showNPCities: 'none',
-                    showNPSklads: 'none',
-                    showAdress: 'flex',
+                    // showCities: 'flex',
+                    // showNPCities: 'none',
+                    // showNPSklads: 'none',
+                    // showAdress: 'flex',
+                    city: null,
                     delivery: action.payload,
                     addCardError: null}
             }
@@ -90,17 +94,24 @@ export default (state = INITIAL_STATE, action) => {
                 showAdress: 'none',
                 npCity: action.payload, addCardError: null
             }
+        case ORDER_CARD_CITY_SELECTED:
         case ORDER_CARD_CITY_CHANGE:
             return {
                 ...state,
+                city: action.payload,
                 orderCardSuccess: false,
-                showCities: 'flex',
-                showNPCities: 'none',
-                showNPSklads: 'none',
-                showAdress: 'flex', addCardError: null
+                // showCities: 'flex',
+                // showNPCities: 'none',
+                // showNPSklads: 'none',
+                // showAdress: 'flex',
+                addCardError: null
             }
+        case ORDER_CARD_SELECT_ADDRESS:
         case ADDRESS_CHANGE:
-            return {...state, address: action.payload, orderCardSuccess: false, addCardError: null};
+            return {...state,
+                address: action.payload,
+                orderCardSuccess: false,
+                addCardError: null};
         case CHANGE_NP_SKLAD:
             return {...state, address: action.payload, orderCardSuccess: false, addCardError: null};
         case COMMENT_CHANGE:

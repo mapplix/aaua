@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, Platform, BackHandler} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -11,6 +11,9 @@ import {RATIO} from '../../styles/constants';
 import {connect} from 'react-redux';
 import {getData, buySubscription} from '../../Actions/SubscriptionAction';
 import {showAlert} from '../Modals';
+import {Actions} from 'react-native-router-flux';
+
+let listener = null
 
 class SubscriptionComponent extends Component {
 
@@ -28,6 +31,29 @@ class SubscriptionComponent extends Component {
 
     componentWillMount() {
         this.props.getData(this.props.token);
+    }
+
+    componentDidMount() {
+        if (Platform.OS == "android" && listener == null) {
+            listener = BackHandler.addEventListener("hardwareBackPress", () => {
+                // if (this.state.isOpen) {
+                //     console.log(this.state);
+                //     this.closeModal();
+                //     return true;
+                // }
+                console.log('hardwareBackPress', Actions.currentScene)
+                let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards']
+                if (Actions.currentScene == '_mainScreen') {
+                    BackHandler.exitApp();
+                }
+                if (routs.includes(Actions.currentScene)) {
+                    Actions.mainScreen()
+                } else {
+                    Actions.pop();
+                }
+                return true;
+            })
+        }
     }
 
     renderPrice() {

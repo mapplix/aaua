@@ -103,8 +103,7 @@ console.log(brandObj)
                 console.log(userData);
                 this.props.sendStep2(userData)
             } else {
-                showModal('error', 'email not valid', 'Ok')
-                console.log(' email not valid');
+                showModal('Ошибка', 'не верный формат email', 'Закрыть')
             }
 
         } else {

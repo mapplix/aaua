@@ -58,6 +58,8 @@ export const COUNTRY_CHANGE = 'country_change';
 export const ADDRESS_CHANGE = 'address_change';
 export const NP_CITY_CHANGE = 'NP_city_change';
 export const ORDER_CARD_CITY_CHANGE = 'order_card_city_change';
+export const ORDER_CARD_CITY_SELECTED = 'order_card_city_selected';
+export const ORDER_CARD_SELECT_ADDRESS = 'order_card_select_address';
 export const CHANGE_NP_SKLAD = 'NP_sklad_change';
 export const DELIVERY_CHANGE = 'delivery_change';
 export const COMMENT_CHANGE = 'comment_change';
@@ -138,3 +140,11 @@ export const MESSAGE_LOAD = 'message_load';
 export const MESSAGE_INFO_LOADED_SUCCESS = 'message_info_load_success';
 export const MESSAGE_INFO_LOADING_FAIL = 'message_info_loading_fail';
 export const MESSAGE_COUNTER_SUCCESS = 'message_counter_loaded_success';
+
+/* DISCOUNTS */
+export const DISCOUNTS_LOADING_CATEGORIES = 'discounts_loading_categories';
+export const DISCOUNTS_LOADING_CATEGORIES_SUCCESS = 'discounts_loading_categories_success';
+export const DISCOUNTS_LOADING_CATEGORIES_FAIL = 'discounts_loading_categories_fail';
+export const DISCOUNTS_LOADING_CARDS = 'discounts_loading_cards';
+export const DISCOUNTS_LOADING_CARDS_SUCCESS = 'discounts_loading_cards_success';
+export const DISCOUNTS_LOADING_CARDS_FAIL = 'discounts_loading_cards_fail';

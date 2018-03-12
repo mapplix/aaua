@@ -26,6 +26,7 @@ class Autocomplete extends Component {
         if (searchedItems.length > 0 ) {
             listHeight = searchedItems.length * 20;
         }
+console.log(searchedItems, searchedText);
         this.setState({searchedItems: searchedItems.slice(0, 30)});
         this.props.onChangeText(searchedText)
     };
@@ -93,6 +94,7 @@ class Autocomplete extends Component {
                         placeholder={placeholder}
                         value={value}
                         onChangeText={this.searchedItems}
+                        onFocus={this.props.onFocus}
                         style={inputStyle}/>
                 </View>
                 {

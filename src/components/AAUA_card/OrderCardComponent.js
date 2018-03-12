@@ -8,6 +8,7 @@ import {
     ButtonRoundet,
     PhoneInput,
     Icon,
+    Autocomplete,
     Header} from '../common'
 import {Actions} from 'react-native-router-flux';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants';
@@ -19,7 +20,9 @@ import {
     changeComment,
     changePhone,
     orderCard,
-    changeNPSkald
+    changeNPSkald,
+    selectCity,
+    selectAddress
 } from '../../Actions/AAUA_CardAction';
 import {connect} from 'react-redux';
 import {getCities, getNPCities, getNPsklads} from '../../Actions/CitiesBrands';
@@ -29,29 +32,20 @@ import {DELIVERY_CURIER,
 
 class OrderCardComponent extends Component {
 
-    onChangeCity(value) {
-        this.props.changeCity(value);
-        console.log('onChangeCity', value)
-    }
-
-    onChangeNPCity(value) {
-        this.props.changeNPCity(value);
-        this.props.getNPsklads(value);
-console.log('onChangeNPCity', value)
-    }
+//     onChangeCity(value) {
+//         this.props.changeCity(value);
+//         console.log('onChangeCity', value)
+//     }
+//
+//     onChangeNPCity(value) {
+//         this.props.changeNPCity(value);
+//         this.props.getNPsklads(value);
+// console.log('onChangeNPCity', value)
+//     }
 
     onChangeDelivery (value) {
 console.log('onChangeMethod ', value);
         this.props.changeDelivery(value);
-    }
-
-    onChangeNPSklad(value) {
-        this.props.changeNPSkald(value);
-    }
-
-    onChangeAddress(value) {
-        this.props.changeAddress(value);
-        console.log('address was changed', value)
     }
 
     onPhoneChange(phone) {
@@ -68,7 +62,7 @@ console.log('onChangeMethod ', value);
         const orderData = {
             "token" : this.props.token,
             "bid" : {
-                "city" : this.props.delivery == DELIVERY_NP ? this.props.npCity : this.props.city,
+                "city" : this.props.city,
                 "delivery" : this.props.delivery,
                 "address" : this.props.address,
                 "address_comment" : this.props.comment,
@@ -78,10 +72,6 @@ console.log('onChangeMethod ', value);
 console.log('on submit OrderCardComponent', orderData)
         this.props.orderCard(orderData);
 
-    }
-
-    onSelect() {
-        console.log(' on select')
     }
 
     setDefaultSkladToStore(address) {
@@ -99,77 +89,53 @@ console.log('on submit OrderCardComponent', orderData)
         )
     }
 
-    renderCities() {
-        if (this.props.cities.length) {
-            console.log(this.props.cities[0])
+    onChangeCity(title){
+        console.log(title)
+        this.props.changeCity(title);
+        this.refs._scrollView.scrollToEnd({animated: true})
+    }
+
+    onSelectCity(cityObj){
+        console.log(cityObj);
+        if (this.props.delivery == DELIVERY_NP) {
+            this.props.selectCity(cityObj.id);
+            this.props.getNPsklads(cityObj.id);
+        } else {
+            this.props.selectCity(cityObj.title);
+        }
+    }
+
+    onChangeAddress(address) {
+        this.props.changeAddress(address);
+    }
+
+    onSelectAddress(address) {
+        this.props.selectAddress(address);
+    }
+
+    renderAddresses () {
+        console.log(this.props.NPsklads.length, this.props.NPsklads);
+        if (this.props.delivery == DELIVERY_NP && this.props.city && this.props.NPsklads.length) {
+            console.log('tyt');
             return (
                 <DropDown
                     label="Город"
-                    elements={this.props.cities}
-                    onValueChange={this.onChangeCity.bind(this)}
-                    selected={this.props.city}
-                />
-            )
-        }
-        return (
-            <DropDown
-                label="Город"
-                elements={[]}
-                onValueChange={this.onChangeCity.bind(this)}
-                selected={this.props.city}
-            />
-        )
-    }
-
-    renderNPCities() {
-        if (this.props.NPcities.length) {
-
-            return (
-                <DropDown
-                    label="Город"
-                    elements={this.props.NPcities}
-                    onValueChange={this.onChangeNPCity.bind(this)}
-                    selected={this.props.npCity || this.props.NPcities[0]}
-                />
-            )
-        }
-        return (
-            <DropDown
-                label="Город"
-                elements={[]}
-                onValueChange={this.onChangeNPCity.bind(this)}
-                selected={this.props.city}
-            />
-        )
-    }
-
-    renderNPsklad () {
-        if (this.props.NPsklads.length) {
-            return (
-                <DropDown
-                    label="Отделение Новой почты"
                     elements={this.props.NPsklads}
-                    selected={this.props.NPskalds}
-                    setDefaultValueToStore = {this.setDefaultSkladToStore.bind(this)}
-                    onValueChange={this.onChangeNPSklad.bind(this)}
+                    onValueChange={this.onChangeAddress.bind(this)}
+                    selected={this.props.address}
+                    setDefaultSkladToStore={this.setDefaultSkladToStore.bind(this)}
                 />
             )
         }
+        console.log('ne tyt');
         return (
-            <DropDown
-                label="Отделение Новой почты"
-                elements={[]}
-                selected={this.props.NPskald}
-                setDefaultValueToStore = {this.setDefaultSkladToStore.bind(this)}
-                onValueChange={this.onChangeNPSklad.bind(this)}
+            <LabelOnInput
+                label={'Адрес'}
+                placeholder={'введите адрес'}
+                onChangeText={this.onChangeAddress.bind(this)}
+                value={this.props.address}
             />
         )
-    }
-
-    componentWillMount() {
-// console.log('ordering component will mount');
-//         this.props.getCities();
-//         this.props.getNPCities();
     }
 
     componentWillReceiveProps(nextProp) {
@@ -178,15 +144,20 @@ console.log('on submit OrderCardComponent', orderData)
         }
     }
 
+    onFocus() {
+        console.log('on focus')
+        // this.refs._scrollView.scrollTo({x:0, y:0});
+    }
+
     render() {
-console.log('render ordering component RIGHT');
-        const {textStyle, radiobuttonContainer, amountText} = styles;
         return (
             <MainCard>
                 <Header back>
                     ОФОРМЛЕНИЕ ЗАКАЗА
                 </Header>
-                <ScrollView>
+                <ScrollView
+                    ref='_scrollView'
+                >
                 <CardItem
                 style={{
                         marginTop: 33,
@@ -229,59 +200,37 @@ console.log('render ordering component RIGHT');
                     display={this.props.showCities}
                     style={{
                     marginTop: 22,
-                    flex:0,
-                    height:60,
+                    flex:11,
                     flexDirection:'column',
                     justifyContent: 'flex-end',
                     alignItems: 'flex-start'
                 }}>
-                    {this.renderCities()}
-                </CardItem>
-
-                <CardItem
-                    display={this.props.showNPCities}
-                    style={{
-                        marginTop: 22,
-                        flex:0,
-                        height:60,
-                        flexDirection:'column',
-                        justifyContent: 'flex-end',
-                        alignItems: 'flex-start'
-                    }}>
-                    {this.renderNPCities()}
-                </CardItem>
-
-                <CardItem
-                    display={this.props.showNPSklads}
-                    style={{
-                        marginTop: 21,
-                        flex:0,
-                        height:60,
-                        flexDirection:'column',
-                        justifyContent: 'flex-end',
-                        alignItems: 'flex-start'
-                    }}
-                >
-                    {this.renderNPsklad()}
+                    <Autocomplete
+                        label={'Город'}
+                        placeholder={'Введите город'}
+                        onChangeText={this.onChangeCity.bind(this)}
+                        onSelect={this.onSelectCity.bind(this)}
+                        data={
+                            this.props.delivery == DELIVERY_CURIER ?
+                            this.props.cities : this.props.NPcities}
+                        value={this.props.city}
+                        onFocus={this.onFocus.bind(this)}
+                    />
                 </CardItem>
 
                 <CardItem
                     display={this.props.showAdress}
                     style={{
-                    flex: 0,
+                        flex:11,
                     height: 65,
                     marginTop:22,
                 }}>
-                    <LabelOnInput
-                        label={'Адрес'}
-                        placeholder={'введите адрес'}
-                        onChangeText={this.onChangeAddress.bind(this)}
-                        value={this.props.address}
-                    />
+
+                    {this.renderAddresses()}
                 </CardItem>
                 <CardItem
                     style={{
-                        flex: 0,
+                        flex:11,
                         height: 65,
                         marginTop:22,
                     }}>
@@ -306,8 +255,7 @@ console.log('render ordering component RIGHT');
                 </CardItem>
 
                     <CardItem style={{
-                    flex:0,
-                    height: 75 * RATIO,
+                        flex:11,
                     flexDirection: 'row',
                     alignItems: 'flex-end',
                     justifyContent: 'flex-start',
@@ -361,11 +309,11 @@ const styles = {
 }
 
 const mapStateToProps = ({AAUA_Card, citiesBrands, auth}) => {
-console.log(citiesBrands);
-var city = citiesBrands.cities[0].title;
-if (AAUA_Card.delivery == DELIVERY_NP) {
-    city = citiesBrands.NPcities[0].id
-}
+console.log(AAUA_Card);
+// var city = citiesBrands.cities[0].title;
+// if (AAUA_Card.delivery == DELIVERY_NP) {
+//     city = citiesBrands.NPcities[0].id
+// }
     return {
         token: auth.user.token,
         showCities: AAUA_Card.showCities,
@@ -378,7 +326,7 @@ if (AAUA_Card.delivery == DELIVERY_NP) {
         phone: AAUA_Card.phone,
         comment: AAUA_Card.comment,
         address: AAUA_Card.address,
-        city: AAUA_Card.city || city,
+        city: AAUA_Card.city,
         orderCardSuccess: AAUA_Card.orderCardSuccess,
 
         NPsklads: citiesBrands.NPsklads,
@@ -400,5 +348,7 @@ export default connect(
         changeComment,
         changePhone,
         orderCard,
-        changeNPSkald
+        changeNPSkald,
+        selectCity,
+        selectAddress
     })(OrderCardComponent);

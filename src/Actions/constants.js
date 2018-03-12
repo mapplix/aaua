@@ -26,6 +26,8 @@ export const MESSAGES_LOADING_URL = API_URL + 'messages';
 export const MESSAGE_LOADING_URL = API_URL + 'message';
 export const IMAGES_LOAD_URL = API_URL + 'slides';
 export const CHECK_TOKEN_URL = API_URL + 'checkToken';
+export const DISCOUNTS_CATEGORIES_URL = API_URL + 'сategoriesDiscontPlaces';
+export const DISCOUNTS_CARDS_URL = API_URL + 'discontCards';
 
 export const SECRET_KEY = 'hmnc7TGjffdhgjs';
 

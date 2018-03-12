@@ -5,9 +5,11 @@ import {View, Picker, Text} from 'react-native';
 class DropDown extends Component {
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
         if (nextProps.elements.length == 1) {
-            console.log('dropdown Will receive props', nextProps.elements, this.props);
-            this.props.setDefaultValueToStore(nextProps.elements[0])
+            if (this.props.setDefaultValueToStore) {
+                this.props.setDefaultValueToStore(nextProps.elements[0])
+            }
         }
     }
 

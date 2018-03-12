@@ -15,11 +15,7 @@ import {logOut} from '../Actions/AuthAction';
 
 class LeftBarComponent extends Component {
 
-    openWallet() {
-        Actions.wallet();
-    }
-
-    onExit() {
+     onExit() {
         Alert.alert(
             'Подтверждение',
             'Вы точно хотите выйти?',

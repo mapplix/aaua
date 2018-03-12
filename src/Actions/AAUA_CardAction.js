@@ -20,7 +20,10 @@ import {
     MY_AAUA_CARD_LOADED,
     MY_AAUA_CARD_FAIL,
     AAUA_ORDERING_CHANGE_PHONE,
-    CHANGE_NP_SKLAD
+    CHANGE_NP_SKLAD,
+    ORDER_CARD_CITY_SELECTED,
+    ORDER_CARD_CITY_CHANGE,
+    ORDER_CARD_SELECT_ADDRESS
 } from '../Actions/types';
 import {
     SECRET_KEY,
@@ -40,7 +43,14 @@ export const changeDelivery = (delivery) => {
 
 export const changeCity = (city) => {
     return {
-        type: CITY_CHANGE,
+        type: ORDER_CARD_CITY_CHANGE,
+        payload: city
+    }
+}
+
+export const selectCity = (city) => {
+    return {
+        type: ORDER_CARD_CITY_SELECTED,
         payload: city
     }
 }
@@ -55,6 +65,13 @@ export const changeNPCity = (city) => {
 export const changeAddress = (address) => {
     return {
         type: ADDRESS_CHANGE,
+        payload: address
+    }
+}
+
+export const selectAddress = (address) => {
+    return {
+        type: ORDER_CARD_SELECT_ADDRESS,
         payload: address
     }
 }
