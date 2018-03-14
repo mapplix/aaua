@@ -23,7 +23,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case ONROAD_PHONE_CHANGE:
-            return {...state, phone: action.payload, orderError: null};
+            return {...state, phone: action.payload, orderError: null, orderSupportMessage: null};
         case ON_ROAD_LOAD_CATEGORIES:
             return {...state, loading: true, orderError: null}
         case ON_ROAD_CATEGORIES_LOADED:
@@ -36,10 +36,11 @@ export default (state = INITIAL_STATE, action) => {
                 details: action.payload,
                 orderError: null}
         case ON_ROAD_ORDER_SUPPORT:
-            return {...state, loading: true, orderError: null}
+            return {...state, loading: true, orderError: null, orderSupportMessage: null}
         case ON_ROAD_SUPPORT_ORDERED_SUCCESS:
             return { ...state, loading: false,
                 orderError: null,
+                phone: null,
                 orderSupportMessage: 'Ваш запрос отправлен'}
         case ON_ROAD_SUPPORT_ORDERED_FAIL:
             return { ...state,
