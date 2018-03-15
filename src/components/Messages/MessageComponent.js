@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Platform, BackHandler} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -8,6 +8,8 @@ import {
 import {connect} from 'react-redux';
 import {getMessage} from '../../Actions/MessagesActions';
 import {Actions} from 'react-native-router-flux';
+
+let listener = null
 
 class MessageComponent extends Component {
 
@@ -28,6 +30,26 @@ class MessageComponent extends Component {
         const {getMessage, token, messageId} = this.props;
 console.log(token, messageId);
         getMessage(token, messageId)
+    }
+
+    componentDidMount() {
+        /*if (Platform.OS == "android" && listener == null) {
+            listener = BackHandler.addEventListener("hardwareBackPress", () => {
+console.log('hardwareBa~ckPress messageComponent', Actions.currentScene)
+                if (Actions.currentScene == 'message') {
+console.log('Actions.currentScene == message')
+                    Actions.popTo('messagesList');
+                }
+                // if (Actions.currentScene == 'messagesList') {
+                //     Actions.mainScreen();
+                // }
+                return true;
+            })
+        }*/
+    }
+
+    componentWillUnmount() {
+        listener = null;
     }
 
     renderContent() {

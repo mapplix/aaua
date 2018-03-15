@@ -17,7 +17,7 @@ import {Actions} from 'react-native-router-flux';
 
 export const loadCategories = (token) => {
     return (dispatch) => {
-
+console.log(token)
         dispatch({
             type:DISCOUNTS_LOADING_CATEGORIES
         })
@@ -85,7 +85,7 @@ console.log(cards)
     }
 }
 
-const categoriesLoaded = (dispatch, cards) => {
+const cardsLoaded = (dispatch, cards) => {
     if (cards.error == 0) {
         dispatch ({
             type: DISCOUNTS_LOADING_CARDS_SUCCESS,

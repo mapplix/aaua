@@ -22,7 +22,8 @@ import {
     orderCard,
     changeNPSkald,
     selectCity,
-    selectAddress
+    selectAddress,
+    cleanNPCities
 } from '../../Actions/AAUA_CardAction';
 import {connect} from 'react-redux';
 import {getCities, getNPCities, getNPsklads} from '../../Actions/CitiesBrands';
@@ -30,32 +31,29 @@ import {DELIVERY_CURIER,
     DELIVERY_NP
 } from '../../Actions/types';
 
+let listHeight = 0;
+
 class OrderCardComponent extends Component {
 
-//     onChangeCity(value) {
-//         this.props.changeCity(value);
-//         console.log('onChangeCity', value)
-//     }
-//
-//     onChangeNPCity(value) {
-//         this.props.changeNPCity(value);
-//         this.props.getNPsklads(value);
-// console.log('onChangeNPCity', value)
-//     }
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            query: '',
+            searchedItems: []
+        };
+    };
 
     onChangeDelivery (value) {
-console.log('onChangeMethod ', value);
         this.props.changeDelivery(value);
     }
 
     onPhoneChange(phone) {
         this.props.changePhone(phone)
-        console.log('onPhoneChange')
     }
 
     onChangeComment(text) {
         this.props.changeComment(text);
-        console.log('comment was changed', text);
     }
 
     onSubmit() {
@@ -75,7 +73,7 @@ console.log('on submit OrderCardComponent', orderData)
     }
 
     setDefaultSkladToStore(address) {
-        console.log(address);
+console.log(address);
         this.props.changeNPSkald(address.title);
     }
 
@@ -89,14 +87,45 @@ console.log('on submit OrderCardComponent', orderData)
         )
     }
 
+    searchedItems = (searchedText) => {
+        var searchedItems = this.props.cities.filter(function(item) {
+            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) == 0;
+        });
+        if (searchedText.length <= 0) {
+            searchedItems = []
+        }
+        if (searchedItems.length > 0 ) {
+            listHeight = searchedItems.length * 20;
+        }
+        if (searchedItems.length == 1) {
+            this.onSelectCity(searchedItems[0])
+            this.setState({searchedItems: []});
+        }
+        this.props.cities.some(e => {
+            if (e.title.toLowerCase() === searchedText.toLowerCase().trim()) {
+                this.onSelectCity(e)
+                this.setState({searchedItems: []});
+            }
+        })
+        this.setState({searchedItems: searchedItems.slice(0, 30)});
+    };
+
     onChangeCity(title){
-        console.log(title)
+        console.log(title.length)
+        if (title.length >= 2) {
+            if (this.props.delivery == DELIVERY_NP) {
+                this.props.getNPCities(title);
+            } else {
+                this.searchedItems(title);
+            }
+        }
         this.props.changeCity(title);
         this.refs._scrollView.scrollToEnd({animated: true})
     }
 
     onSelectCity(cityObj){
-        console.log(cityObj);
+        this.setState({searchedItems: []});
+        this.props.getNPCities('.');
         if (this.props.delivery == DELIVERY_NP) {
             this.props.selectCity(cityObj.id);
             this.props.getNPsklads(cityObj.id);
@@ -114,20 +143,17 @@ console.log('on submit OrderCardComponent', orderData)
     }
 
     renderAddresses () {
-        console.log(this.props.NPsklads.length, this.props.NPsklads);
         if (this.props.delivery == DELIVERY_NP && this.props.city && this.props.NPsklads.length) {
-            console.log('tyt');
             return (
                 <DropDown
-                    label="Город"
+                    label="Адрес"
                     elements={this.props.NPsklads}
                     onValueChange={this.onChangeAddress.bind(this)}
                     selected={this.props.address}
-                    setDefaultSkladToStore={this.setDefaultSkladToStore.bind(this)}
+                    setDefaultValueToStore={this.setDefaultSkladToStore.bind(this)}
                 />
             )
         }
-        console.log('ne tyt');
         return (
             <LabelOnInput
                 label={'Адрес'}
@@ -145,11 +171,11 @@ console.log('on submit OrderCardComponent', orderData)
     }
 
     onFocus() {
-        console.log('on focus')
-        // this.refs._scrollView.scrollTo({x:0, y:0});
+
     }
 
     render() {
+console.log('render component', this.props.NPcities);
         return (
             <MainCard>
                 <Header back>
@@ -173,7 +199,7 @@ console.log('on submit OrderCardComponent', orderData)
                         selectTextOnFocus={false}
                         label={'Страна'}
                         placeholder={'Украина'}
-                        onChangeText={() => console.log('change country')}
+                        onChangeText={() => []}
                         value={this.props.county}
                     />
                 </CardItem>
@@ -212,8 +238,9 @@ console.log('on submit OrderCardComponent', orderData)
                         onSelect={this.onSelectCity.bind(this)}
                         data={
                             this.props.delivery == DELIVERY_CURIER ?
-                            this.props.cities : this.props.NPcities}
+                            this.state.searchedItems : this.props.NPcities}
                         value={this.props.city}
+                        listHeight={{height: listHeight}}
                         onFocus={this.onFocus.bind(this)}
                     />
                 </CardItem>
@@ -309,7 +336,7 @@ const styles = {
 }
 
 const mapStateToProps = ({AAUA_Card, citiesBrands, auth}) => {
-console.log(AAUA_Card);
+console.log(citiesBrands);
 // var city = citiesBrands.cities[0].title;
 // if (AAUA_Card.delivery == DELIVERY_NP) {
 //     city = citiesBrands.NPcities[0].id
@@ -350,5 +377,6 @@ export default connect(
         orderCard,
         changeNPSkald,
         selectCity,
-        selectAddress
+        selectAddress,
+        cleanNPCities
     })(OrderCardComponent);

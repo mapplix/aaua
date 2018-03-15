@@ -87,40 +87,41 @@ console.log('city loaded', cities)
 }
 
 /*GET NP CITIES*/
-export const getNPCities = () => {
+export const getNPCities = (city) => {
     return (dispatch) => {
 
-        AsyncStorage.getItem('NPcities').then(
-            (NPcachedCities) => {
-                if (NPcachedCities == null) {
-                    const signature = md5(SECRET_KEY)
-console.log('get np cities', NP_CITIES_URL, signature);
-                    axios.get(NP_CITIES_URL, {
-                            headers: {
-                                'Signature': signature
-                            }
-                        }
-                    )
-                        .then(cities => {
-                            let citiesAraay = [];
-                            for (var city in cities.data.data) {
-                                 citiesAraay.push({
-                                     id : city,
-                                     title : cities.data.data[city]
-                                 })
-                            }
-                            saveItem('NPcities', JSON.stringify(citiesAraay));
-                console.log(citiesAraay);
-                            onNPCitiesLoaded(dispatch, citiesAraay)
-                        })
-                } else {
-                    onNPCitiesLoaded(dispatch, JSON.parse(NPcachedCities))
+        const obj = {
+            "city" : city
+        }
+
+        const data = JSON.stringify(obj);
+        const signature = md5(SECRET_KEY + data)
+
+console.log('getNPCities', NP_CITIES_URL, data, signature);
+        axios.post(NP_CITIES_URL, data, {
+                headers: {
+                    'Signature' : signature,
+                    'Content-Type': 'application/json',
                 }
+            }
+        )
+            .then(cities => {
+                let citiesAraay = [];
+                for (var city in cities.data.data) {
+                     citiesAraay.push({
+                         id : city,
+                         title : cities.data.data[city]
+                     })
+                }
+                // saveItem('NPcities', JSON.stringify(citiesAraay));
+
+                onNPCitiesLoaded(dispatch, citiesAraay)
             })
     }
 }
 
 const onNPCitiesLoaded = (dispatch, cities) => {
+console.log('onNPCitiesLoaded', cities);
     dispatch({
         type: NP_CITES_LOADED,
         payload: cities

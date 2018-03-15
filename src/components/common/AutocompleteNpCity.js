@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, ListView, TouchableOpacity} from 'react-native';
-import {Spiner} from './'
+import {getNPCities} from '../../Actions/CitiesBrands';
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 let listHeight = 0;
 
-class Autocomplete extends Component {
+class AutocompleteNpCity extends Component {
 
     constructor(props) {
         super(props);
@@ -16,8 +16,38 @@ class Autocomplete extends Component {
         };
     };
 
-    renderItem = (item) => {
+    searchedItems = (searchedText) => {
 
+        let data = getNPCities(searchedText);
+
+        var searchedItems = this.props.data.filter(function(item) {
+            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) == 0;
+        });
+        if (searchedText.length <= 0) {
+            listHeight = 0;
+            searchedItems = []
+        }
+        if (searchedItems.length > 0 ) {
+            listHeight = searchedItems.length * 20;
+        }
+        if (searchedItems.length == 1) {
+            this.props.onSelect(searchedItems[0])
+            this.setState({searchedItems: []});
+            console.log(searchedItems.includes(searchedText), searchedText);
+        }
+        this.props.data.some(e => {
+            if (e.title.toLowerCase() === searchedText.toLowerCase().trim()) {
+console.log('element in the array');
+                this.props.onSelect(e)
+                this.setState({searchedItems: []});
+            }
+        })
+console.log(searchedText.trim());
+        this.setState({searchedItems: searchedItems.slice(0, 30)});
+        this.props.onChangeText(searchedText)
+    };
+
+    renderItem = (item) => {
         return (
             <View style={{
                 height: 18
@@ -31,35 +61,24 @@ class Autocomplete extends Component {
                         }
                     }
                 >
-                    <Text
-                        numberOfLines={1}
-                        style={{flexWrap: 'wrap'}}
-                    >
-                        {item.id}, {item.title}
-                        </Text>
+                    <Text>{item.id}, {item.title}</Text>
                 </TouchableOpacity>
             </View>
         );
     };
 
     renderList() {
-
-console.log('render list', this.props.data);
-
-        let listHeight = 0;
+        console.log(this.props.data);
         if (this.props.data.length >= 1) {
-            const renderedList = this.props.data.slice(0, 30)
-            listHeight = renderedList.length <= 10 ? renderedList.length * 20 : 200;
-
             return (
                 <View style={{
-                    maxHeight: 200,
-                    height: listHeight
+                    height: listHeight,
+                    maxHeight: 200
                 }}
                 >
                     <ListView
                         style={{
-                            height: listHeight,
+                            height: 200,
                             flex: 1
                         }}
                         enableEmptySections
@@ -71,7 +90,7 @@ console.log('render list', this.props.data);
     }
 
     render() {
-console.log(this.props.data);
+
         const {inputStyle, labelStyle, containerStyle} = styles;
         const {label, placeholder, value} = this.props;
         return (
@@ -138,4 +157,4 @@ const styles = {
 
 }
 
-export {Autocomplete};
+export {AutocompleteNpCity};

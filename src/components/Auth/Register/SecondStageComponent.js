@@ -35,7 +35,9 @@ class SecondStageComponent extends Component {
         super(props);
 
         this.state = {
-            searchedItems: []
+            enableScrollViewScroll: true,
+            searchedCities: [],
+            searchedBrands: [],
         };
     };
 
@@ -56,19 +58,70 @@ class SecondStageComponent extends Component {
     }
 
     onChangeBrand(title){
+        if (title.length >= 2) {
+            this.searchedBrands(title);
+        }
         this.props.onChangeBrand(title);
+        this.refs._scrollView.scrollTo({x:800, y: 500, animated: true})
     }
     onSelectBrand(brandObj){
-console.log(brandObj)
+        this.setState({searchedBrands: []});
         this.props.onSelectBrand(brandObj);
     }
     onChangeCity(title){
+        if (title.length >= 2) {
+            this.searchedCities(title);
+        }
         this.props.changeCity(title);
+        if (title.length == 1) {
+            this.refs._scrollView.scrollTo({x:800, y: 500, animated: true})
+        }
     }
 
     onSelectCity(cityObj){
+        this.setState({searchedCities: []});
         this.props.selectCity(cityObj);
     }
+
+    searchedCities = (searchedText) => {
+        var searchedItems = this.props.cities.filter(function(item) {
+            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) == 0;
+        });
+        if (searchedText.length <= 0) {
+            searchedItems = []
+        }
+        if (searchedItems.length == 1) {
+            this.onSelectCity(searchedItems[0])
+            this.setState({searchedCities: []});
+        }
+        this.props.cities.some(e => {
+            if (e.title.toLowerCase() === searchedText.toLowerCase().trim()) {
+                this.onSelectCity(e)
+                this.setState({searchedCities: []});
+            }
+        })
+        this.setState({searchedCities: searchedItems.slice(0, 30)});
+    };
+
+    searchedBrands = (searchedText) => {
+        var searchedItems = this.props.brands.filter(function(item) {
+            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) == 0;
+        });
+        if (searchedText.length <= 0) {
+            searchedItems = []
+        }
+        if (searchedItems.length == 1) {
+            this.onSelectBrand(searchedItems[0])
+            this.setState({searchedBrands: []});
+        }
+        this.props.cities.some(e => {
+            if (e.title.toLowerCase() === searchedText.toLowerCase().trim()) {
+                this.onSelectBrand(e)
+                this.setState({searchedBrands: []});
+            }
+        })
+        this.setState({searchedBrands: searchedItems.slice(0, 30)});
+    };
 
     showAlert() {
         Alert.alert(
@@ -127,7 +180,14 @@ console.log(brandObj)
                 <Header >
                     ПЕРСОНАЛЬНЫЕ ДАННЫЕ
                 </Header>
-                <ScrollView>
+                <ScrollView
+                    ref='_scrollView'
+                    // onStartShouldSetResponderCapture={() => {
+                    //     console.log('ResponderCapture in scrollView');
+                    //     this.setState({ enableScrollViewScroll: true });
+                    // }}
+                    scrollEnabled={this.state.enableScrollViewScroll}
+                >
                     <CardItem
                     style={{
                         marginTop: 33,
@@ -156,7 +216,7 @@ console.log(brandObj)
                             placeholder={'Введите город'}
                             onChangeText={this.onChangeCity.bind(this)}
                             onSelect={this.onSelectCity.bind(this)}
-                            data={this.props.cities}
+                            data={this.state.searchedCities}
                             value={this.props.city}
                         />
                     </CardItem>
@@ -172,7 +232,7 @@ console.log(brandObj)
                             placeholder={'Введите марку авто'}
                             onChangeText={this.onChangeBrand.bind(this)}
                             onSelect={this.onSelectBrand.bind(this)}
-                            data={this.props.brands}
+                            data={this.state.searchedBrands}
                             value={this.props.car}
                         />
                     </CardItem>

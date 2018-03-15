@@ -26,6 +26,7 @@ class SubscriptionComponent extends Component {
                 'Закрыть'
             )
         }
+console.log(this.props);
         this.props.buySubscription(this.props.token);
     }
 
@@ -36,19 +37,18 @@ class SubscriptionComponent extends Component {
     componentDidMount() {
         if (Platform.OS == "android" && listener == null) {
             listener = BackHandler.addEventListener("hardwareBackPress", () => {
-                // if (this.state.isOpen) {
-                //     console.log(this.state);
-                //     this.closeModal();
-                //     return true;
-                // }
                 console.log('hardwareBackPress', Actions.currentScene)
-                let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards']
+                let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards', 'messagesList']
                 if (Actions.currentScene == '_mainScreen') {
                     BackHandler.exitApp();
                 }
                 if (routs.includes(Actions.currentScene)) {
                     Actions.mainScreen()
-                } else {
+                }
+                if (Actions.currentScene == 'message') {
+                    Actions.messagesList();
+                }
+                else {
                     Actions.pop();
                 }
                 return true;

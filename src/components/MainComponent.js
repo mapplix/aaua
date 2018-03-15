@@ -29,7 +29,6 @@ class MainComponent extends Component {
 
     componentWillMount() {
         AsyncStorage.getItem('user').then((user) => {
-console.log(user);
             const userObj = JSON.parse(user);
             this.props.setUserFromSession(userObj)
             this.props.getSliderImages(userObj.token)
@@ -52,7 +51,6 @@ console.log(user);
         this.props.images.map( image => {
             images.push(image.url)
         })
-console.log( 'render main component ', this.props.images, images);
         return (
             <MainCard>
                 <Header burger >
@@ -104,7 +102,6 @@ console.log( 'render main component ', this.props.images, images);
 }
 
 const mapStateToProps = ({auth, citiesBrands, messages}) => {
-console.log(citiesBrands.sliderImages);
     return {
         // token: auth.user.token,
         bonus: auth.user ? auth.user.bonus : 0,

@@ -5,8 +5,8 @@ import {View, Picker, Text} from 'react-native';
 class DropDown extends Component {
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        if (nextProps.elements.length == 1) {
+        if (nextProps.elements.length >= 1) {
+            console.log(nextProps);
             if (this.props.setDefaultValueToStore) {
                 this.props.setDefaultValueToStore(nextProps.elements[0])
             }

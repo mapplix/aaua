@@ -57,6 +57,7 @@ export const ORDER_CARD_FAIL = 'order_card_fail';
 export const COUNTRY_CHANGE = 'country_change';
 export const ADDRESS_CHANGE = 'address_change';
 export const NP_CITY_CHANGE = 'NP_city_change';
+export const NP_CITIES_CLEAN = 'clean_NP_cities_list';
 export const ORDER_CARD_CITY_CHANGE = 'order_card_city_change';
 export const ORDER_CARD_CITY_SELECTED = 'order_card_city_selected';
 export const ORDER_CARD_SELECT_ADDRESS = 'order_card_select_address';

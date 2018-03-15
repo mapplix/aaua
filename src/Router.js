@@ -116,7 +116,7 @@ console.log('router component will mount')
         // AsyncStorage.clear();
         this.props.getBrands();
         this.props.getCities();
-        this.props.getNPCities();
+        // this.props.getNPCities();
     }
 
     componentDidMount() {
@@ -163,6 +163,11 @@ console.log(obj);
                                     })
                                 } else {
                                     AsyncStorage.removeItem('user');
+                                    this.setState({
+                                        hasToken: false,
+                                        hasCard: false,
+                                        isLoaded: true
+                                    })
                                 }
                             } else {
                                 this.setState({

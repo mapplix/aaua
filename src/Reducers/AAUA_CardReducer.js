@@ -25,6 +25,7 @@ import {
     CHANGE_NP_SKLAD,
     DELIVERY_CURIER,
     DELIVERY_NP,
+    NP_CITIES_CLEAN,
     ORDER_CARD_CITY_SELECTED,
     ORDER_CARD_SELECT_ADDRESS
 } from '../Actions/types';
@@ -62,28 +63,12 @@ export default (state = INITIAL_STATE, action) => {
         case CITY_CHANGE:
             return {...state, city: action.payload, addCardError: null};
         case DELIVERY_CHANGE:
-            if (action.payload == DELIVERY_NP) { // Нова пошта
-                return {...state,
-                    orderCardSuccess: false,
-                    // showCities: 'none',
-                    // showNPCities: 'flex',
-                    // showNPSklads: 'none',
-                    // showAdress: 'none',
-                    city: null,
-                    delivery: action.payload,
-                    addCardError: null}
-            }
-            if (action.payload == DELIVERY_CURIER) { // Курьер
-                return {...state,
-                    orderCardSuccess: false,
-                    // showCities: 'flex',
-                    // showNPCities: 'none',
-                    // showNPSklads: 'none',
-                    // showAdress: 'flex',
-                    city: null,
-                    delivery: action.payload,
-                    addCardError: null}
-            }
+            return {...state,
+                orderCardSuccess: false,
+                city: null,
+                delivery: action.payload,
+                address: null,
+                addCardError: null}
         case NP_CITY_CHANGE:
             return {
                 ...state,
@@ -92,14 +77,25 @@ export default (state = INITIAL_STATE, action) => {
                 showNPCities: 'flex',
                 showNPSklads: 'flex',
                 showAdress: 'none',
+                address: null,
                 npCity: action.payload, addCardError: null
             }
         case ORDER_CARD_CITY_SELECTED:
+console.log(ORDER_CARD_CITY_SELECTED);
+            return {
+                ...state,
+                npCities: [],
+                city: action.payload,
+                orderCardSuccess: false,
+                address: null,
+                addCardError: null
+            }
         case ORDER_CARD_CITY_CHANGE:
             return {
                 ...state,
                 city: action.payload,
                 orderCardSuccess: false,
+                address: null,
                 // showCities: 'flex',
                 // showNPCities: 'none',
                 // showNPSklads: 'none',
@@ -112,6 +108,14 @@ export default (state = INITIAL_STATE, action) => {
                 address: action.payload,
                 orderCardSuccess: false,
                 addCardError: null};
+        case NP_CITIES_CLEAN:
+            return {
+                ...state,
+                npCities: null,
+                orderCardSuccess: false,
+                address: null,
+                addCardError: null
+            }
         case CHANGE_NP_SKLAD:
             return {...state, address: action.payload, orderCardSuccess: false, addCardError: null};
         case COMMENT_CHANGE:
@@ -119,7 +123,6 @@ export default (state = INITIAL_STATE, action) => {
         case ADD_CARD:
             return {...state, orderCardSuccess: false, addCardError: null};
         case ADD_CARD_SUCCESS:
-            Actions.my_aaua_cards();
             return {...state, addCardError: null};
         case ADD_CARD_FAIL:
             return {...state, addCardError: action.payload, orderCardSuccess: false,};

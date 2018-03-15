@@ -11,6 +11,7 @@ import SubscriptionReducer from './SubscriptionReducer'
 import OnroadReducer from './OnroadReducer'
 import OrderingReducer from './OrderingReducer'
 import MessagesReducer from './MessagesReducer'
+import DiscountsReducer from './DiscountsReducer'
 
 export default combineReducers({
     auth: AuthReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
     onRoad: OnroadReducer,
     ordering: OrderingReducer,
     messages: MessagesReducer,
+    discounts: DiscountsReducer,
 })

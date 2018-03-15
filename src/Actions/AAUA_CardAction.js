@@ -23,7 +23,8 @@ import {
     CHANGE_NP_SKLAD,
     ORDER_CARD_CITY_SELECTED,
     ORDER_CARD_CITY_CHANGE,
-    ORDER_CARD_SELECT_ADDRESS
+    ORDER_CARD_SELECT_ADDRESS,
+    NP_CITIES_CLEAN
 } from '../Actions/types';
 import {
     SECRET_KEY,
@@ -33,6 +34,7 @@ import {
 } from './constants';
 import axios from 'axios';
 import md5 from 'js-md5'
+import {Actions} from 'react-native-router-flux';
 
 export const changeDelivery = (delivery) => {
     return {
@@ -59,6 +61,13 @@ export const changeNPCity = (city) => {
     return {
         type: NP_CITY_CHANGE,
         payload: city
+    }
+}
+
+export const cleanNPCities = () => {
+console.log(' cleanNPCities action')
+    return {
+        type: NP_CITIES_CLEAN
     }
 }
 
@@ -112,7 +121,6 @@ export const addCard = (card) => {
 
         const data = JSON.stringify(obj);
         const signature = md5(SECRET_KEY + data)
-console.log(ADD_AAUA_CARD_URL, data, signature);
         axios.post(ADD_AAUA_CARD_URL, data, {
                 headers: {
                     'Signature' : signature,
@@ -126,11 +134,12 @@ console.log(ADD_AAUA_CARD_URL, data, signature);
 }
 
 export const addCardSuccess = (dispatch, response) => {
-console.log(response)
+
     if (response.error == 0) {
         dispatch({
             type: ADD_CARD_SUCCESS,
         })
+        Actions.my_aaua_cards();
     } else {
         var errorMsg = 'Произошла ошибка, попробуйте позже'
         if (response.error == 2) {
@@ -147,7 +156,6 @@ console.log(response)
             payload: errorMsg
         })
     }
-
 }
 
 export const orderCard = (card) => {
@@ -199,19 +207,6 @@ console.log('orderCardSuccess', data, data.error == 0);
 
 }
 
-export const orderCardFail = () => {
-    return {
-        type: ORDER_CARD_FAIL,
-    }
-}
-
-export const submitUserData = () => {
-
-    return {
-        type: SUBMIT_USER_DATA
-    }
-}
-
 export const deleteCard = (cardId) => {
     return {
         type: DELETE_AAUA_CARD,
@@ -231,6 +226,7 @@ export const getMyCard = (token) => {
 
         const data = JSON.stringify(obj);
         const signature = md5(SECRET_KEY + data)
+console.log(MY_AAUA_CARD_URL, data, signature)
         axios.post(MY_AAUA_CARD_URL, data, {
                 headers: {
                     'Signature' : signature,
@@ -246,7 +242,7 @@ export const getMyCard = (token) => {
 }
 
 const getCardSuccess = (dispatch, card) => {
-console.log(card);
+console.log('getCardSuccess', card);
     if (card.error == 0) {
         dispatch({
             type: MY_AAUA_CARD_LOADED,

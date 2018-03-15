@@ -156,9 +156,9 @@ export const countMessages = (token, offset = 0) => {
 }
 
 const onMessageCountLoaded = (dispatch, messages) => {
-    console.log('messages count success', messages.data.length)
+    console.log('messages count success', messages)
     var counter = 0;
-    if (messages.error == 0) {
+    if (messages.error == 0 && messages.data) {
         counter = messages.data.length
     }
     dispatch({

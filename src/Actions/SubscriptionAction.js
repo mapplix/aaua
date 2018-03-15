@@ -48,18 +48,8 @@ export const buySubscription = (token) => {
             token: token
         }
         const url = BUY_SUBSCRIPTION_URL + '&token=' + token;
-
         Linking.openURL(url);
     }
-}
-
-const onBuySuccess = (dispatch, page) => {
-
-    console.log(page);
-    dispatch({
-        type: BUY_SUBSCRIPTION_SUCCESS,
-        payload: page.data
-    })
 }
 
 const onSubmitSuccess = (dispatch, subscription) => {

@@ -1,18 +1,60 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView} from 'react-native';
-import {MainCard, CardItem, Header} from '../common'
+import {CardItem, Spiner} from '../common'
 import Item from './Item';
 import {RATIO} from '../../styles/constants';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+import {loadCategories} from '../../Actions/DiscountsAction';
 
 class CategoriesScreen extends Component {
 
-    render() {
-        return (
+    componentWillMount() {
+        const {loadCategories, token} = this.props;
+        loadCategories(token);
+    }
+
+    renderItems() {
+        const categories = {...this.props.categories};
+        for (var i = 0; i <= categories.length; i + 3) {
+            this.renderRow(categories.slice(i, i+3))
+        }
+    }
+
+    renderRow(items) {
+        console.log(items)
+        /*return (
+            <CardItem style={{
+
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center'
+            }}>
+                {items.map( item => {
+                    return (
+                        <Item
+                            onPress={Actions.discontsMap}
+                            imageSrc={require('../../images/icons/sto.png')}
+                        >
+                            {
+                                item.title
+                            }
+                        </Item>
+                    )
+                })}
+            </CardItem>
+        )*/
+    }
+
+    renderContent() {
+        const {loading, categories} = this.props
+        if (loading) {
+            return (
                 <ScrollView style={{
                     paddingLeft: 22,
                     paddingRight: 22,
                 }}>
+                    { }
                     <CardItem style={{
 
                         flexDirection: 'row',
@@ -129,8 +171,26 @@ class CategoriesScreen extends Component {
                         />
                     </CardItem>
                 </ScrollView>
+            )
+        }
+        return (
+            <Spiner />
+        )
+    }
+
+    render() {
+        return (
+                this.renderContent()
         )
     }
 }
 
-export default CategoriesScreen;
+const mapStateToProps = ({auth, discounts}) => {
+    return {
+        token: auth.user.token,
+        categories: discounts.categories,
+        loading: false
+    }
+}
+
+export default connect(mapStateToProps, {loadCategories})(CategoriesScreen);

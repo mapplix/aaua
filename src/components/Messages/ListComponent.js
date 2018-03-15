@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, FlatList, ListView} from 'react-native';
+import {View, Text, ScrollView, FlatList, ListView, Platform, BackHandler} from 'react-native';
 import {
     MainCard,
     Spiner,
@@ -8,6 +8,9 @@ import {
 import ListItem from './ListItem';
 import {connect} from 'react-redux';
 import {loadMessages} from '../../Actions/MessagesActions'
+import {Actions} from 'react-native-router-flux';
+
+let listener = null
 
 class ListComponent extends Component {
 
@@ -54,7 +57,20 @@ console.log('handleLoadMore');
     componentDidMount() {
 console.log('messages list did mount');
         this.props.loadMessages(this.props.token);
+        /*if (Platform.OS == "android" && listener == null) {
+            listener = BackHandler.addEventListener("hardwareBackPress", () => {
+                console.log('hardwareBackPress', Actions.currentScene)
+                if (Actions.currentScene == 'messagesList') {
+                    Actions.popTo('mainScreen');
+                }
+                return true;
+            })
+        }*/
     };
+
+    componentWillUnmount() {
+        listener = null;
+    }
 
     renderRow(item) {
 console.log(item);

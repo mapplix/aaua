@@ -30,4 +30,4 @@ export * from './RightMenu';
 export * from './Checkbox';
 export * from './CreditCardInput';
 export * from './Autocomplete';
-export * from './AutocompleteExample';
+export * from './AutocompleteNpCity';
