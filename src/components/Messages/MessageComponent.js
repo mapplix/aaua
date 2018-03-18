@@ -28,24 +28,18 @@ class MessageComponent extends Component {
 
     componentWillMount() {
         const {getMessage, token, messageId} = this.props;
-console.log(token, messageId);
         getMessage(token, messageId)
     }
 
     componentDidMount() {
-        /*if (Platform.OS == "android" && listener == null) {
+        if (Platform.OS == "android" && listener == null) {
             listener = BackHandler.addEventListener("hardwareBackPress", () => {
-console.log('hardwareBa~ckPress messageComponent', Actions.currentScene)
                 if (Actions.currentScene == 'message') {
-console.log('Actions.currentScene == message')
-                    Actions.popTo('messagesList');
+                    Actions.messagesList();
+                    return true;
                 }
-                // if (Actions.currentScene == 'messagesList') {
-                //     Actions.mainScreen();
-                // }
-                return true;
             })
-        }*/
+        }
     }
 
     componentWillUnmount() {
@@ -60,7 +54,6 @@ console.log('Actions.currentScene == message')
             textStyle,
             dateStyle
         } = styles;
-console.log(this.props.loading);
         if (!this.props.loading) {
             const {message} = this.props;
             return (
@@ -107,6 +100,7 @@ console.log(this.props.loading);
     }
 
     render() {
+console.log('render message');
         const {
             componentContainer
         } = styles;

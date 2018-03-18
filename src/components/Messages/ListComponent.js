@@ -49,23 +49,17 @@ console.log('handleRefresh')
         });
     };
 
-    handleLoadMore() {
-console.log('handleLoadMore');
-        // this.props.loadMessages(this.props.token, 5);
-    };
-
     componentDidMount() {
-console.log('messages list did mount');
         this.props.loadMessages(this.props.token);
-        /*if (Platform.OS == "android" && listener == null) {
+        if (Platform.OS == "android" && listener == null) {
             listener = BackHandler.addEventListener("hardwareBackPress", () => {
-                console.log('hardwareBackPress', Actions.currentScene)
+
                 if (Actions.currentScene == 'messagesList') {
-                    Actions.popTo('mainScreen');
+                    Actions.mainScreen();
+                    return true;
                 }
-                return true;
             })
-        }*/
+        }
     };
 
     componentWillUnmount() {
@@ -103,17 +97,6 @@ console.log(item);
                     data={this.props.messages}
                     keyExtractor={(item, index) => item.id}
                     renderItem={this.renderRow.bind(this)}
-                    /*renderFooter={() => {
-                        return (
-                            this.state.isLoading &&
-                            <View style={{ flex: 1 }}>
-                                <Spiner size="small" />
-                            </View>
-                        );
-                    }}*/
-                    // refreshing={isRefreshing}
-                    // onRefresh={this.handleRefresh.bind(this)}
-                    onEndReached={this.handleLoadMore.bind(this)}
                     onEndThreshold={0}
                 />
             </CardItem>

@@ -18,26 +18,21 @@ let listener = null
 class SubscriptionComponent extends Component {
 
     addToBalance() {
-        console.log('add to balance', this.props)
         if (this.props.bought_at != null) {
             showAlert(
                 'Ошибка',
                 'У Вас уже есть активная подписка',
                 'Закрыть'
             )
+        } else {
+            this.props.buySubscription(this.props.token);
         }
-console.log(this.props);
-        this.props.buySubscription(this.props.token);
-    }
-
-    componentWillMount() {
-        this.props.getData(this.props.token);
     }
 
     componentDidMount() {
         if (Platform.OS == "android" && listener == null) {
             listener = BackHandler.addEventListener("hardwareBackPress", () => {
-                console.log('hardwareBackPress', Actions.currentScene)
+console.log('hardwareBackPress', Actions.currentScene)
                 let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards', 'messagesList']
                 if (Actions.currentScene == '_mainScreen') {
                     BackHandler.exitApp();
@@ -46,7 +41,8 @@ console.log(this.props);
                     Actions.mainScreen()
                 }
                 if (Actions.currentScene == 'message') {
-                    Actions.messagesList();
+console.log('back from message')
+                    Actions.push('messagesList');
                 }
                 else {
                     Actions.pop();
@@ -54,6 +50,10 @@ console.log(this.props);
                 return true;
             })
         }
+    }
+
+    componentWillUnmount(){
+        console.log('component will unmount', this.props);
     }
 
     renderPrice() {
@@ -120,10 +120,10 @@ console.log(this.props);
                     <ScrollView style={{flex: 1}}>
                         <Text style={textStyle}>
                             В годовую подписку входит:
-                            - Действует 365 дней
-                            - Активна бонусная система AAUA
-                            - Пакет юридический стандарт
-                            - Бесплатная доставка карты лояльсти
+                            {"\n"}- Действует 365 дней
+                            {"\n"}- Активна бонусная система AAUA
+                            {"\n"}- Пакет юридический стандарт
+                            {"\n"}- Бесплатная доставка карты лояльсти
                         </Text>
                     </ScrollView>
                 </CardItem>

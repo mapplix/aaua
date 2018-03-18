@@ -19,11 +19,9 @@ import ImageSlider from 'react-native-image-slider';
 import {BottomMenuItem} from "./common/BottomMenuItem";
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import {setUserFromSession} from '../Actions/AuthAction';
+import {setUserFromSession, updateStatus} from '../Actions/AuthAction';
 import {getSliderImages} from '../Actions/CitiesBrands';
 import {countMessages} from '../Actions/MessagesActions';
-
-let listener = null
 
 class MainComponent extends Component {
 
@@ -34,16 +32,6 @@ class MainComponent extends Component {
             this.props.getSliderImages(userObj.token)
             this.props.countMessages(userObj.token)
         })
-
-//         if (Platform.OS == "android" && listener == null) {
-//             listener = BackHandler.addEventListener("hardwareBackPress", () => {
-// console.log(this.props.title);
-//                 if (this.props.title == 'main_screen') {
-//                     return true;
-//                 }
-//                 return false;
-//             })
-//         }
     }
 
     render() {
