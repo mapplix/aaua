@@ -5,7 +5,8 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
     LOGOUT,
-    TOKEN_GET_SUCCESS
+    TOKEN_GET_SUCCESS,
+    UPDATE_STATUS_SUCCESS
 } from '../Actions/types';
 import axios from 'axios';
 import md5 from 'js-md5';
@@ -148,10 +149,32 @@ console.log('subscription', subscription, userObject);
 }
 
 export const setUserFromSession = (user) => {
-    return {
+    return (dispatch) => {
+        const data = JSON.stringify(
+            {
+                "token": user.token
+            });
+        const signature = md5(SECRET_KEY + data)
+        axios.post(SUBSCRIPTION_URL, data, {
+            headers: {
+                'Signature': signature,
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((subscription) => {
+                const status = subscription.data.data.bought_at != null ? 'active' : 'inactive';
+                user.status = status;
+                setUserFromSessionSucces(dispatch, user)
+            })
+    }
+}
+
+const setUserFromSessionSucces = (dispatch, user) => {
+    console.log(user)
+    dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: user
-    }
+    })
 }
 
 const onLoginSuccess = (dispatch, user) => {

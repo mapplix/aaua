@@ -7,7 +7,8 @@ import {
     LOGOUT,
     UPDATE_USER_SUBSCRIPTION,
     UPDATE_USER_STATUS,
-    TOKEN_GET_SUCCESS
+    TOKEN_GET_SUCCESS,
+    UPDATE_STATUS_SUCCESS
 } from '../Actions/types';
 import {Actions} from 'react-native-router-flux';
 
@@ -41,10 +42,12 @@ console.log(TOKEN_GET_SUCCESS, action.payload)
             Actions.reset('auth');
             return {...state, user: null, loginError: false, loading: false};
         case UPDATE_USER_SUBSCRIPTION:
-            console.log(action);
             const user = {...state.user, subscription: action.payload}
             return {...state, user: user}
-
+        case UPDATE_STATUS_SUCCESS: {
+            const user = {...state.user, status: action.payload}
+            return {...state, user: user}
+        }
         default: return state;
     }
 }

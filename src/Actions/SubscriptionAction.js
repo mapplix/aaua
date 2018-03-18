@@ -35,7 +35,7 @@ console.log('subscription action', data, obj, signature, SUBSCRIPTION_URL);
                 }
             }
         )
-            .then(subscription => onSubmitSuccess(dispatch, subscription.data))
+            .then(subscription => onGetDataSuccess(dispatch, subscription.data))
             .catch((error) => {
                 console.log(error)
             })
@@ -52,7 +52,7 @@ export const buySubscription = (token) => {
     }
 }
 
-const onSubmitSuccess = (dispatch, subscription) => {
+const onGetDataSuccess = (dispatch, subscription) => {
 console.log(subscription);
    if (subscription.error == 0) {
         dispatch({
@@ -70,3 +70,4 @@ console.log(subscription);
         })
     }
 }
+
