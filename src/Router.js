@@ -279,69 +279,71 @@ console.log('router will unmount');
                             panCloseMask={0.2}
                             negotiatePan={true}
                         >
-                            {/*
-                             Wrapper Scene needed to fix a bug where the tabs would
-                             reload as a modal ontop of itself
-                             */}
-                            <Scene hideNavBar key="mainScreen" component={MainComponent} title="main_screen"/>
-                            <Scene hideNavBar key="wallet" component={WalletComponent} title="Кошелек"/>
-                            <Stack>
-                                <Scene hideNavBar key="subscription" component={SubscriptionComponent}
-                                       title="Годовая подписка"/>
-                            </Stack>
-                            <Stack hideNavBar key="store">
-                                <Scene hideNavBar key="categories" component={CategoriesComponent} title="Store"/>
-                                <Scene key="detail" component={DetailsComponent} title="Details"/>
-                                <Scene key="goods" component={GoodsListComponent} title="Goods"/>
-                                <Scene hideNavBar key="specialOffer" component={SpecialOfferComponent}/>
-                                <Scene hideNavBar key="basketList" component={BasketListComponent}/>
-                                <Scene hideNavBar key="basketOrdering" component={OrderingComponent} title="Goods"/>
-                            </Stack>
-                            <Stack hideNavBar key="AAUA_card">
-                                <Scene
-                                    // initial={!this.state.hasCard}
-                                    hideNavBar
-                                    key="AAUA_main"
-                                    component={AAUAMainComponent} title="Карта AAUA"/>
-                                <Scene hideNavBar key="add_aaua_card" component={AAUAAddCardComponent}
-                                       title="Заказать карту"/>
-                                <Scene
-                                    // initial={this.state.hasCard}
-                                    hideNavBar
-                                    key="my_aaua_cards"
-                                    component={MyAAUACardsComponent}
-                                    title="Карта AAUA"/>
-                                <Scene hideNavBar key="order_aaua_card" component={AAUAOrderCardComponent}
-                                       title="Добавить карту"/>
-
-                            </Stack>
-                            <Stack hideNavBar key="onroadSupport">
-                                <Scene hideNavBar key="onroadCategories" component={OnroadCategoriesComponent}/>
-                                <Scene hideNavBar key="onroadDetails" component={OnroadCategoriesDetailsComponent}/>
-                                <Scene hideNavBar key="orderOnRoadSupport" component={OrderSupport}/>
-                            </Stack>
-                            <Stack key="discounts">
-                                <Stack key="discontCards">
-                                    <Scene initial hideNavBar key="tabs" component={TabsComponent}/>
-                                    <Scene hideNavBar key="discontCard" component={DiscontCardComponent}/>
-                                    <Scene hideNavBar key="discontsMap" component={DiscontMapComponent}/>
+                            <Stack key="drawerWrapper">
+                                {/*
+                                 Wrapper Scene needed to fix a bug where the tabs would
+                                 reload as a modal ontop of itself
+                                 */}
+                                <Scene hideNavBar key="mainScreen" component={MainComponent} title="main_screen"/>
+                                <Scene hideNavBar key="wallet" component={WalletComponent} title="Кошелек"/>
+                                <Stack>
+                                    <Scene hideNavBar key="subscription" component={SubscriptionComponent}
+                                           title="Годовая подписка"/>
                                 </Stack>
-                            </Stack>
-                            <Stack hideNavBar key="insurance">
-                                <Scene hideNavBar key="insuranceCategories" component={InsuranceComponent}/>
-                                <Scene hideNavBar key="kaskoComponent" component={KaskoComponent}/>
-                                <Scene hideNavBar key="osagoComponent" component={OsagoComponent}/>
-                            </Stack>
-                            <Stack>
-                                <Scene hideNavBar key="history" component={HistoryComponent}/>
-                                <Scene hideNavBar key="ordering" component={OrderingComponent}/>
-                            </Stack>
-                            <Scene hideNavBar key="AnQ" component={AnQComponent}/>
-                            <Scene hideNavBar key="feedback" component={FeedbackComponent}/>
-                            <Scene hideNavBar key="settings" component={SettingsComponent}/>
-                            <Stack hideNavBar key="messages">
-                                <Scene hideNavBar key="messagesList" component={MessagesListComponent}/>
-                                <Scene hideNavBar key="message" component={MessageComponent}/>
+                                <Stack hideNavBar key="store">
+                                    <Scene hideNavBar key="categories" component={CategoriesComponent} title="Store"/>
+                                    <Scene key="detail" component={DetailsComponent} title="Details"/>
+                                    <Scene key="goods" component={GoodsListComponent} title="Goods"/>
+                                    <Scene hideNavBar key="specialOffer" component={SpecialOfferComponent}/>
+                                    <Scene hideNavBar key="basketList" component={BasketListComponent}/>
+                                    <Scene hideNavBar key="basketOrdering" component={OrderingComponent} title="Goods"/>
+                                </Stack>
+                                <Stack hideNavBar key="AAUA_card">
+                                    <Scene
+                                        // initial={!this.state.hasCard}
+                                        hideNavBar
+                                        key="AAUA_main"
+                                        component={AAUAMainComponent} title="Карта AAUA"/>
+                                    <Scene hideNavBar key="add_aaua_card" component={AAUAAddCardComponent}
+                                           title="Заказать карту"/>
+                                    <Scene
+                                        // initial={this.state.hasCard}
+                                        hideNavBar
+                                        key="my_aaua_cards"
+                                        component={MyAAUACardsComponent}
+                                        title="Карта AAUA"/>
+                                    <Scene hideNavBar key="order_aaua_card" component={AAUAOrderCardComponent}
+                                           title="Добавить карту"/>
+
+                                </Stack>
+                                <Stack hideNavBar key="onroadSupport">
+                                    <Scene hideNavBar key="onroadCategories" component={OnroadCategoriesComponent}/>
+                                    <Scene hideNavBar key="onroadDetails" component={OnroadCategoriesDetailsComponent}/>
+                                    <Scene hideNavBar key="orderOnRoadSupport" component={OrderSupport}/>
+                                </Stack>
+                                {/*<Stack key="discounts">*/}
+                                    <Stack key="discontCards">
+                                        <Scene initial hideNavBar key="tabs" component={TabsComponent}/>
+                                        <Scene hideNavBar key="discontCard" component={DiscontCardComponent}/>
+                                        <Scene hideNavBar key="discontsMap" component={DiscontMapComponent}/>
+                                    </Stack>
+                                {/*</Stack>*/}
+                                <Stack hideNavBar key="insurance">
+                                    <Scene hideNavBar key="insuranceCategories" component={InsuranceComponent}/>
+                                    <Scene hideNavBar key="kaskoComponent" component={KaskoComponent}/>
+                                    <Scene hideNavBar key="osagoComponent" component={OsagoComponent}/>
+                                </Stack>
+                                <Stack>
+                                    <Scene hideNavBar key="history" component={HistoryComponent}/>
+                                    <Scene hideNavBar key="ordering" component={OrderingComponent}/>
+                                </Stack>
+                                <Scene hideNavBar key="AnQ" component={AnQComponent}/>
+                                <Scene hideNavBar key="feedback" component={FeedbackComponent}/>
+                                <Scene hideNavBar key="settings" component={SettingsComponent}/>
+                                <Stack hideNavBar key="messages">
+                                    <Scene hideNavBar key="messagesList" component={MessagesListComponent}/>
+                                    <Scene hideNavBar key="message" component={MessageComponent}/>
+                                </Stack>
                             </Stack>
                         </Drawer>
                     </Stack>
