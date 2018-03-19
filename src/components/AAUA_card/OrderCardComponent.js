@@ -67,13 +67,11 @@ class OrderCardComponent extends Component {
                 "phone" : this.props.phone
             }
         }
-console.log('on submit OrderCardComponent', orderData)
         this.props.orderCard(orderData);
 
     }
 
     setDefaultSkladToStore(address) {
-console.log(address);
         this.props.changeNPSkald(address.title);
     }
 
@@ -111,7 +109,6 @@ console.log(address);
     };
 
     onChangeCity(title){
-        console.log(title.length)
         if (title.length >= 2) {
             if (this.props.delivery == DELIVERY_NP) {
                 this.props.getNPCities(title);
@@ -170,12 +167,7 @@ console.log(address);
         }
     }
 
-    onFocus() {
-
-    }
-
     render() {
-console.log('render component', this.props.NPcities);
         return (
             <MainCard>
                 <Header back>
@@ -241,7 +233,6 @@ console.log('render component', this.props.NPcities);
                             this.state.searchedItems : this.props.NPcities}
                         value={this.props.city}
                         listHeight={{height: listHeight}}
-                        onFocus={this.onFocus.bind(this)}
                     />
                 </CardItem>
 

@@ -92,13 +92,13 @@ class CategoryDetailsComponent extends Component {
 
 const styles = {
     iconStyle: {
-        flex: 20,
+        flex: 19,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
     checkboxesContainer: {
-        flex: 60,
+        flex: 61,
         paddingTop: 35,
         paddingRight: 70,
         // height: 280 * RATIO,

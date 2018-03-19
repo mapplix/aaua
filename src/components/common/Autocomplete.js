@@ -20,7 +20,9 @@ class Autocomplete extends Component {
 
         return (
             <View style={{
-                height: 18
+                height: 25,
+                alignItems: 'flex-start',
+                justifyContent: 'center'
             }}>
                 <TouchableOpacity
                     onPress={
@@ -33,9 +35,12 @@ class Autocomplete extends Component {
                 >
                     <Text
                         numberOfLines={1}
-                        style={{flexWrap: 'wrap'}}
+                        style={[styles.labelStyle,{
+                            flexWrap: 'wrap',
+                            textDecorationLine: 'underline'
+                        }]}
                     >
-                        {item.id}, {item.title}
+                        {item.title}
                         </Text>
                 </TouchableOpacity>
             </View>
@@ -43,16 +48,15 @@ class Autocomplete extends Component {
     };
 
     renderList() {
-
-console.log('render list', this.props.data);
-
         let listHeight = 0;
         if (this.props.data.length >= 1) {
             const renderedList = this.props.data.slice(0, 30)
-            listHeight = renderedList.length <= 10 ? renderedList.length * 20 : 200;
+            listHeight = renderedList.length <= 10 ? renderedList.length * 30 : 200;
 
             return (
                 <View style={{
+                    flex:1,
+                    alignSelf: 'stretch',
                     maxHeight: 200,
                     height: listHeight
                 }}
