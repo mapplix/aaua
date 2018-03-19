@@ -8,7 +8,7 @@ import {
 } from '../Actions/types';
 
 const INITIAL_STATE = {
-    loadingCategories: false,
+    loadingCategories: true,
     loadingCards: false,
     categories: [],
     discountsCards: []

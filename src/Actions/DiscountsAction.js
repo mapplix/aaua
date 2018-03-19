@@ -17,7 +17,6 @@ import {Actions} from 'react-native-router-flux';
 
 export const loadCategories = (token) => {
     return (dispatch) => {
-console.log(token)
         dispatch({
             type:DISCOUNTS_LOADING_CATEGORIES
         })
@@ -37,17 +36,25 @@ console.log(DISCOUNTS_CATEGORIES_URL, data, signature);
             }
         )
         .then(categories => {
-            console.log(categories)
             categoriesLoaded(dispatch, categories.data)
         })
     }
 }
 
 const categoriesLoaded = (dispatch, categories) => {
+console.log('categoriesLoaded', categories);
     if (categories.error == 0) {
+        let categoriesAraay = [];
+        for (var category in categories.data) {
+            categoriesAraay.push({
+                id : categories.data[category].id,
+                title : categories.data[category].title
+            })
+        }
+
         dispatch ({
             type: DISCOUNTS_LOADING_CATEGORIES_SUCCESS,
-            payload: categories.data
+            payload: categoriesAraay
         })
     } else {
         dispatch ({
