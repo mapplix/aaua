@@ -4,11 +4,15 @@ import {
     MainCard,
     CardItem,
     Header,
-    ModalCard,
+    Spiner,
     MapButton } from '../common';
-import MapView from 'react-native-maps';
+import MapView,{Marker, Callout} from 'react-native-maps';
 import Modal from 'react-native-modalbox';
 import {RATIO} from '../../styles/constants';
+import {connect} from 'react-redux';
+import CustomMarker from './CustomMarker';
+import MapFiltersComponent from './MapFiltersComponent';
+import {selectCategory} from '../../Actions/DiscountsAction';
 
 class MapComponent extends Component {
 
@@ -16,171 +20,100 @@ class MapComponent extends Component {
         isOpen: false,
     };
 
-    render() {
+    onChangeCategory(id) {
+        console.log('onChangeCategory', id);
+        this.props.selectCategory(this.props.token, id);
+    }
+
+    renderMarkers() {
+        console.log(this.props);
+        if (this.props.places.length) {
+            return this.props.places.map(marker => {
+                if (marker.lat) {
+                    const latitude = parseFloat(marker.lat);
+                    const longitude = parseFloat(marker.lon);
+                    return (
+                        <Marker
+                            key={marker.id}
+                            coordinate={{latitude: latitude, longitude: longitude}}
+                            >
+                            <Callout>
+                                <CustomMarker {...marker}/>
+                            </Callout>
+                        </Marker>
+                    )
+                }
+            })
+        }
+    }
+
+    renderContent() {
         const {
             container,
             map,
-            mapSettings,
-            modalCard,
-            modalTextContainer,
-            modalRow} = styles;
-        return (
-            <MainCard>
-                <Header back>
-                    ТОРГОВЫЕ ЦЕНТРЫ
-                </Header>
-                <CardItem>
-                    <View style={container}>
-                        <MapView
-                            style={
-                                map
-                            }
-                            initialRegion={{
-                                latitude: 37.78825,
-                                longitude: -122.4324,
-                                latitudeDelta: 0.0922,
-                                longitudeDelta: 0.0421,
-                            }}
-                        />
-                    </View>
-                    <TouchableOpacity
-                        onPress={() => this.setState({isOpen: true})}
-                        style={mapSettings}
+            mapSettings} = styles;
+        if (this.props.loading) {
+            return (
+                <MainCard>
+                    <Spiner />
+                </MainCard>
+            )
+        } else {
+            return (
+                <MainCard>
+                    <Header back>
+                        {this.props.selectedCategory.title || ''}
+                    </Header>
+                    <CardItem>
+                        <View style={container}>
+                            <MapView
+                                style={
+                                    map
+                                }
+                                initialRegion={{
+                                    latitude: 50.447662,
+                                    longitude: 30.474047,
+                                    latitudeDelta: 0.0922,
+                                    longitudeDelta: 0.0421,
+                                }}
+
+                            >
+                                {this.renderMarkers()}
+                            </MapView>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => this.setState({isOpen: true})}
+                            style={mapSettings}
+                        >
+                            <Image
+                                style={{
+                                    height: 52 * RATIO,
+                                    width: 52 * RATIO,
+                                }}
+                                source={require('../../images/icons/map_filters.png')}
+                            />
+                        </TouchableOpacity>
+                    </CardItem>
+                    <Modal style={styles.modal}
+                           position={"bottom"}
+                           ref={"modal"}
+                           isOpen={this.state.isOpen}
+                           onClosed={() => this.setState({isOpen: false})}
                     >
-                        <Image
-                            style={{
-                                height: 52 * RATIO,
-                                width: 52 * RATIO,
-                            }}
-                            source={require('../../images/icons/map_filters.png')}
+                        <MapFiltersComponent
+                            selectCategory={this.onChangeCategory.bind(this)}
+                            onCloseModal={() => this.setState({isOpen: false})}
                         />
-                    </TouchableOpacity>
-                </CardItem>
-                <Modal style={styles.modal}
-                       position={"bottom"}
-                       ref={"modal"}
-                       isOpen={this.state.isOpen}
-                       onClosed={() => this.setState({isOpen: false})}
-                >
-                    <ModalCard style={modalCard}>
-                        <View style={modalRow}>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                СТО
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Шиномонтаж
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Мойка
-                            </MapButton>
-                        </View>
-                        <View style={modalRow}>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Торговые центры
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Супермаркет
-                            </MapButton>
-                        </View>
-                        <View style={modalRow}>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Аптека
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Клиники
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Стоматология
-                            </MapButton>
-                        </View>
-                        <View style={modalRow}>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Химчистка
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Отдых
-                            </MapButton>
-                        </View>
-                        <View style={modalRow}>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Красота и здоровье
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Все для авто
-                            </MapButton>
-                        </View>
-                        <View style={modalRow}>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Рестораны
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Кафе
-                            </MapButton>
-                            <MapButton
-                                onPress={() => console.log('fdsfsdf')}
-                            >
-                                Одежда, обувь
-                            </MapButton>
-                        </View>
-                        <View style={[modalRow, {marginBottom: 12}]}>
-                            <View style={{
-                                flex:1,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <Text style={{
-                                    fontFamily: 'SFUIText-Regular',
-                                    color:'#423486',
-                                    fontSize: 16
-                                }}>
-                                    Закрыть
-                                </Text>
-                            </View>
-                            <View style={{
-                                flex:1,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <Text style={{
-                                    fontFamily: 'SFUIText-Semibold',
-                                    color:'#423486',
-                                    fontSize: 16
-                                }}>
-                                    Применить
-                                </Text>
-                            </View>
-                        </View>
-                    </ModalCard>
-                </Modal>
-            </MainCard>
+                    </Modal>
+                </MainCard>
+            )
+        }
+    }
+
+    render() {
+console.log('render map', this.props);
+        return (
+             this.renderContent()
         )
     }
 }
@@ -242,4 +175,13 @@ const styles = {
     }
 };
 
-export default MapComponent;
+const mapStateToProps = ({auth, discounts}) => {
+    return {
+        token: auth.user.token,
+        places: discounts.discountsPlaces,
+        selectedCategory: discounts.selectedCategory,
+        loading: discounts.loadingCategories
+    }
+}
+
+export default connect(mapStateToProps, {selectCategory})(MapComponent);

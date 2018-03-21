@@ -5,13 +5,18 @@ import Item from './Item';
 import {RATIO} from '../../styles/constants';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import {loadCategories} from '../../Actions/DiscountsAction';
+import {loadCategories, selectCategory} from '../../Actions/DiscountsAction';
+import {getImageByCategoryId} from '../../Helpers/ImageHelper';
 
 class CategoriesScreen extends Component {
 
     componentWillMount() {
         const {loadCategories, token} = this.props;
         loadCategories(token);
+    }
+
+    openDiscountCategory(category) {
+        this.props.selectCategory(this.props.token, category);
     }
 
     renderRows() {
@@ -23,6 +28,7 @@ class CategoriesScreen extends Component {
             i = i+3;
         }
         return rows.map( (row, index) => {
+
             return (
                 <CardItem
                     style={{
@@ -33,24 +39,24 @@ class CategoriesScreen extends Component {
                     key={index}
                 >
                     <Item
-                        onPress={Actions.discontsMap}
-                        imageSrc={require('../../images/icons/sto.png')}
+                        onPress={() => this.openDiscountCategory(row[0])}
+                        imageSrc={getImageByCategoryId(row[0].id)}
                     >
                         {
                             row[0].title
                         }
                     </Item>
                     <Item
-                        onPress={() => console.log('dfsfsdfsdf')}
-                        imageSrc={require('../../images/icons/tyres.png')}
+                        onPress={() => this.openDiscountCategory(row[1])}
+                        imageSrc={getImageByCategoryId(row[1].id)}
                     >
                         {
                             row[1].title
                         }
                     </Item>
                     <Item
-                        onPress={() => console.log('dfsfsdfsdf')}
-                        imageSrc={require('../../images/icons/carWash.png')}
+                        onPress={() => this.openDiscountCategory(row[2])}
+                        imageSrc={getImageByCategoryId(row[2].id)}
                     >
                         {
                             row[2].title
@@ -94,4 +100,4 @@ const mapStateToProps = ({auth, discounts}) => {
     }
 }
 
-export default connect(mapStateToProps, {loadCategories})(CategoriesScreen);
+export default connect(mapStateToProps, {loadCategories, selectCategory})(CategoriesScreen);

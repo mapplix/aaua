@@ -99,6 +99,7 @@ export const SUBSCRIPTION_GET_DATA = 'subscription_get_data';
 export const SUBSCRIPTION_GET_DATA_FAIL = 'subscription_get_data_fail';
 export const BUY_SUBSCRIPTION_SUCCESS = 'buy_subscription_success';
 export const UPDATE_USER_SUBSCRIPTION = 'update_user_subscription';
+export const UPDATE_STATUS_SUCCESS = 'update_status_success';
 
 /* FEEDBACK */
 export const FEEDBACK_MESSAGE_CHANGE = 'feedback_message_change';
@@ -149,3 +150,10 @@ export const DISCOUNTS_LOADING_CATEGORIES_FAIL = 'discounts_loading_categories_f
 export const DISCOUNTS_LOADING_CARDS = 'discounts_loading_cards';
 export const DISCOUNTS_LOADING_CARDS_SUCCESS = 'discounts_loading_cards_success';
 export const DISCOUNTS_LOADING_CARDS_FAIL = 'discounts_loading_cards_fail';
+export const SELECT_DISCOUNT_CARD = 'select_discount_card';
+export const DISCOUNT_PLACES_LOADED = 'discount_places_loaded';
+
+/* INVITE FRIEND*/
+export const INVITE_FRIEND_CHANGE_PHONE = 'invite_friend_change_phone';
+export const INVITE_SENDED_SUCCESS = 'invite_sended_success';
+export const INVITE_SENDED_FAIL = 'invite_sended_fail';

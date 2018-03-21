@@ -2,17 +2,20 @@ import React, {Component} from 'react';
 import {View, Text, Image} from 'react-native';
 import {MainCard, CardItem, Header} from '../../common';
 import {RATIO, WIDTH_RATIO} from '../../../styles/constants';
+import {connect} from 'react-redux';
+import {BASE_URL} from '../../../Actions/constants';
 
 class DiscontCardComponent extends Component {
 
     render() {
-        console.log(WIDTH_RATIO, RATIO);
-
+        const {selectedCard} = this.props;
         const {imageStyle} = styles;
         return (
             <MainCard>
                 <Header back>
-                    МАРКЕТОПТ
+                    {
+                        selectedCard.title
+                    }
                 </Header>
                 <CardItem
                     style={{
@@ -25,7 +28,7 @@ class DiscontCardComponent extends Component {
                 >
                     <Image
                         style={imageStyle}
-                        source={require('../../../images/marketopt.png')}
+                        source={{uri:BASE_URL+selectedCard.logo}}
                     />
                 </CardItem>
                 <CardItem
@@ -57,7 +60,9 @@ class DiscontCardComponent extends Component {
                             fontSize: 31,
                             color: '#1b1b1b'
                         }}>
-                            0
+                            {
+                                selectedCard.sale
+                            }
                         </Text>
                     </View>
                 </CardItem>
@@ -81,7 +86,7 @@ class DiscontCardComponent extends Component {
                                 height: 138,
                                 width: null
                             }}
-                            source={require('../../../images/kod.png')}
+                            source={{uri:BASE_URL+selectedCard.code}}
                         />
                     </View>
                 </CardItem>
@@ -109,4 +114,11 @@ const styles = {
     }
 }
 
-export default DiscontCardComponent;
+const mapStateToProps = ({auth, discounts}) => {
+    return {
+        token: auth.user.token,
+        selectedCard: discounts.selectedCard
+    }
+}
+
+export default connect(mapStateToProps)(DiscontCardComponent);

@@ -26,26 +26,13 @@ export const MESSAGES_LOADING_URL = API_URL + 'messages';
 export const MESSAGE_LOADING_URL = API_URL + 'message';
 export const IMAGES_LOAD_URL = API_URL + 'slides';
 export const CHECK_TOKEN_URL = API_URL + 'checkToken';
-export const DISCOUNTS_CATEGORIES_URL = API_URL + 'сategoriesDiscontPlaces';
+export const DISCOUNTS_CATEGORIES_URL = API_URL + 'categoriesDiscontPlaces';
 export const DISCOUNTS_CARDS_URL = API_URL + 'discontCards';
+export const DISCOUNTS_PLACES_URL = API_URL + 'discontPlaces';
+export const INVITE_FRIEND_URL = API_URL + 'sendPartnerLink';
 
 export const SECRET_KEY = 'hmnc7TGjffdhgjs';
-
-const CITIES_SIGNATURE = md5(SECRET_KEY);
-console.log(CITIES_SIGNATURE);
 export const DEVICE_OS = Platform.OS === 'ios' ? 2 : 1;
-
-export const CITIES = [
-    {
-        "id":4312,
-        "title":"Киев"
-    },
-    {
-        "id":418,
-        "title":"Енакиево"
-    }
-];
-
 
 export const saveItem = async (item, selectedValue) => {
     try {
