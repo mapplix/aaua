@@ -47,7 +47,8 @@ const INITIAL_STATE = {
     username: null,
     isDisabled: true,
     smsError: null,
-    sms: null
+    sms: null,
+    sendingStep2: false
 }
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
@@ -128,10 +129,13 @@ export default (state = INITIAL_STATE, action) => {
         case STEP_1_FAIL:
             return {...state, user: '', error: 'Ошибка авторизации', loading: false};
         case SEND_STEP_2:
-            return {...state, loading: true, error: ''};
+            return {...state,
+                loading: true,
+                sendingStep2: true,
+                error: ''};
         case STEP_2_SUCCESS:
             Actions.mainScreen();
-            return {...state, error: '', loading: false};
+            return {...state, error: '', loading: false, sendingStep2: false};
         case STEP_2_FAIL:
             return {...state,
                 token : null,

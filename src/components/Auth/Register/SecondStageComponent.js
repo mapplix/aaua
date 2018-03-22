@@ -24,7 +24,7 @@ import {
     PasswordInput,
     Header,
     Autocomplete,
-    AutocompleteExample
+    Spiner
 } from '../../common';
 import {showModal} from '../../Modals';
 import {CITIES} from '../../../Actions/constants';
@@ -114,7 +114,7 @@ class SecondStageComponent extends Component {
             this.onSelectBrand(searchedItems[0])
             this.setState({searchedBrands: []});
         }
-        this.props.cities.some(e => {
+        this.props.brands.some(e => {
             if (e.title.toLowerCase() === searchedText.toLowerCase().trim()) {
                 this.onSelectBrand(e)
                 this.setState({searchedBrands: []});
@@ -146,14 +146,14 @@ class SecondStageComponent extends Component {
             phone: phone,
             pushToken: pushToken
         }
-        console.log(userData, this.props);
+console.log(userData, this.props);
         if (name.length > 0 && cityId > 0
             && year.length> 0 && email.length
             && password.length > 0 && confirm_password > 0
             && brandId > 0
         ) {
             if(this.validate(email)) {
-                console.log(userData);
+console.log(userData);
                 this.props.sendStep2(userData)
             } else {
                 showModal('Ошибка', 'не верный формат email', 'Закрыть')
@@ -182,10 +182,6 @@ class SecondStageComponent extends Component {
                 </Header>
                 <ScrollView
                     ref='_scrollView'
-                    // onStartShouldSetResponderCapture={() => {
-                    //     console.log('ResponderCapture in scrollView');
-                    //     this.setState({ enableScrollViewScroll: true });
-                    // }}
                     scrollEnabled={this.state.enableScrollViewScroll}
                 >
                     <CardItem
@@ -309,9 +305,16 @@ class SecondStageComponent extends Component {
                         justifyContent: 'flex-end'
                     }}>
                         <View style={styles.footerWrapper}>
-                            <ButtonSquad onPress={this.onSubmit.bind(this)}>
-                                ДАЛЕЕ
-                            </ButtonSquad>
+                            {this.props.sendingStep2 ?
+                                <Spiner size="small"/> :
+                                <ButtonSquad
+                                    disabled={this.props.sendingStep2}
+                                    onPress={this.onSubmit.bind(this)}
+                                    >
+                                    ДАЛЕЕ
+                                </ButtonSquad>
+                            }
+
                         </View>
                     </CardItem>
                 </ScrollView>
@@ -343,6 +346,7 @@ const mapStateToProps = ({register, citiesBrands, auth}) => {
         token: register.token,
         username: register.username,
         phone: register.phone,
+        sendingStep2: register.sendingStep2,
         brands: citiesBrands.brands,
         cities: citiesBrands.cities,
         pushToken: auth.pushToken

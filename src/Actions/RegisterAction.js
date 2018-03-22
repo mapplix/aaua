@@ -269,18 +269,6 @@ console.log(obj, signature);
     }
 }
 
-const onStep2Success = (dispatch, data) => {
-console.log(data);
-    const user = {
-        token: data.token,
-        username: data.username,
-    };
-    dispatch({
-        type: STEP_2_SUCCESS,
-        payload: user
-    })
-}
-
 const onStep2Fail = (dispatch) => {
     dispatch({
         type: STEP_2_FAIL
