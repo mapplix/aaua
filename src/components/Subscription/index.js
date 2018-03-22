@@ -29,6 +29,10 @@ class SubscriptionComponent extends Component {
         }
     }
 
+    componentWillMount() {
+        this.props.getData(this.props.token);
+    }
+
     componentDidMount() {
         if (Platform.OS == "android" && listener == null) {
             listener = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -120,10 +124,10 @@ console.log('back from message')
                     <ScrollView style={{flex: 1}}>
                         <Text style={textStyle}>
                             В годовую подписку входит:
-                            {"\n"}- Действует 365 дней
-                            {"\n"}- Активна бонусная система AAUA
-                            {"\n"}- Пакет юридический стандарт
-                            {"\n"}- Бесплатная доставка карты лояльсти
+                            {"\n"}{"\n"}- Действует 365 дней
+                            {"\n"}{"\n"}- Активна бонусная система AAUA
+                            {"\n"}{"\n"}- Пакет юридический стандарт
+                            {"\n"}{"\n"}- Бесплатная доставка карты лояльсти
                         </Text>
                     </ScrollView>
                 </CardItem>
