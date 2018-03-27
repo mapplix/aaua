@@ -8,31 +8,38 @@ import {
     Header
 } from '../common';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants';
+import {sendInvitation, changePhone} from '../../Actions/InviteFriendAction';
+import {connect} from 'react-redux';
 
 class InviteFriendComponent extends Component {
+
+    onChangeText(text) {
+        console.log(text);
+        this.props.changePhone(text);
+    }
+
+    onSubmit() {
+        console.log('onSubmit', this.props.phone);
+        const {token, phone} = this.props;
+        this.props.sendInvitation(phone)
+    }
+
     render() {
-        console.log(WIDTH_RATIO);
-        const {textStyle, textContainerStyle, buttonContainer, buttonWrapper} = styles;
+        const {textStyle, textContainerStyle, buttonContainer} = styles;
         return (
             <MainCard>
                 <Header back>
                     ПРИВЕДИТЕ ДРУГА
                 </Header>
                 <CardItem style={textContainerStyle}>
-                    {/*<View style={{*/}
-                        {/*width: 230,*/}
-                        {/*height: 56*/}
-                    {/*}}>*/}
                         <Text style={textStyle}>
                             Приведите друга
                         </Text>
                         <Text style={textStyle}>
                             и получите бонус
                         </Text>
-                    {/*</View>*/}
                 </CardItem>
                 <CardItem style={{
-                    // backgroundColor: '#283',
                     flex:0,
                     height: 122 * RATIO,
                     flexDirection:'column',
@@ -41,10 +48,9 @@ class InviteFriendComponent extends Component {
 
                 }}>
                     <LabelOnInput
-                        // labelStyle={{width: 220}}
                         label={'Номер телефона или E-mail'}
                         placeholder={'Ввести'}
-                        onChangeText={() => console.log('text changed')}
+                        onChangeText={this.onChangeText.bind(this)}
                         value={this.props.email}
                     />
                 </CardItem>
@@ -59,7 +65,7 @@ class InviteFriendComponent extends Component {
                             height: 43
                         }}
                         textStyle={{color: '#1b1b1b'}}
-                        onPress={() => console.log('send invite')}
+                        onPress={this.onSubmit.bind(this)}
                     >
                         Отправить
                     </ButtonRoundet>
@@ -98,11 +104,8 @@ class InviteFriendComponent extends Component {
 
 const styles = {
     textContainerStyle: {
-
         flex:0,
         height: 135 * RATIO,
-        // marginLeft: 66,
-        // marginRight: 66,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center'
@@ -121,8 +124,15 @@ const styles = {
     },
     buttonWrapper: {
         height: 43,
-        // flex: 1
     }
 }
 
-export default InviteFriendComponent;
+const mapStateToProps = ({auth, inviteFriend}) => {
+    return {
+        phone: inviteFriend.phone,
+        error: inviteFriend.error,
+        loading: inviteFriend.loading,
+    }
+}
+
+export default connect(mapStateToProps,{sendInvitation, changePhone})(InviteFriendComponent);
