@@ -82,11 +82,19 @@ export const FORGOT_PASS_SUBMIT_FAIL = 'forgot_pass_submit_fail';
 /* INSURANCE */
 export const INSURANCE_CAR_CHANGE = 'insurance_car_change';
 export const INSURANCE_CAR_BRAND_CHANGE = 'insurance_car_brand_change';
+export const INSURANCE_CAR_BRAND_SELECT = 'insurance_car_brand_select';
 export const INSURANCE_YEAR_CHANGE = 'insurance_year_change';
 export const INSURANCE_CHANGE_VOLUME = 'change_volume';
+export const INSURANCE_CHANGE_OSAGO_CITY = 'insurance_change_osago_city';
+export const INSURANCE_SELECT_OSAGO_CITY = 'insurance_select_osago_city';
 export const INSURANCE_CHANGE_REGISTRATION = 'change_registartion';
 export const ORDER_KASKO_START = 'order_kasko_start';
 export const ORDER_OSAGO_START = 'order_osago_start';
+export const KASKO_LOAD_CAR_MODEL = 'kasko_load_car_model';
+export const MODELS_LOADED_SUCCESS = 'kasko_car_model_loaded';
+export const SELECT_CAR_MODEL = 'kasko_select_car_model';
+export const KASKO_ORDER_SUCCESS = 'kasko_order_success';
+export const KASKO_ORDER_FAIL = 'kasko_order_fail';
 
 export const CARD_NUMBER_CHANGE = 'card_number_change';
 

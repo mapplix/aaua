@@ -9,7 +9,6 @@ export * from './CardItem';
 export * from './CardHeader';
 export * from './InputWithLabel';
 export * from './PhoneInput';
-export * from './LabelWithMaskedInput';
 export * from './PasswordInput';
 export * from './LabelOnInput';
 export * from './ErrorText';
