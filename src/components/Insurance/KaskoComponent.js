@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {
     MainCard,
@@ -7,142 +7,221 @@ import {
     ButtonRoundet,
     LabelOnInput,
     Header,
+    Autocomplete,
     DropDown} from '../common'
-import {changeYear, changeCar, changeCarBrand, orderKasko} from '../../Actions/InsuranceAction';
+import {changeYear, changeCar,
+    changeCarBrand, orderKasko,
+    selectBrand, getCarModel, selectModel} from '../../Actions/InsuranceAction';
 import {getBrands} from '../../Actions/CitiesBrands';
+import {showAlert} from '../Modals';
+import {Actions} from 'react-native-router-flux';
 
 class KaskoComponent extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            enableScrollViewScroll: true,
+            searchedCities: [],
+            searchedBrands: [],
+            rowHeight: 2
+        };
+    };
 
     onChangeCar(itemValue){
         this.props.changeCar(itemValue);
     }
 
     onChangeCarBrand(itemValue){
+        if (itemValue.length >= 2) {
+            this.searchedBrands(itemValue);
+        }
         this.props.changeCarBrand(itemValue);
+    }
+
+    onSelectBrand(brand) {
+console.log(brand);
+        this.setState({searchedBrands: []});
+        this.props.selectBrand(brand)
+        this.props.getCarModel(brand.id)
     }
 
     onChangeYear(year) {
         this.props.changeYear(year);
     }
 
+    onChangeCarModel(model) {
+console.log('onChangeCarModel', model);
+        this.props.selectModel(model);
+    }
+
     onOrder() {
-        const {car, carBrand, year} = this.props;
-        orderData = {
-            car, carBrand, year
+        const {token, carModel, carBrandId, year} = this.props;
+
+        const orderData = {
+            "token" : token,
+            "bid" : {
+                "brand_id" : carBrandId,
+                "modela_id" : carModel,
+                "year" : year
+            },
+
         }
+console.log(orderData);
         this.props.orderKasko(orderData);
     }
 
-    componentWillMount() {
-        this.props.getBrands();
-    }
+    searchedBrands = (searchedText) => {
+        var searchedItems = this.props.brands.filter(function(item) {
+            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) == 0;
+        });
+        if (searchedText.length <= 0) {
+            searchedItems = []
+        }
+        if (searchedItems.length == 1) {
+            this.onSelectBrand(searchedItems[0])
+            this.setState({searchedBrands: []});
+        }
+        this.props.brands.some(e => {
+            if (e.title.toLowerCase() === searchedText.toLowerCase().trim()) {
+                this.onSelectBrand(e)
+                this.setState({searchedBrands: []});
+            }
+        })
+        if (searchedItems.length == 0) {
+            this.setState({rowHeight:2})
+        } else if (searchedItems.length <= 10) {
+            this.setState({rowHeight:3})
+        } else if (searchedItems.length > 10) {
+            this.setState({rowHeight:6})
+        }
+        this.setState({searchedBrands: searchedItems.slice(0, 30)});
+    };
 
-    renderBrands() {
-        if(this.props.brands.length) {
+    renderCarModel() {
+        if (this.props.carModels.length > 0) {
             return (
                 <DropDown
-                    label="Марка авто"
-                    elements={this.props.brands}
-                    selected={this.props.carBrand}
-                    onValueChange={this.onChangeCarBrand.bind(this)}
+                    label="Модель авто"
+                    elements={this.props.carModels}
+                    selected={this.props.carModel}
+                    onValueChange={this.onChangeCarModel.bind(this)}
+                />
+            )
+        } else {
+            return (
+                <LabelOnInput
+                    label={'Модель авто'}
+                    placeholder={'Выберете марку авто'}
+                    editable={false}
                 />
             )
         }
-        return (
-            <DropDown
-                label="Марка авто"
-                elements={[]}
-                selected={this.props.carBrand}
-                onValueChange={this.onChangeCarBrand.bind(this)}
-            />
-        )
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.kaskoOrderSuccess) {
+            showAlert(
+                'Спасибо',
+                'Ваша заявка принята',
+                'Закрыть',
+                () => {
+                    Actions.insuranceCategories()
+            })
+        }
     }
 
     render() {
+console.log(this.state.rowHeight)
         return (
             <MainCard>
                 <Header back>
                     КАСКО
                 </Header>
-                <CardItem style={{
-                    marginTop: 18,
-                    flex:0,
-                    height:60,
-                    flexDirection:'column',
-                    justifyContent: 'flex-end',
-                    alignItems: 'flex-start'
-                }}>
-                    {
-                        this.renderBrands()
-                    }
-                </CardItem>
-                <CardItem style={{
-                    marginTop: 18,
-                    flex:0,
-                    height:60,
-                    flexDirection:'column',
-                    justifyContent: 'flex-end',
-                    alignItems: 'flex-start'
-                }}>
-                    <DropDown
-                        label="Модель авто"
-                        elements={[
-                            {title: 'BMW', id: 1},
-                            {title: 'Mercedez', id: 2},
-                            {title: 'Audi', id: 3},
-                        ]}
-                        selected={this.props.car}
-                        onValueChange={this.onChangeCar.bind(this)}
-                    />
-                </CardItem>
-                <CardItem
-                    style={{
+                    <CardItem style={{
                         marginTop: 18,
-                        flex:0,
+                        flex: this.state.rowHeight,
                         height:60,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
-                    }}
-                >
-                    <LabelOnInput
-                        label={'Год выпуска'}
-                        placeholder={'0000'}
-                        maxLength={4}
-                        keyboardType = 'numeric'
-                        onChangeText={this.onChangeYear.bind(this)}
-                        value={this.props.year}
-                    />
-                </CardItem>
-                <CardItem style={{
-                    marginTop:22,
-                }}>
-                    <ButtonRoundet
+                    }}>
+                        <Autocomplete
+                            label={"Марка авто"}
+                            placeholder={'Введите марку авто'}
+                            onChangeText={this.onChangeCarBrand.bind(this)}
+                            onSelect={this.onSelectBrand.bind(this)}
+                            data={this.state.searchedBrands}
+                            value={this.props.carBrand}
+                        />
+                    </CardItem>
+                    <CardItem style={{
+                        marginTop: 18,
+                        flex:2,
+                        height:60,
+                        flexDirection:'column',
+                        justifyContent: 'flex-end',
+                        alignItems: 'flex-start'
+                    }}>
+                        {this.renderCarModel()}
+                    </CardItem>
+                    <CardItem
                         style={{
-                            marginRight: 83,
-                            marginLeft: 83,
-                            height: 45,
-                            backgroundColor: '#FFC200',
-                            borderColor:'#FFC200'
+                            marginTop: 18,
+                            flex:2,
+                            height:60,
+                            flexDirection:'column',
+                            justifyContent: 'flex-end',
+                            alignItems: 'flex-start'
                         }}
-                        textStyle={{color:'#1B1B1B'}}
-                        onPress={this.onOrder.bind(this)}
                     >
-                        Заказать
-                    </ButtonRoundet>
-                </CardItem>
+                        <LabelOnInput
+                            label={'Год выпуска'}
+                            placeholder={'0000'}
+                            maxLength={4}
+                            keyboardType = 'numeric'
+                            onChangeText={this.onChangeYear.bind(this)}
+                            value={this.props.year}
+                        />
+                    </CardItem>
+                    <CardItem style={{
+                        flex: 6,
+                        marginTop:22,
+                    }}>
+                        <ButtonRoundet
+                            style={{
+                                marginRight: 83,
+                                marginLeft: 83,
+                                height: 45,
+                                backgroundColor: '#FFC200',
+                                borderColor:'#FFC200'
+                            }}
+                            textStyle={{color:'#1B1B1B'}}
+                            onPress={this.onOrder.bind(this)}
+                        >
+                            Заказать
+                        </ButtonRoundet>
+                    </CardItem>
             </MainCard>
         )
     }
 }
 
-const mapStateToProps = ({insurance, citiesBrands}) => {
+const mapStateToProps = ({auth, insurance, citiesBrands}) => {
     return {
+        token: auth.user.token,
         car: insurance.car,
         carBrand: insurance.carBrand,
+        carBrandId: insurance.carBrandId,
         brands: citiesBrands.brands,
-        year: insurance.year
+        year: insurance.year,
+        carModels: insurance.carModels,
+        carModel: insurance.carModel,
+        kaskoOrderSuccess: insurance.kaskoOrderSuccess
     }
 }
 
-export default connect(mapStateToProps, {changeYear, changeCar, changeCarBrand, orderKasko, getBrands})(KaskoComponent);
+export default connect(mapStateToProps,
+    {changeYear, changeCar, changeCarBrand,
+        orderKasko, getBrands, selectBrand, getCarModel, selectModel})(KaskoComponent);

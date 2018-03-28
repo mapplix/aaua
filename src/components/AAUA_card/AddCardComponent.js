@@ -12,7 +12,6 @@ import {changeCardNumber, addCard} from '../../Actions/AAUA_CardAction';
 import {
     MainCard,
     CardItem,
-    LabelWithMaskedInput,
     ButtonRoundet,
     Header,
     CreditCardInput

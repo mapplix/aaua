@@ -19,7 +19,6 @@ export default (state = INITIAL_STATE, action) => {
         case SUBSCRIPTION_GET_DATA_SUCCESS:
             return {...state, price: action.payload.price, bought_at: action.payload.bought_at, loading: false};
         case BUY_SUBSCRIPTION_SUCCESS:
-            Actions.LiqPay()
             return {...state, page: action.payload}
         default: return state;
     }

@@ -23,7 +23,7 @@ import {
     sendSms,
     sendStep1
 } from '../../../Actions/RegisterAction';
-import {DEVICE_OS} from '../../../Actions/constants';
+import {DEVICE_OS, iOS, Android} from '../../../Actions/constants';
 import {Actions} from 'react-native-router-flux';
 
 let labelFontSize = WIDTH_RATIO <= 1 ? 10 : 12;
@@ -84,7 +84,6 @@ class FirstStageComponent extends Component {
 
     checkPhone() {
         const {phone} = this.props;
-console.log(phone);
         this.props.sendSms(phone);
     }
 
@@ -143,7 +142,7 @@ console.log(phone);
         const licensLabel = '';
         return(
             <MainCard>
-                <Header >
+                <Header back={DEVICE_OS == iOS ? true : false}>
                     ПЕРСОНАЛЬНЫЕ ДАННЫЕ
                 </Header>
                 <CardItem style={{

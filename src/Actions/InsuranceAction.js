@@ -6,10 +6,29 @@ import {
     INSURANCE_YEAR_CHANGE,
     ORDER_OSAGO_START,
     ORDER_KASKO_START,
+    INSURANCE_CAR_BRAND_SELECT,
+    INSURANCE_CHANGE_OSAGO_CITY,
+    INSURANCE_SELECT_OSAGO_CITY,
+    KASKO_LOAD_CAR_MODEL,
+    MODELS_LOADED_SUCCESS,
+    SELECT_CAR_MODEL,
+    KASKO_ORDER_SUCCESS,
+    KASKO_ORDER_FAIL,
+    KASKO_LOAD_CAR_TYPES,
+    KASKO_LOAD_CAR_TYPES_SUCCESS,
+    CALCULATE_OSAGO_START,
+    CALCULATE_OSAGO_SUCCESS,
+    OSAGO_ORDER_SUCCESS,
+    OSAGO_ORDER_FAIL
 } from '../Actions/types';
 import {
     SECRET_KEY,
     DEVICE_OS,
+    GET_CAR_MODEL_URL,
+    BID_KASKO_URL,
+    GET_CAR_TYPES_URL,
+    CALCULATE_OSAGO_URL,
+    BID_OSAGO_URL
 } from './constants';
 import axios from 'axios';
 import md5 from 'js-md5'
@@ -21,10 +40,17 @@ export const changeCar = (carId) => {
     }
 }
 
-export const changeCarBrand = (brandId) => {
+export const changeCarBrand = (brand) => {
     return {
         type: INSURANCE_CAR_BRAND_CHANGE,
-        payload: brandId
+        payload: brand
+    }
+}
+
+export const selectBrand = (brand) => {
+    return {
+        type: INSURANCE_CAR_BRAND_SELECT,
+        payload: brand
     }
 }
 
@@ -49,86 +75,223 @@ export const changeRegistration = (registration) => {
     }
 }
 
+export const changeOsagoCity = (city) => {
+    return {
+        type: INSURANCE_CHANGE_OSAGO_CITY,
+        payload: city.title
+    }
+}
+
+export const selectOsagoCity = (city) => {
+    return {
+        type: INSURANCE_SELECT_OSAGO_CITY,
+        payload: city
+    }
+}
+
 /*ORDER KASKO*/
-export const orderKasko = (phone) => {
+export const orderKasko = (kaskoObj) => {
     return (dispatch) => {
 
         dispatch({
             type: ORDER_KASKO_START
         })
 
-        // const obj = {
-        //     "phone" : phone,
-        // };
-        //
-        // const data = JSON.stringify(obj);
-        // const signature = md5(SECRET_KEY + data)
-        //
-        // axios.post(SMS_CODE_URL, data, {
-        //         headers: {
-        //             'Signature' : signature,
-        //             'Content-Type': 'application/json',
-        //         }
-        //     }
-        // )
-        //     .then(user => KaskoSuccess(dispatch, user.data))
-        //     .catch((error) => {
-        //         onSMSFail(dispatch, error)
-        //     })
+        const obj = kaskoObj;
+
+        const data = JSON.stringify(obj);
+        const signature = md5(SECRET_KEY + data)
+
+        axios.post(BID_KASKO_URL, data, {
+                headers: {
+                    'Signature' : signature,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+            .then(result => KaskoSuccess(dispatch, result.data))
+            .catch((error) => {
+                console.log(error)
+            })
     }
 }
 
 const KaskoSuccess = (dispatch, response) => {
+console.log('KaskoSuccess',response)
     if (response.error == 0) {
         dispatch({
-            type: SEND_SMS_SUCCESS,
+            type: KASKO_ORDER_SUCCESS,
             payload: response
         })
     } else if (response.error >= 1) {
         dispatch({
-            type: SEND_SMS_FAIL
+            type: KASKO_ORDER_FAIL
         })
     }
 }
 
+export const getCarModel = (carBrandId) => {
+    return (dispatch) => {
+
+        dispatch({
+            type: KASKO_LOAD_CAR_MODEL
+        })
+
+        const obj = {
+            "brand_id" : carBrandId
+        };
+
+        const data = JSON.stringify(obj);
+        const signature = md5(SECRET_KEY + data)
+console.log(GET_CAR_MODEL_URL, data, signature);
+        axios.post(GET_CAR_MODEL_URL, data, {
+                headers: {
+                    'Signature' : signature,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+            .then(models => getModelSucces(dispatch, models.data))
+            .catch((error) => {
+                console.log( error)
+            })
+    }
+}
+
+const getModelSucces = (dispatch, models) => {
+    console.log(models);
+    if (models.error == 0) {
+        dispatch({
+            type: MODELS_LOADED_SUCCESS,
+            payload: models.data
+        })
+    }
+}
+
+export const selectModel = (model) => {
+    return {
+        type: SELECT_CAR_MODEL,
+        payload: model
+    }
+}
+
 /* ORDER OSAGO*/
-export const orderOsago = (phone) => {
+export const orderOsago = (osagoData) => {
     return (dispatch) => {
 
         dispatch({
             type: ORDER_OSAGO_START
         })
 
-        // const obj = {
-        //     "phone" : phone,
-        // };
-        //
-        // const data = JSON.stringify(obj);
-        // const signature = md5(SECRET_KEY + data)
-        //
-        // axios.post(SMS_CODE_URL, data, {
-        //         headers: {
-        //             'Signature' : signature,
-        //             'Content-Type': 'application/json',
-        //         }
-        //     }
-        // )
-        //     .then(user => OsagoSuccess(dispatch, user.data))
-        //     .catch((error) => {
-        //         onSMSFail(dispatch, error)
-        //     })
+        const obj = {
+            "token" : osagoData.token,
+            "city_id" : osagoData.cityId,
+            "type_car" : osagoData.carType,
+        };
+
+        const data = JSON.stringify(obj);
+        const signature = md5(SECRET_KEY + data)
+
+        axios.post(BID_OSAGO_URL, data, {
+                headers: {
+                    'Signature' : signature,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+            .then(response => osagoSuccess(dispatch, response.data))
+            .catch((error) => {
+                console.log(error)
+            })
     }
 }
 
-const OsagoSuccess = (dispatch, response) => {
+const osagoSuccess = (dispatch, response) => {
+console.log('order osago Success', response);
     if (response.error == 0) {
         dispatch({
-            type: SEND_SMS_SUCCESS,
+            type: OSAGO_ORDER_SUCCESS,
             payload: response
         })
     } else if (response.error >= 1) {
         dispatch({
-            type: SEND_SMS_FAIL
+            type: OSAGO_ORDER_FAIL
         })
     }
+}
+
+/* CALCULATE OSAGO*/
+export const calculateOsago = (token, cityId, carType) => {
+    return (dispatch) => {
+
+        dispatch({
+            type: CALCULATE_OSAGO_START
+        })
+
+        const obj = {
+            "token" : token,
+            "city_id" : cityId,
+            "type_car" : carType,
+        };
+
+        const data = JSON.stringify(obj);
+        const signature = md5(SECRET_KEY + data)
+console.log(CALCULATE_OSAGO_URL, data, signature)
+        axios.post(CALCULATE_OSAGO_URL, data, {
+                headers: {
+                    'Signature' : signature,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+            .then(response => calculationSuccess(dispatch, response.data))
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+}
+
+const calculationSuccess = (dispatch, response) => {
+console.log('calculationSuccess', response)
+    if (response.error == 0) {
+        dispatch({
+            type: CALCULATE_OSAGO_SUCCESS,
+            payload: response.data
+        })
+    } else if (response.error >= 1) {
+        console.log(response)
+        // dispatch({
+        //     type: SEND_SMS_FAIL
+        // })
+    }
+}
+
+export const getCarType = () => {
+    return (dispatch) => {
+
+        dispatch({
+            type: KASKO_LOAD_CAR_TYPES
+        })
+        const data = JSON.stringify({});
+        const signature = md5(SECRET_KEY)
+console.log(GET_CAR_TYPES_URL, signature);
+        axios.post(GET_CAR_TYPES_URL, data,{
+                headers: {
+                    'Signature' : signature,
+                }
+            }
+        )
+            .then(types => getCarTypesSucces(dispatch, types))
+            .catch((error) => {
+                console.log( error)
+            })
+    }
+}
+
+const getCarTypesSucces = (dispatch, types) => {
+    console.log('getCarTypesSucces', types);
+    dispatch({
+        type: KASKO_LOAD_CAR_TYPES_SUCCESS,
+        payload: types.data
+    })
 }

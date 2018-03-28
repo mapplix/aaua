@@ -220,19 +220,7 @@ console.log('router will unmount');
             )
         } else {
             return (
-                <Router
-                    // backAndroidHandler={
-                    //     // () => {
-                    //     //     console.log(Actions.state);
-                    //     //     if (Actions.currentScene == '_mainScreen') {
-                    //     //         Actions.reset('drawer')
-                    //     //         return true;
-                    //     //     }
-                    //     //     Actions.pop();
-                    //     //     return true;
-                    //     // }
-                    // }
-                >
+                <Router>
                     <Stack
                         hideNavBar
                         key="root"

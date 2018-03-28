@@ -31,11 +31,15 @@ export const DISCOUNTS_CARDS_URL = API_URL + 'discontCards';
 export const DISCOUNTS_PLACES_URL = API_URL + 'discontPlaces';
 export const INVITE_FRIEND_URL = API_URL + 'sendPartnerLink';
 export const GET_CAR_MODEL_URL = API_URL + 'get_models';
+export const GET_CAR_TYPES_URL = API_URL + 'getTypesCar';
 export const BID_KASKO_URL = API_URL + 'bidKasko';
 export const BID_OSAGO_URL = API_URL + 'bidOsago';
+export const CALCULATE_OSAGO_URL = API_URL + 'osagoCalc';
 
 export const SECRET_KEY = 'hmnc7TGjffdhgjs';
-export const DEVICE_OS = Platform.OS === 'ios' ? 2 : 1;
+export const iOS = 2;
+export const Android = 1;
+export const DEVICE_OS = Platform.OS === 'ios' ? iOS : Android;
 
 export const saveItem = async (item, selectedValue) => {
     try {

@@ -86,6 +86,31 @@ class Header extends Component{
             )
         }
 
+        if (this.props.goToMain) {
+            return (
+                <TouchableOpacity
+                    style={{
+                        paddingTop:25,
+                        paddingRight:25,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                    onPress={Actions.mainScreen}
+                >
+                    <Text
+                        style={{
+                            fontSize: 11,
+                            fontWeight: '400',
+                            color: '#111',
+                            alignSelf: 'center'
+                        }}
+                    >
+                        На главную
+                    </Text>
+                </TouchableOpacity>
+            )
+        }
+
         return (
             <View></View>
         )

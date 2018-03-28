@@ -67,6 +67,7 @@ class OrderCardComponent extends Component {
                 "phone" : this.props.phone
             }
         }
+        console.log(orderData);
         this.props.orderCard(orderData);
 
     }
@@ -327,11 +328,6 @@ const styles = {
 }
 
 const mapStateToProps = ({AAUA_Card, citiesBrands, auth}) => {
-console.log(citiesBrands);
-// var city = citiesBrands.cities[0].title;
-// if (AAUA_Card.delivery == DELIVERY_NP) {
-//     city = citiesBrands.NPcities[0].id
-// }
     return {
         token: auth.user.token,
         showCities: AAUA_Card.showCities,

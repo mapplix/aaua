@@ -22,14 +22,6 @@ class MainComponent extends Component {
         Actions.order_aaua_card();
     }
 
-    componentWillMount() {
-console.log('componentWillMount', this.props.user);
-        // if (this.props.user.card != null) {
-        //     Actions.my_aaua_cards();
-        // }
-        // this.props.getMyCard(this.props.token);
-    }
-
     render() {
         console.log(this.props.myCards);
         return (
@@ -73,7 +65,6 @@ console.log('componentWillMount', this.props.user);
 }
 
 const mapStateToProps = ({AAUA_Card, auth}) => {
-console.log(auth.user);
     return {
         user: auth.user,
         token: auth.user.token,

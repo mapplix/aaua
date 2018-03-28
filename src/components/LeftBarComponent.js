@@ -117,7 +117,7 @@ class LeftBarComponent extends Component {
                         <LeftBarMenuItem
                             title={'Дисконты'}
                             image={require('../images/icons/discounts.png')}
-                            onPress={Actions.tabs}
+                            onPress={Actions.discontCards}
                         />
                         <LeftBarMenuItem
                             title={'Страхование'}
@@ -215,7 +215,7 @@ const styles = {
 }
 
 const mapStateToProps = ({auth}) => {
-console.log(auth);
+
     var userName = '';
     var userSurName = '';
     var status = false;

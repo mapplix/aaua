@@ -95,6 +95,12 @@ export const MODELS_LOADED_SUCCESS = 'kasko_car_model_loaded';
 export const SELECT_CAR_MODEL = 'kasko_select_car_model';
 export const KASKO_ORDER_SUCCESS = 'kasko_order_success';
 export const KASKO_ORDER_FAIL = 'kasko_order_fail';
+export const KASKO_LOAD_CAR_TYPES = 'kasko_load_car_types';
+export const KASKO_LOAD_CAR_TYPES_SUCCESS = 'kasko_load_car_types_success';
+export const CALCULATE_OSAGO_START = 'calculate_osago_start';
+export const CALCULATE_OSAGO_SUCCESS = 'calculate_osago_success';
+export const OSAGO_ORDER_SUCCESS = 'osago_order_success';
+export const OSAGO_ORDER_FAIL = 'osago_order_fail';
 
 export const CARD_NUMBER_CHANGE = 'card_number_change';
 

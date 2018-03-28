@@ -3,23 +3,19 @@ import {View, Text, Image} from 'react-native';
 import {
     MainCard,
     CardItem,
-    CardComponent,
-    ButtonRoundet,
-    LabelOnInput,
-    ModalCard,
-    Spiner,
     Header
 } from '../common';
 import CategoryItem from './CategoryItem';
 import {RATIO} from '../../styles/constants'
 import {Actions} from 'react-native-router-flux';
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 class CategoriesComponent extends Component {
 
     render() {
         return (
             <MainCard>
-                <Header burger >
+                <Header burger goToMain={DEVICE_OS == Android ? true : false}>
                     СТРАХОВАНИЕ
                 </Header>
                 <CardItem style={{

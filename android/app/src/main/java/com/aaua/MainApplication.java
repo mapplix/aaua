@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
-import com.RNTextInputMask.RNTextInputMaskPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -29,7 +28,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new BackgroundTaskPackage(),
             new FIRMessagingPackage(),
-            new RNTextInputMaskPackage(),
             new MapsPackage()
       );
     }

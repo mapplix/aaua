@@ -4,15 +4,6 @@ import {View, Picker, Text} from 'react-native';
 
 class DropDown extends Component {
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.elements.length >= 1) {
-            console.log(nextProps);
-            if (this.props.setDefaultValueToStore) {
-                this.props.setDefaultValueToStore(nextProps.elements[0])
-            }
-        }
-    }
-
     renderList() {
         const {inputStyle} = styles;
         const {selected, onValueChange, elements} = this.props;
@@ -30,6 +21,15 @@ class DropDown extends Component {
                     }
                 </Picker>
             )
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.elements.length >= 1 && this.props.selected == null) {
+
+            if (this.props.setDefaultValueToStore) {
+                this.props.setDefaultValueToStore(this.props.elements[0])
+            }
         }
     }
 
