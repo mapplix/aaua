@@ -13,6 +13,7 @@ import {
 import {showAlert} from '../Modals';
 import {changeMessage, changeSubject, changePhone, submitUserData} from '../../Actions/FeedbackAction';
 import {RATIO} from '../../styles/constants'
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 class FeedBackComponent extends Component {
 
@@ -66,7 +67,7 @@ console.log(phone);
         const {titleContainer, phoneText, phoneNumber, phoneContainer} = styles;
         return (
             <MainCard>
-                <Header burger >
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     {"ОБРАТНАЯ СВЯЗЬ"}
                 </Header>
                 <CardItem style={titleContainer}>

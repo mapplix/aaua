@@ -11,6 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import {getCategories} from '../../Actions/OnRoadActions';
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 class CategoriesComponent extends Component {
 
@@ -65,7 +66,7 @@ class CategoriesComponent extends Component {
     if (!this.props.loading) {
         return (
             <MainCard>
-                <Header burger >
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false} >
                     {"ПОДДЕРЖКА НА ДОРОГЕ"}
                 </Header>
                 <CardItem style={{

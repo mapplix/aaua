@@ -4,6 +4,7 @@ import Tabs from 'react-native-tabs';
 import {MainCard, CardItem, Header} from '../common'
 import CategoriesScreen from './CategoriesScreen';
 import DiscontsListScreen from './DiscontsListScreen';
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants'
 
 class TabsComponent extends Component {
 
@@ -29,7 +30,7 @@ class TabsComponent extends Component {
         const {tabText, selectedTabText, selectedTab} = styles;
         return (
             <MainCard>
-                <Header burger>
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     ДИСКОНТЫ
                 </Header>
                 <CardItem

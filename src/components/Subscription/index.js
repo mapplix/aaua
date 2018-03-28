@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {getData, buySubscription} from '../../Actions/SubscriptionAction';
 import {showAlert} from '../Modals';
 import {Actions} from 'react-native-router-flux';
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 let listener = null
 
@@ -82,7 +83,7 @@ console.log('back from message')
         const {textStyle, textContainer, imageContainer} = styles;
         return (
             <MainCard>
-                <Header burger>
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     {"ГОДОВАЯ ПОДПИСКА"}
                 </Header>
                 <CardItem style={imageContainer}>

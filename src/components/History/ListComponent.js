@@ -14,6 +14,7 @@ import {Actions} from 'react-native-router-flux';
 import TextComponent from './TextComponent';
 import ButtonComponent from './ButtonComponent';
 import {RATIO} from '../../styles/constants';
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 class ListComponent extends Component {
 
@@ -21,7 +22,7 @@ class ListComponent extends Component {
         const {imageStyle, imageContainer, textContainer, iconImageStyle, componentStyle, buttonContainer} = styles;
         return (
             <MainCard>
-                <Header burger >
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     {"ИСТОРИЯ ЗАКАЗОВ"}
                 </Header>
                 <ScrollView style={{

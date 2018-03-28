@@ -15,7 +15,7 @@ class CategoriesComponent extends Component {
     render() {
         return (
             <MainCard>
-                <Header burger goToMain={DEVICE_OS == Android ? true : false}>
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     СТРАХОВАНИЕ
                 </Header>
                 <CardItem style={{

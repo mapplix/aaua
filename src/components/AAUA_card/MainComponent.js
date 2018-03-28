@@ -10,6 +10,7 @@ import {Actions} from 'react-native-router-flux';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants'
 import {getMyCard} from '../../Actions/AAUA_CardAction';
 import {connect} from 'react-redux';
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 class MainComponent extends Component {
 
@@ -26,7 +27,7 @@ class MainComponent extends Component {
         console.log(this.props.myCards);
         return (
             <MainCard>
-                <Header burger >
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     {"КАРТА AAUA"}
                 </Header>
                 <CardItem style={{

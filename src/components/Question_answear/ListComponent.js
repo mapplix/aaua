@@ -6,14 +6,14 @@ import {
     CardItem,
     Header
 } from '../common';
-
+import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 class ListComponent extends Component {
 
     render() {
         return (
             <MainCard>
-                <Header burger >
+                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     ВОПРОС/ОТВЕТ
                 </Header>
                 <ScrollView>
