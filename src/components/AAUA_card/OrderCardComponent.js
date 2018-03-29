@@ -30,6 +30,7 @@ import {getCities, getNPCities, getNPsklads} from '../../Actions/CitiesBrands';
 import {DELIVERY_CURIER,
     DELIVERY_NP
 } from '../../Actions/types';
+import {DEVICE_OS, iOS} from '../../Actions/constants';
 
 let listHeight = 0;
 
@@ -199,7 +200,7 @@ class OrderCardComponent extends Component {
                 <CardItem style={{
                     marginTop: 21,
                     flex:0,
-                    height:55,
+                    height: DEVICE_OS == iOS ? 110 : 55,
                     flexDirection:'column',
                     justifyContent: 'flex-end',
                     alignItems: 'flex-start'
