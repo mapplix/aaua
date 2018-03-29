@@ -11,7 +11,7 @@ import {
     Spiner,
     DropDown} from '../common'
 import {RATIO} from '../../styles/constants';
-import {CITIES} from '../../Actions/constants';
+import {CITIES, DEVICE_OS, iOS} from '../../Actions/constants';
 import {changeRegistration, changeVolume, orderOsago, changeOsagoCity, selectOsagoCity, getCarType, calculateOsago} from '../../Actions/InsuranceAction';
 import {getCities} from '../../Actions/CitiesBrands';
 import {Actions} from 'react-native-router-flux';
@@ -127,7 +127,7 @@ console.log(nextProps);
                 </Header>
                 <CardItem style={{
                     marginTop: 18,
-                    flex:2,
+                    flex: DEVICE_OS == iOS ? 4 : 2,
                     height:60,
                     flexDirection:'column',
                     justifyContent: 'flex-end',
@@ -186,7 +186,7 @@ console.log(nextProps);
                 </CardItem>
                 <CardItem style={{
                     marginTop:38,
-                    flex: 5
+                    flex: DEVICE_OS == iOS ? 4 : 5
                 }}>
                     <ButtonRoundet
                         style={{
