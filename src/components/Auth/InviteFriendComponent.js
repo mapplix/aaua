@@ -10,6 +10,7 @@ import {
 import {RATIO, WIDTH_RATIO} from '../../styles/constants';
 import {sendInvitation, changePhone} from '../../Actions/InviteFriendAction';
 import {connect} from 'react-redux';
+import {showAlert} from '../Modals';
 
 class InviteFriendComponent extends Component {
 
@@ -19,9 +20,18 @@ class InviteFriendComponent extends Component {
     }
 
     onSubmit() {
-        console.log('onSubmit', this.props.phone);
         const {token, phone} = this.props;
         this.props.sendInvitation(phone)
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.error != null) {
+            showAlert(
+                'Ошибка',
+                nextProps.error,
+                'Закрыть'
+            )    
+        }
     }
 
     render() {
