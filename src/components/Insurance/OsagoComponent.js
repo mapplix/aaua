@@ -135,6 +135,9 @@ console.log(nextProps);
                 }}>
                     <DropDown
                         label="Обьем двигателя"
+                        pickerStyle={{
+                            fontSize: 6
+                        }}
                         elements={[
                             {title: 'Легковые автомобили - до 1600 м3', id: 1, value: 1},
                             {title: 'Легковые автомобили - от 1601 до 2000 м3', id: 2, value: 2},
