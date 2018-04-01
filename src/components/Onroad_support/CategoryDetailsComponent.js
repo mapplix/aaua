@@ -5,18 +5,47 @@ import {MainCard,
     ButtonRoundet,
     Header,
     Spiner,
+    PhoneInput,
     Icon} from '../common';
 import DetailsItem from './DetailsItem';
 import {Actions} from 'react-native-router-flux';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants'
 import {showAlert} from '../Modals';
-import {loadCategoryDetails} from '../../Actions/OnRoadActions';
+import {loadCategoryDetails, phoneChange, orderOnRoadSupport} from '../../Actions/OnRoadActions';
 import {connect} from 'react-redux';
 
 class CategoryDetailsComponent extends Component {
 
+    onPhoneChange = (phone) => {
+        this.props.phoneChange(phone);
+    }
+
+    onSubmit = () => {
+        const {token, category, phone} = this.props;
+        this.props.orderOnRoadSupport(token, category.id, phone)
+    }
+
     componentWillMount() {
         this.props.loadCategoryDetails(this.props.category.id, this.props.token);
+    }
+
+    componentWillReceiveProps(nextProps) {
+console.log(nextProps);
+        if (nextProps.orderSupportMessage != null) {
+            showAlert(
+                'Спасибо',
+                nextProps.orderSupportMessage,
+                'Закрыть',
+                () => {Actions.reset('drawer');}
+            )
+        }
+        if (nextProps.orderError != null) {
+            showAlert(
+                'Ошибка',
+                nextProps.orderError,
+                'OK'
+            );
+        }
     }
 
     renderContent() {
@@ -63,15 +92,29 @@ class CategoryDetailsComponent extends Component {
                         }
                     </CardItem>
                     <CardItem style={{
-                        flex: 20,
-                        height: 90*RATIO,
-                        paddingTop: 50,
+                        flex: 18,
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'flex-end',
+                    }}>
+                        <PhoneInput
+                            label={'Номер телефона'}
+                            placeholder={'+380'}
+                            value={this.props.phone}
+                            onChangeText={this.onPhoneChange.bind(this)}
+                        />
+                    </CardItem>
+                    <CardItem style={{
+                        flex: 14,
+                        height: 60*RATIO,
+                        paddingTop: 30,
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
                         alignItems: 'flex-start',
                     }}>
                         <ButtonRoundet
-                            onPress={() => Actions.orderOnRoadSupport({category: this.props.category})}
+                            // onPress={() => Actions.orderOnRoadSupport({category: this.props.category})}
+                            onPress={() => this.onSubmit()}
                             style={buttonStyle}
                         >
                             Заказать
@@ -120,8 +163,10 @@ const mapStateToProps = ({onRoad, auth}) => {
         token: auth.user.token,
         loading: onRoad.loading,
         details: onRoad.details,
-        orderError: onRoad.orderError
+        phone: onRoad.phone,
+        orderError: onRoad.orderError,
+        orderSupportMessage: onRoad.orderSupportMessage
     }
 }
 
-export default connect(mapStateToProps, {loadCategoryDetails})(CategoryDetailsComponent);
+export default connect(mapStateToProps, {loadCategoryDetails, phoneChange, orderOnRoadSupport})(CategoryDetailsComponent);
