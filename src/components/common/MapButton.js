@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 
-const MapButton = (props) => {
-    const {onPress, children} = props;
-    const {buttonStyle, textStyle} = style;
-    return (
-        <TouchableOpacity style={[buttonStyle, props.style]}
-                          onPress={onPress}>
-            <Text style={[textStyle, props.textStyle]}>
-                {children}
-            </Text>
-        </TouchableOpacity>
-    )
+class MapButton extends Component {
+
+    render() {
+        const {onPress, children} = this.props;
+        const {buttonStyle, textStyle} = style;
+        return (
+            <TouchableOpacity
+                style={[buttonStyle, this.props.style]}
+                onPress={onPress}
+            >
+                <Text style={[textStyle, this.props.textStyle]}>
+                    {children}
+                </Text>
+            </TouchableOpacity>
+        )
+    }
 }
 
 const style = {
@@ -21,11 +26,12 @@ const style = {
         justifyContent: 'center',
         color: '#1b1b1b',
         fontSize: 12,
-        marginLeft: 14,
-        marginRight: 14,
+        marginLeft: 12,
+        marginRight: 12,
     },
     buttonStyle: {
         height: 31,
+        width: '33%',
         marginLeft: 3,
         marginLeft: 3,
         backgroundColor: '#ffffff',
