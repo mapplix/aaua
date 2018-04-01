@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {
     ModalCard, MapButton } from '../common';
-import {RATIO} from '../../styles/constants';
+import {RATIO, HEIGHT, WIDTH} from '../../styles/constants';
 import {connect} from 'react-redux';
 
 class MapFiltersComponent extends Component {
@@ -31,6 +31,7 @@ class MapFiltersComponent extends Component {
         return rows.map( (row, index) => {
             return (
                 <View
+                    ref="filterContainer"
                     key={index}
                     style={styles.modalRow}>
                     <MapButton
@@ -127,6 +128,7 @@ const styles = {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         marginRight: 13,
+        width: '95%'
         // backgroundColor: 'rgba(0,0,0,0)'
     },
     modalText: {

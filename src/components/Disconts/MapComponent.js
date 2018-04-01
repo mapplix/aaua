@@ -8,7 +8,7 @@ import {
     MapButton } from '../common';
 import MapView,{Marker, Callout} from 'react-native-maps';
 import Modal from 'react-native-modalbox';
-import {RATIO} from '../../styles/constants';
+import {RATIO, HEIGHT, WIDTH} from '../../styles/constants';
 import {connect} from 'react-redux';
 import CustomMarker from './CustomMarker';
 import MapFiltersComponent from './MapFiltersComponent';
@@ -111,7 +111,6 @@ class MapComponent extends Component {
     }
 
     render() {
-console.log('render map', this.props);
         return (
              this.renderContent()
         )
