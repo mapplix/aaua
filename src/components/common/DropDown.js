@@ -1,6 +1,6 @@
-
 import React, {Component} from 'react';
 import {View, Picker, Text} from 'react-native';
+import { Dropdown } from 'react-native-material-dropdown';
 
 class DropDown extends Component {
 
@@ -8,19 +8,40 @@ class DropDown extends Component {
         const {inputStyle} = styles;
         const {selected, onValueChange, elements} = this.props;
         if (elements.length) {
+console.log(elements, selected);
+const value = selected != null ? selected : elements[0];
             return (
-                <Picker style={inputStyle}
+                /*<Picker style={[inputStyle]}
                         selectedValue={selected}
-                        onValueChange={onValueChange}>
+                        onValueChange={onValueChange}
+                >
                     {
                         elements.map( (element) => {
                             return (
-                                <Picker.Item key={element.id} label={element.title} value={element.id} />
+                                <Picker.Item
+                                    key={element.id}
+                                    label={element.title}
+                                    value={element.id} />
                             )
                         })
                     }
-                </Picker>
+                </Picker>*/
+                <Dropdown
+                    containerStyle={{
+                        flex: 1,
+                        alignSelf: 'stretch'
+                    }}
+                    fontSize={this.props.fontSize ? this.props.fontSize : 16}
+                    labelExtractor={(label) => label.title}
+                    valueExtractor={this.props.valueExtractor ? this.props.valueExtractor : (value) => value.value}
+                    onChangeText={onValueChange}
+                    value={value.title}
+                    data={elements}
+                />
+
+
             )
+
         }
     }
 
@@ -51,7 +72,8 @@ class DropDown extends Component {
 const styles = {
     inputStyle: {
         color: '#b6b9bf',
-        flex:1
+        flex:1,
+        alignSelf: 'stretch'
     },
     labelStyle: {
         marginLeft: 4,
@@ -67,19 +89,20 @@ const styles = {
         marginLeft: 45,
         marginRight: 45,
         flex: 1,
+        alignSelf: 'stretch',
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'flex-end'
     },
     pickerWrapper: {
         flex:1,
-        // backgroundColor: '#535',
+        alignSelf: 'stretch',
         flexDirection:'row',
         minHeight:40,
         height: 40,
         alignItems: 'center',
-        borderBottomColor: '#050505',
-        borderBottomWidth: 1,
+        // borderBottomColor: '#050505',
+        // borderBottomWidth: 1,
     }
 }
 export {DropDown};

@@ -19,6 +19,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.4.3",
     "react-native-maps": "^0.20.0",
     "react-native-masked-input": "^1.0.3",
+    "react-native-material-dropdown": "^0.11.1",
     "react-native-modalbox": "^1.4.2",
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-slideshow": "^1.0.1",

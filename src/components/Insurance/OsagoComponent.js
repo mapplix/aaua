@@ -16,6 +16,7 @@ import {changeRegistration, changeVolume, orderOsago, changeOsagoCity, selectOsa
 import {getCities} from '../../Actions/CitiesBrands';
 import {Actions} from 'react-native-router-flux';
 import {showAlert} from '../Modals';
+import { Dropdown } from 'react-native-material-dropdown';
 
 class OsagoComponent extends Component {
 
@@ -31,6 +32,7 @@ class OsagoComponent extends Component {
     };
 
     onChangeVolume(itemValue){
+console.log(itemValue)
         this.props.changeVolume(itemValue);
         this.setState({carType:itemValue});
         if (this.state.cityId != null) {
@@ -134,10 +136,8 @@ console.log(nextProps);
                     alignItems: 'flex-start'
                 }}>
                     <DropDown
+                        fontSize={13}
                         label="Обьем двигателя"
-                        pickerStyle={{
-                            fontSize: 6
-                        }}
                         elements={[
                             {title: 'Легковые автомобили - до 1600 м3', id: 1, value: 1},
                             {title: 'Легковые автомобили - от 1601 до 2000 м3', id: 2, value: 2},
