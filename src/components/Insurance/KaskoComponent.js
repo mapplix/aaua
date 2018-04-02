@@ -12,6 +12,7 @@ import {
 import {changeYear, changeCar,
     changeCarBrand, orderKasko,
     selectBrand, getCarModel, selectModel} from '../../Actions/InsuranceAction';
+import {DEVICE_OS, iOS} from '../../Actions/constants';
 import {getBrands} from '../../Actions/CitiesBrands';
 import {showAlert} from '../Modals';
 import {Actions} from 'react-native-router-flux';
@@ -25,7 +26,7 @@ class KaskoComponent extends Component {
             enableScrollViewScroll: true,
             searchedCities: [],
             searchedBrands: [],
-            rowHeight: 2
+            rowHeight: DEVICE_OS == iOS ? 1 : 2
         };
     };
 
@@ -42,7 +43,7 @@ class KaskoComponent extends Component {
 
     onSelectBrand(brand) {
 console.log(brand);
-        this.setState({searchedBrands: []});
+        this.setState({searchedBrands: [], rowHeight:2});
         this.props.selectBrand(brand)
         this.props.getCarModel(brand.id)
     }
@@ -157,8 +158,9 @@ console.log(this.state.rowHeight)
                         />
                     </CardItem>
                     <CardItem style={{
+                      backgroundColor:'#289',
                         marginTop: 18,
-                        flex:2,
+                        flex:(DEVICE_OS == iOS && this.props.carModels.length > 1) ? 4 : 2,
                         height:60,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
@@ -186,7 +188,7 @@ console.log(this.state.rowHeight)
                         />
                     </CardItem>
                     <CardItem style={{
-                        flex: 6,
+                        flex: DEVICE_OS == iOS ? 4 : 6,
                         marginTop:22,
                     }}>
                         <ButtonRoundet

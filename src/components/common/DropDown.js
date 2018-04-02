@@ -78,7 +78,7 @@ const styles = {
         minHeight:40,
         height: 40,
         alignItems: 'center',
-        borderBottomColor: '#050505',
+        borderBottomColor: '#000',
         borderBottomWidth: 1,
     }
 }

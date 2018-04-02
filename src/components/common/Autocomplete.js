@@ -127,7 +127,9 @@ const styles = {
         color: '#b6b9bf',
         fontSize: 15,
         lineHeight: 25,
-        flex:1
+        flex:1,
+        borderBottomWidth: 1,
+        borderBottomColor: '#000'
     },
     labelStyle: {
         marginLeft: 4,

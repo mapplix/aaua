@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import {DEVICE_OS, iOS} from '../../Actions/constants';
 
 class PasswordInput extends Component{
 
@@ -38,6 +39,7 @@ class PasswordInput extends Component{
 
 const styles = {
     containerStyle: {
+      //backgroundColor:"#289",
         height: 63,
         marginLeft: 45,
         marginRight: 45,
@@ -69,11 +71,10 @@ const styles = {
         width: '100%'
     },
     inputContainer: {
-        // backgroundColor: '#289',
         height: 40,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start'
+        alignItems: DEVICE_OS == iOS ? 'center' : 'flex-start'
     },
     inputStyle: {
         // placeholderTextColor: '#b6b9bf',
@@ -82,7 +83,9 @@ const styles = {
         fontFamily: 'SFUIText-Regular',
         color: '#b6b9bf',
         fontSize: 15,
-        flex:1
+        flex:1,
+        borderBottomWidth: 1,
+        borderBottomColor: '#000'
     }
 }
 
