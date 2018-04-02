@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput} from 'react-native';
+import {DEVICE_OS, iOS} from '../../Actions/constants';
 
 class CreditCardInput extends Component {
 
@@ -67,7 +68,7 @@ const styles = {
         fontSize: 15,
         lineHeight: 25,
         flex:1,
-        borderBottomWidth: 1,
+        borderBottomWidth: DEVICE_OS == iOS ? 1 : 0,
         borderBottomColor: '#000'
     },
     labelStyle: {

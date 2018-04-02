@@ -97,16 +97,9 @@ class Header extends Component{
                     }}
                     onPress={Actions.mainScreen}
                 >
-                    <Text
-                        style={{
-                            fontSize: 11,
-                            fontWeight: '400',
-                            color: '#111',
-                            alignSelf: 'center'
-                        }}
-                    >
-                        На главную
-                    </Text>
+                    <Icon
+                        imageSrc={require('../../images/icons/iconBarHome.png')}
+                    />
                 </TouchableOpacity>
             )
         }

@@ -84,7 +84,7 @@ const styles = {
         color: '#b6b9bf',
         fontSize: 15,
         flex:1,
-        borderBottomWidth: 1,
+        borderBottomWidth: DEVICE_OS == iOS ? 1 : 0,
         borderBottomColor: '#000'
     }
 }
