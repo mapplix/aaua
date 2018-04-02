@@ -148,16 +148,6 @@ console.log(this.props)
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
-                        {/*
-                        <Autocomplete
-                            label={"Марка авто"}
-                            placeholder={'Введите марку авто'}
-                            onChangeText={this.onChangeCarBrand.bind(this)}
-                            onSelect={this.onSelectBrand.bind(this)}
-                            data={this.state.searchedBrands}
-                            value={this.props.carBrand}
-                        />
-                        */}
                         <DropDown
                             label="Марка авто"
                             elements={this.props.brands}
