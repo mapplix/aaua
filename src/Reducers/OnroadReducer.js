@@ -29,7 +29,7 @@ export default (state = INITIAL_STATE, action) => {
         case ON_ROAD_CATEGORIES_LOADED:
             return {...state, loading: false, categories: action.payload, orderError: null}
         case ON_ROAD_LOAD_CATEGORY_DETAILS:
-            return {...state, loading: true, orderError: null}
+            return {...state, loading: true, orderError: null, orderSupportMessage: null}
         case ON_ROAD_CATEGORY_DETAILS_LOADED:
             return {...state,
                 loading: false,

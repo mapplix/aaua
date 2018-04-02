@@ -53,7 +53,7 @@ console.log(brand);
     }
 
     onChangeCarModel(model) {
-console.log('onChangeCarModel', model);
+
         this.props.selectModel(model);
     }
 
@@ -69,7 +69,7 @@ console.log('onChangeCarModel', model);
             },
 
         }
-console.log(orderData);
+
         this.props.orderKasko(orderData);
     }
 
@@ -101,12 +101,14 @@ console.log(orderData);
     };
 
     renderCarModel() {
+console.log(this.props)
         if (this.props.carModels.length > 0) {
             return (
                 <DropDown
                     label="Модель авто"
                     elements={this.props.carModels}
                     selected={this.props.carModel}
+                    valueExtractor={ (value) => value}
                     onValueChange={this.onChangeCarModel.bind(this)}
                 />
             )
@@ -134,7 +136,6 @@ console.log(orderData);
     }
 
     render() {
-console.log(this.state.rowHeight)
         return (
             <MainCard>
                 <Header back>
@@ -148,6 +149,7 @@ console.log(this.state.rowHeight)
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
+                        {/*
                         <Autocomplete
                             label={"Марка авто"}
                             placeholder={'Введите марку авто'}
@@ -155,6 +157,14 @@ console.log(this.state.rowHeight)
                             onSelect={this.onSelectBrand.bind(this)}
                             data={this.state.searchedBrands}
                             value={this.props.carBrand}
+                        />
+                        */}
+                        <DropDown
+                            label="Марка авто"
+                            elements={this.props.brands}
+                            selected={this.props.carBrand}
+                            valueExtractor={ (value) => value}
+                            onValueChange={this.onSelectBrand.bind(this)}
                         />
                     </CardItem>
                     <CardItem style={{

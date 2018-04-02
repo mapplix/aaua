@@ -56,7 +56,7 @@ console.log(INVITE_FRIEND_URL, data, obj, signature);
 }
 
 const onInviteSended = (dispatch, response) => {
-console.log(response);
+console.log('onInviteSended', response);
     if (response.error == 0) {
         dispatch({
             type: INVITE_SENDED_SUCCESS,
