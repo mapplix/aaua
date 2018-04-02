@@ -107,6 +107,7 @@ console.log(orderData);
                     label="Модель авто"
                     elements={this.props.carModels}
                     selected={this.props.carModel}
+                    valueExtractor={ (value) => value}
                     onValueChange={this.onChangeCarModel.bind(this)}
                 />
             )
