@@ -8,8 +8,11 @@ class DropDown extends Component {
         const {inputStyle} = styles;
         const {selected, onValueChange, elements} = this.props;
         if (elements.length) {
-console.log(elements, selected);
+
 const value = selected != null ? selected : elements[0];
+console.log('value',value);
+console.log('selected',selected);
+console.log('elements',elements[0]);
             return (
                 /*<Picker style={[inputStyle]}
                         selectedValue={selected}
@@ -29,7 +32,9 @@ const value = selected != null ? selected : elements[0];
                 <Dropdown
                     containerStyle={{
                         flex: 1,
-                        alignSelf: 'stretch'
+                        padding:0,
+                        margin:0,
+                        alignSelf: 'stretch',
                     }}
                     fontSize={this.props.fontSize ? this.props.fontSize : 16}
                     labelExtractor={(label) => label.title}
@@ -85,14 +90,14 @@ const styles = {
         color: '#3d3e40',
     },
     containerStyle: {
-        height: 65,
+        height: 90,
         marginLeft: 45,
         marginRight: 45,
         flex: 1,
         alignSelf: 'stretch',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-start'
     },
     pickerWrapper: {
         flex:1,
