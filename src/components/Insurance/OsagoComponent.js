@@ -129,7 +129,7 @@ console.log(nextProps);
                 </Header>
                 <CardItem style={{
                     marginTop: 18,
-                    flex: DEVICE_OS == iOS ? 4 : 2,
+                    flex: 2,
                     height:60,
                     flexDirection:'column',
                     justifyContent: 'flex-end',

@@ -148,11 +148,17 @@ console.log(this.state.rowHeight)
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
-                        
+                        <DropDown
+                            label="Марка авто"
+                            elements={this.props.brands}
+                            selected={this.props.carBrand}
+                            valueExtractor={ (value) => value}
+                            onValueChange={this.onSelectBrand.bind(this)}
+                        />
                     </CardItem>
                     <CardItem style={{
                         marginTop: 18,
-                        flex:(DEVICE_OS == iOS && this.props.carModels.length > 1) ? 4 : 2,
+                        flex:2,
                         height:60,
                         flexDirection:'column',
                         justifyContent: 'flex-end',

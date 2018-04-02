@@ -106,13 +106,8 @@ const styles = {
         minHeight:40,
         height: 40,
         alignItems: 'center',
-<<<<<<< HEAD
-        borderBottomColor: '#000',
-        borderBottomWidth: 1,
-=======
         // borderBottomColor: '#050505',
         // borderBottomWidth: 1,
->>>>>>> 00b6039f09125bee802c8c90ea9044cb6feded9a
     }
 }
 export {DropDown};
