@@ -53,7 +53,7 @@ console.log(brand);
     }
 
     onChangeCarModel(model) {
-
+console.log('onChangeCarModel', model);
         this.props.selectModel(model);
     }
 
@@ -69,7 +69,7 @@ console.log(brand);
             },
 
         }
-
+console.log(orderData);
         this.props.orderKasko(orderData);
     }
 
@@ -101,14 +101,12 @@ console.log(brand);
     };
 
     renderCarModel() {
-console.log(this.props)
         if (this.props.carModels.length > 0) {
             return (
                 <DropDown
                     label="Модель авто"
                     elements={this.props.carModels}
                     selected={this.props.carModel}
-                    valueExtractor={ (value) => value}
                     onValueChange={this.onChangeCarModel.bind(this)}
                 />
             )
@@ -136,6 +134,7 @@ console.log(this.props)
     }
 
     render() {
+console.log(this.state.rowHeight)
         return (
             <MainCard>
                 <Header back>
@@ -149,26 +148,9 @@ console.log(this.props)
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
-                        {/*
-                        <Autocomplete
-                            label={"Марка авто"}
-                            placeholder={'Введите марку авто'}
-                            onChangeText={this.onChangeCarBrand.bind(this)}
-                            onSelect={this.onSelectBrand.bind(this)}
-                            data={this.state.searchedBrands}
-                            value={this.props.carBrand}
-                        />
-                        */}
-                        <DropDown
-                            label="Марка авто"
-                            elements={this.props.brands}
-                            selected={this.props.carBrand}
-                            valueExtractor={ (value) => value}
-                            onValueChange={this.onSelectBrand.bind(this)}
-                        />
+                        
                     </CardItem>
                     <CardItem style={{
-                      backgroundColor:'#289',
                         marginTop: 18,
                         flex:(DEVICE_OS == iOS && this.props.carModels.length > 1) ? 4 : 2,
                         height:60,
