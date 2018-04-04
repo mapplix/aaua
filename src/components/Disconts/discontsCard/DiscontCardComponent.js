@@ -10,6 +10,7 @@ class DiscontCardComponent extends Component {
     render() {
         const {selectedCard} = this.props;
         const {imageStyle} = styles;
+console.log(this.props)
         return (
             <MainCard>
                 <Header back>
@@ -70,7 +71,7 @@ class DiscontCardComponent extends Component {
                 style={{
                     // backgroundColor: '#289',
                     flex: 0,
-                    height: 207 * RATIO,
+                    height: 235 * RATIO,
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
@@ -89,18 +90,6 @@ class DiscontCardComponent extends Component {
                             source={{uri:BASE_URL+selectedCard.code}}
                         />
                     </View>
-                </CardItem>
-                <CardItem>
-                    <Text style={{
-                        fontFamily:'SFUIText-Medium',
-                        fontSize: 29 * WIDTH_RATIO,
-                        color: '#1b1b1b',
-                        marginTop: 33,
-                        marginLeft: 33 * WIDTH_RATIO,
-                        marginRight: 25 * WIDTH_RATIO,
-                    }}>
-                        2830000003562805
-                    </Text>
                 </CardItem>
             </MainCard>
         )

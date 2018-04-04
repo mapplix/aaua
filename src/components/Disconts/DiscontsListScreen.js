@@ -40,9 +40,10 @@ class DiscontsListComponent extends Component {
             return (
                 <CardItem style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-around',
+                    justifyContent: row.length > 1 ? 'space-around' :'flex-start',
                     alignItems: 'center',
                     marginTop: 27 * RATIO,
+                    marginLeft: row.length > 1 ? 0 : '3%'
                 }}
                 key={index}
                 >
