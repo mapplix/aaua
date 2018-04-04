@@ -22,6 +22,7 @@ class CategoryDetailsComponent extends Component {
 
     onSubmit = () => {
         const {token, category, phone} = this.props;
+console.log(this.props);
         this.props.orderOnRoadSupport(token, category.id, phone)
     }
 
@@ -91,7 +92,7 @@ console.log(nextProps);
                             })
                         }
                     </CardItem>
-                    <CardItem style={{
+                    {/*<CardItem style={{
                         flex: 18,
                         flexDirection: 'row',
                         justifyContent: 'flex-start',
@@ -103,7 +104,7 @@ console.log(nextProps);
                             value={this.props.phone}
                             onChangeText={this.onPhoneChange.bind(this)}
                         />
-                    </CardItem>
+                    </CardItem>*/}
                     <CardItem style={{
                         flex: 14,
                         height: 60*RATIO,
@@ -159,11 +160,12 @@ const styles = {
 }
 
 const mapStateToProps = ({onRoad, auth}) => {
+console.log(auth);
     return {
         token: auth.user.token,
         loading: onRoad.loading,
         details: onRoad.details,
-        phone: onRoad.phone,
+        phone: auth.user.profile.phone,
         orderError: onRoad.orderError,
         orderSupportMessage: onRoad.orderSupportMessage
     }
