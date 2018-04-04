@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, Image, Animated} from 'react-native';
+import {View, Text, Image, Animated, WebView} from 'react-native';
 import {BASE_URL} from '../../Actions/constants';
-import {Spiner} from '../common';
 
 class CustomMarker extends Component {
 
@@ -13,36 +12,38 @@ class CustomMarker extends Component {
         };
     };
 
+    onNavigationChange(event){
+        console.log(event)
+    }
+
     render() {
         const {title, img} = this.props;
         const uri = BASE_URL+img;
-console.log(uri);
         return(
             <View style={{
                 flex:1,
+                flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                height: 300,
+                width: 300,
+                maxWidth: 600
             }}>
-                <View style={{
-                    flex:1,
-                    alignSelf: 'stretch',
-                    minHeight: 150,
-                    minWidth: 150,
-                    backgroundColor: '#289',
-                }}>
-                    <Image
-                        resizeMode={'cover'}
+                    <WebView
                         style={{
-
-                            flex: 1,
+                            flex:1,
                             alignSelf: 'stretch',
-                            width: undefined,
-                            height: undefined
-                        }}
-                        source={{uri: uri}}
-                        // source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                            width: 300,
+                            height: 300,
+                            maxWidth: 600
+                         }}
+                        javaScriptEnabled={false}
+                        domStorageEnabled={false}
+                        startInLoadingState={false}
+                        scalesPageToFit={false}
+                        scrollEnabled={true}
+                        source={{ html: "<html><div><img src='"+uri+"' height='300' width='300'/></div></html>" }}
                     />
-                </View>
                 <Text>
                     {title}
                 </Text>
