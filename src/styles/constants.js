@@ -6,5 +6,5 @@ export const MIN_WIDTH = 360;
 const {height, width} = Dimensions.get('window');
 export const RATIO = Math.round((height/MIN_HEIGHT) * 100) /100;
 export const WIDTH_RATIO = Math.round((width/MIN_WIDTH) * 100) /100;
-
-console.log(width, MIN_WIDTH, WIDTH_RATIO);
+export const WIDTH = width;
+export const HEIGHT = height;

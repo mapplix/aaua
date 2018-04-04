@@ -19,9 +19,9 @@ export const getImageByCategoryId = (categoryId) => {
         case 11:
             return require('../images/icons/rest.png')
         case 12:
-            return require('../images/icons/bar.png')
+            return require('../images/icons/pub.png')
         case 13:
-            return require('../images/icons/bar.png')
+            return require('../images/icons/education.png')
         case 14:
             return require('../images/icons/beauty.png')
         case 15:
