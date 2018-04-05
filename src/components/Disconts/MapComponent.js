@@ -93,18 +93,19 @@ class MapComponent extends Component {
                                 source={require('../../images/icons/map_filters.png')}
                             />
                         </TouchableOpacity>
+                        <Modal style={styles.modal}
+                               position={"bottom"}
+                               ref={"modal"}
+                               isOpen={this.state.isOpen}
+                               onClosed={() => this.setState({isOpen: false})}
+                        >
+                            <MapFiltersComponent
+                                selectCategory={this.onChangeCategory.bind(this)}
+                                onCloseModal={() => this.setState({isOpen: false})}
+                            />
+                        </Modal>
                     </CardItem>
-                    <Modal style={styles.modal}
-                           position={"bottom"}
-                           ref={"modal"}
-                           isOpen={this.state.isOpen}
-                           onClosed={() => this.setState({isOpen: false})}
-                    >
-                        <MapFiltersComponent
-                            selectCategory={this.onChangeCategory.bind(this)}
-                            onCloseModal={() => this.setState({isOpen: false})}
-                        />
-                    </Modal>
+
                 </MainCard>
             )
         }
@@ -143,14 +144,6 @@ const styles = {
         height: 325,
         marginBottom: 25,
         backgroundColor: 'rgba(0,0,0,0)'
-    },
-    modalCard: {
-        height: 300,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginRight: 13,
-        // backgroundColor: 'rgba(0,0,0,0)'
     },
     modalText: {
         fontFamily: 'SFUIText-Regular',

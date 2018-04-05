@@ -28,43 +28,20 @@ class MapFiltersComponent extends Component {
             rows.push(categories.slice(i, i+3))
             i = i+3;
         }
-        return rows.map( (row, index) => {
+        return categories.map( (row, index) => {
             return (
-                <View
-                    ref="filterContainer"
+
+                <MapButton
                     key={index}
-                    style={styles.modalRow}>
-                    <MapButton
-                        style={{
-                            backgroundColor: this.state.selectedCategory.id == row[0].id ? '#ffc200' : '#ffffff'
-                        }}
-                        onPress={() => this.onSelectCategory(row[0])}
-                    >
-                        {
-                            row[0].title
-                        }
-                    </MapButton>
-                    <MapButton
-                        style={{
-                            backgroundColor: this.state.selectedCategory.id == row[1].id ? '#ffc200' : '#ffffff'
-                        }}
-                        onPress={() => this.onSelectCategory(row[1])}
-                    >
-                        {
-                            row[1].title
-                        }
-                    </MapButton>
-                    <MapButton
-                        style={{
-                            backgroundColor: this.state.selectedCategory.id == row[2].id ? '#ffc200' : '#ffffff'
-                        }}
-                        onPress={() => this.onSelectCategory(row[2])}
-                    >
-                        {
-                            row[2].title
-                        }
-                    </MapButton>
-                </View>
+                    style={{
+                        backgroundColor: this.state.selectedCategory.id == row.id ? '#ffc200' : '#ffffff'
+                    }}
+                    onPress={() => this.onSelectCategory(row)}
+                >
+                    {
+                        row.title
+                    }
+                </MapButton>
             )
         })
     }
@@ -75,9 +52,13 @@ class MapFiltersComponent extends Component {
             modalRow} = styles;
         return(
             <ModalCard style={modalCard}>
+                <View
+                    ref="filterContainer"
+                    style={styles.modalRow}>
                 {
                     this.renderRows()
                 }
+                </View>
 
                     <View style={[
                         modalRow,
@@ -144,9 +125,10 @@ const styles = {
     },
     modalRow: {
         marginTop: 10,
-        marginLeft: 10 * RATIO,
-        marginRight: 10,
-        flex: 1,
+        marginLeft: 3,
+        marginRight: 3,
+        flex: 8,
+        flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center'

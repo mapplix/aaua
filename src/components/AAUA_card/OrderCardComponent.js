@@ -46,6 +46,7 @@ class OrderCardComponent extends Component {
     };
 
     onChangeDelivery (value) {
+console.log(value);
         this.props.changeDelivery(value);
     }
 
@@ -69,7 +70,7 @@ class OrderCardComponent extends Component {
             }
         }
         console.log(orderData);
-        this.props.orderCard(orderData);
+        // this.props.orderCard(orderData);
 
     }
 
@@ -107,11 +108,13 @@ class OrderCardComponent extends Component {
                 this.setState({searchedItems: []});
             }
         })
+console.log(searchedItems);
         this.setState({searchedItems: searchedItems.slice(0, 30)});
     };
 
     onChangeCity(title){
         if (title.length >= 2) {
+console.log(this.props.delivery)
             if (this.props.delivery == DELIVERY_NP) {
                 this.props.getNPCities(title);
             } else {
@@ -134,6 +137,7 @@ class OrderCardComponent extends Component {
     }
 
     onChangeAddress(address) {
+        console.log(address)
         this.props.changeAddress(address);
     }
 
@@ -149,6 +153,7 @@ class OrderCardComponent extends Component {
                     elements={this.props.NPsklads}
                     onValueChange={this.onChangeAddress.bind(this)}
                     selected={this.props.address}
+                    valueExtractor={ (value) => value.title}
                     setDefaultValueToStore={this.setDefaultSkladToStore.bind(this)}
                 />
             )
@@ -200,7 +205,7 @@ class OrderCardComponent extends Component {
                 <CardItem style={{
                     marginTop: 21,
                     flex:0,
-                    height: DEVICE_OS == iOS ? 110 : 55,
+                    height: 85,
                     flexDirection:'column',
                     justifyContent: 'flex-end',
                     alignItems: 'flex-start'
@@ -208,9 +213,10 @@ class OrderCardComponent extends Component {
                     <DropDown
                         label="Способ доставки"
                         elements={[
-                            {title: 'Курьер', value: DELIVERY_CURIER, id: 2},
-                            {title: 'Новая почта', value: DELIVERY_NP, id: 1}
+                            {title: 'Курьер', id: DELIVERY_CURIER},
+                            {title: 'Новая почта', id: DELIVERY_NP}
                         ]}
+                        valueExtractor={ (value) => value.id}
                         selected={this.props.delivery}
                         onValueChange={this.onChangeDelivery.bind(this)}
                     />
@@ -241,9 +247,9 @@ class OrderCardComponent extends Component {
                 <CardItem
                     display={this.props.showAdress}
                     style={{
-                        flex:11,
-                    height: 65,
-                    marginTop:22,
+                    flex:15,
+                    // height: 65,
+                    // marginTop:22,
                 }}>
 
                     {this.renderAddresses()}
