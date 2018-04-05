@@ -12,7 +12,7 @@ class DropDown extends Component {
 const value = selected != null ? selected : elements[0];
 console.log('value',value);
 console.log('selected',selected);
-console.log('elements',elements[0]);
+console.log('elements',elements);
             return (
                 /*<Picker style={[inputStyle]}
                         selectedValue={selected}

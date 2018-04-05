@@ -31,9 +31,10 @@ const style = {
     },
     buttonStyle: {
         height: 31,
-        width: '33%',
         marginLeft: 3,
         marginLeft: 3,
+        marginTop: 5,
+        marginBottom: 5,
         backgroundColor: '#ffffff',
         borderWidth: 1,
         borderRadius: 15,

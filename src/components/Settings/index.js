@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, Switch, TouchableOpacity, Linking} from 'react-native';
 import {MainCard, CardItem, Header, Icon, ButtonRoundet} from '../common';
 import {RATIO} from '../../styles/constants'
+import Permissions from 'react-native-permissions'
 
 class SettingsComponent extends Component {
 
@@ -9,6 +10,13 @@ class SettingsComponent extends Component {
         pushes: false,
         politics: true,
         privacy: true,
+    }
+
+    componentDidMount() {
+        Permissions.check('notification').then(response => {
+            // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+            this.setState({ pushes: response ==  'authorized' ? true : false})
+        })
     }
 
     callNumber = (url) =>{
@@ -19,18 +27,6 @@ class SettingsComponent extends Component {
                 return Linking.openURL(url);
             }
         }).catch(err => console.error('An error occurred', err));
-    }
-
-    enablePushes() {
-
-    }
-
-    agryPolitics() {
-
-    }
-
-    agryPrivacy() {
-
     }
 
     render(){
