@@ -7,8 +7,10 @@ import {RATIO, WIDTH_RATIO} from '../../styles/constants'
 
 let labelFontSize = WIDTH_RATIO <= 1 ? 11 : 13;
 
-const CardComponent = ({onPress, children, imageSrc, style, imageParentStyle, imageContainerStyles}) => {
+const CardComponent = ({onPress, children, imageSrc, style, imageParentStyle, imageContainerStyles, isDisabled}) => {
     const {container, imageContainer, imageStyle, textStyle, buttonStyle} = styles;
+
+console.log(isDisabled);
     return (
         <View style={[
             container,
@@ -32,8 +34,9 @@ const CardComponent = ({onPress, children, imageSrc, style, imageParentStyle, im
                 paddingRight: 6*WIDTH_RATIO
             }}>
                 <ButtonRoundet
-                    style={buttonStyle}
-                    textStyle={textStyle}
+                    isDisabled={isDisabled}
+                    style={[buttonStyle, {backgroundColor: isDisabled ? '#e1a700' : '#FFC200'}]}
+                    textStyle={[textStyle, {color: isDisabled ? '#e0e0e0' : '#1d1d1d'}]}
                     onPress={onPress}
                 >
                     {children}

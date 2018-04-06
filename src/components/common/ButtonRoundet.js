@@ -2,10 +2,13 @@ import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 
 const ButtonRoundet = (props) => {
-    const {onPress, children} = props;
+    const {onPress, children, isDisabled} = props;
     const {buttonStyle, textStyle} = style;
+console.log(props);
     return (
-        <TouchableOpacity style={[buttonStyle, props.style]} onPress={onPress}>
+        <TouchableOpacity
+            disabled={isDisabled}
+            style={[buttonStyle, props.style]} onPress={onPress}>
             <Text style={[textStyle, props.textStyle]}>
                 {children}
             </Text>

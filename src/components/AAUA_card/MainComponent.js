@@ -63,7 +63,7 @@ class MainComponent extends Component {
     }
 
     render() {
-console.log(this.props);
+console.log(this.props.myCards == null);
         return (
             <MainCard>
                 <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
@@ -81,6 +81,7 @@ console.log(this.props);
                             marginLeft: 14 * WIDTH_RATIO,
                             marginRight: 12 * WIDTH_RATIO,
                         }}
+                        isDisabled={this.props.myCards != null}
                         imageSrc={require('../../images/icons/add_card.png')}
                         onPress={this.onAddCardPressed.bind(this)}
                     >
