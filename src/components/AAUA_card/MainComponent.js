@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -10,7 +10,8 @@ import {Actions} from 'react-native-router-flux';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants'
 import {getMyCard} from '../../Actions/AAUA_CardAction';
 import {connect} from 'react-redux';
-import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
+import {DEVICE_OS, iOS} from '../../Actions/constants';
+import QRCode from 'react-native-qrcode';
 
 class MainComponent extends Component {
 
@@ -23,14 +24,53 @@ class MainComponent extends Component {
         Actions.order_aaua_card();
     }
 
+    componentWillMount() {
+        this.props.getMyCard(this.props.token);
+    }
+
+    renderQR() {
+        if (this.props.myCards != null) {
+            return (
+                <TouchableOpacity style={{
+                    flex:1,
+                    flexDirection: 'row',
+                    alignItems: 'flex-start',
+                    justifyContent: 'flex-start'
+                }}
+                onPress={Actions.QRcode}
+                >
+                    <View style={{
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <QRCode
+                            value={this.props.myCards}
+                            size={200}
+                            bgColor='#000'
+                            fgColor='white'/>
+                        <Text style={{
+                            fontSize: 22,
+                        }}>
+                            {
+                                this.props.myCards
+                            }
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        }
+    }
+
     render() {
-        console.log(this.props.myCards);
+console.log(this.props);
         return (
             <MainCard>
                 <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     {"КАРТА AAUA"}
                 </Header>
                 <CardItem style={{
+                    flex: 4,
                     paddingTop: 21 * RATIO,
                     flexDirection: 'row',
                     justifyContent: 'space-around',
@@ -59,6 +99,18 @@ class MainComponent extends Component {
                     >
                         Заказать карту
                     </CardComponent>
+                </CardItem>
+                <CardItem
+                    style={{
+                        flex: 5,
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center'
+                    }}
+                >
+                    {
+                        this.renderQR()
+                    }
                 </CardItem>
             </MainCard>
         )

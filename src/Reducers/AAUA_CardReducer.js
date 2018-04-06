@@ -32,7 +32,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 
 const INITIAL_STATE = {
-    myCards: [],
+    myCards: null,
     error: '',
     addCardError: null,
     loading: false,

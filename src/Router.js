@@ -26,8 +26,7 @@ import OnroadCategoriesComponent from './components/Onroad_support/CategoriesCom
 import OnroadCategoriesDetailsComponent from './components/Onroad_support/CategoryDetailsComponent';
 import OrderSupport from './components/Onroad_support/OrderSupport';
 
-import DiscontCategoriesComponent from './components/Disconts/CategoriesScreen';
-import DiscontListComponent from './components/Disconts/DiscontsListScreen';
+import MarkerInfo from './components/Disconts/MarkerInfo';
 import DiscontMapComponent from './components/Disconts/MapComponent';
 import TabsComponent from './components/Disconts/TabsComponent';
 import DiscontCardComponent from './components/Disconts/discontsCard/DiscontCardComponent';
@@ -44,6 +43,7 @@ import AAUAMainComponent from './components/AAUA_card/MainComponent';
 import AAUAAddCardComponent from './components/AAUA_card/AddCardComponent';
 import AAUAOrderCardComponent from './components/AAUA_card/OrderCardComponent';
 import MyAAUACardsComponent from './components/AAUA_card/MyAAUACardsComponent';
+import QRcode from './components/AAUA_card/QRcode';
 
 import OrderingComponent from './components/Store/OrderingComponent';
 
@@ -288,20 +288,19 @@ console.log('router will unmount');
                                 </Stack>
                                 <Stack hideNavBar key="AAUA_card">
                                     <Scene
-                                        // initial={!this.state.hasCard}
                                         hideNavBar
                                         key="AAUA_main"
                                         component={AAUAMainComponent} title="Карта AAUA"/>
                                     <Scene hideNavBar key="add_aaua_card" component={AAUAAddCardComponent}
                                            title="Заказать карту"/>
                                     <Scene
-                                        // initial={this.state.hasCard}
                                         hideNavBar
                                         key="my_aaua_cards"
                                         component={MyAAUACardsComponent}
                                         title="Карта AAUA"/>
                                     <Scene hideNavBar key="order_aaua_card" component={AAUAOrderCardComponent}
                                            title="Добавить карту"/>
+                                    <Scene hideNavBar key="QRcode" component={QRcode}/>
 
                                 </Stack>
                                 <Stack hideNavBar key="onroadSupport">
@@ -309,13 +308,12 @@ console.log('router will unmount');
                                     <Scene hideNavBar key="onroadDetails" component={OnroadCategoriesDetailsComponent}/>
                                     <Scene hideNavBar key="orderOnRoadSupport" component={OrderSupport}/>
                                 </Stack>
-                                {/*<Stack key="discounts">*/}
                                     <Stack key="discontCards">
                                         <Scene initial hideNavBar key="tabs" component={TabsComponent}/>
                                         <Scene hideNavBar key="discontCard" component={DiscontCardComponent}/>
                                         <Scene hideNavBar key="discontsMap" component={DiscontMapComponent}/>
+                                        <Scene hideNavBar key="MarkerInfo" component={MarkerInfo}/>
                                     </Stack>
-                                {/*</Stack>*/}
                                 <Stack hideNavBar key="insurance">
                                     <Scene hideNavBar key="insuranceCategories" component={InsuranceComponent}/>
                                     <Scene hideNavBar key="kaskoComponent" component={KaskoComponent}/>
