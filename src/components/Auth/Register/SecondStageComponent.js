@@ -223,17 +223,9 @@ console.log(userData);
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
-                        {/*
-                        <Autocomplete
-                            label={"Марка авто"}
-                            placeholder={'Введите марку авто'}
-                            onChangeText={this.onChangeBrand.bind(this)}
-                            onSelect={this.onSelectBrand.bind(this)}
-                            data={this.state.searchedBrands}
-                            value={this.props.car}
-                        /> */}
                         <DropDown
                             label="Марка авто"
+                            itemCount={8}
                             elements={this.props.brands}
                             selected={this.props.car}
                             valueExtractor={ (value) => value}

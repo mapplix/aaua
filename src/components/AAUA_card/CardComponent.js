@@ -10,7 +10,6 @@ let labelFontSize = WIDTH_RATIO <= 1 ? 11 : 13;
 const CardComponent = ({onPress, children, imageSrc, style, imageParentStyle, imageContainerStyles, isDisabled}) => {
     const {container, imageContainer, imageStyle, textStyle, buttonStyle} = styles;
 
-console.log(isDisabled);
     return (
         <View style={[
             container,

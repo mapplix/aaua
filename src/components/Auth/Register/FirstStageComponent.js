@@ -99,13 +99,13 @@ class FirstStageComponent extends Component {
                 'OK'
             );
         }
-        if (nextProps.sms != null) {
+        /*if (nextProps.sms != null) {
             showAlert(
                 'Код',
                 nextProps.sms.toString(),
                 'OK'
             );
-        }
+        }*/
     }
 
     componentDidMount() {
