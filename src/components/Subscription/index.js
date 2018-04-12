@@ -57,10 +57,6 @@ console.log('back from message')
         }
     }
 
-    componentWillUnmount(){
-        console.log('component will unmount', this.props);
-    }
-
     renderPrice() {
         const {amountContainer, amountStyle} = styles;
         if (this.props.loading == false) {

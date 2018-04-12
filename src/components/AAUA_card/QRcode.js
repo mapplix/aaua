@@ -4,8 +4,20 @@ import {MainCard, CardItem} from '../common';
 import QRCode from 'react-native-qrcode';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
+import DeviceBrightness from 'react-native-device-brightness';
 
 class QRcode extends Component {
+    state = {
+        luminous: 0.3
+    }
+
+    componentDidMount() {
+        DeviceBrightness.setBrightnessLevel(0.8);
+    }
+
+    componentWillUnmount() {
+        DeviceBrightness.setBrightnessLevel(this.state.luminous);
+    }
 
     render() {
 

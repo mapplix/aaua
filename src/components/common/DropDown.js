@@ -14,21 +14,6 @@ console.log('value',value);
 console.log('selected',selected);
 console.log('elements',elements);
             return (
-                /*<Picker style={[inputStyle]}
-                        selectedValue={selected}
-                        onValueChange={onValueChange}
-                >
-                    {
-                        elements.map( (element) => {
-                            return (
-                                <Picker.Item
-                                    key={element.id}
-                                    label={element.title}
-                                    value={element.id} />
-                            )
-                        })
-                    }
-                </Picker>*/
                 <Dropdown
                     containerStyle={{
                         flex: 1,
@@ -36,6 +21,7 @@ console.log('elements',elements);
                         margin:0,
                         alignSelf: 'stretch',
                     }}
+                    itemCount={this.props.itemCount || 4}
                     fontSize={this.props.fontSize ? this.props.fontSize : 16}
                     labelExtractor={(label) => label.title}
                     valueExtractor={this.props.valueExtractor ? this.props.valueExtractor : (value) => value.value}
