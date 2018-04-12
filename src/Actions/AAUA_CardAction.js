@@ -139,7 +139,7 @@ export const addCardSuccess = (dispatch, response) => {
         dispatch({
             type: ADD_CARD_SUCCESS,
         })
-        Actions.my_aaua_cards();
+        Actions.AAUA_main();
     } else {
         var errorMsg = 'Произошла ошибка, попробуйте позже'
         if (response.error == 2) {
