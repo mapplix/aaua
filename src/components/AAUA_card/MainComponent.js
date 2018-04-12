@@ -44,6 +44,11 @@ class MainComponent extends Component {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
+                        <Text style={{
+                            fontSize: 22,
+                        }}>
+                            Это Ваша карта “AAUA”
+                        </Text>
                         <QRCode
                             value={this.props.myCards}
                             size={200}
