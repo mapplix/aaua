@@ -34,7 +34,7 @@ import {DEVICE_OS, iOS} from '../../Actions/constants';
 
 let listHeight = 0;
 
-class OrderCardComponent extends Component {
+class OrderVirtualCardComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -44,11 +44,6 @@ class OrderCardComponent extends Component {
             searchedItems: []
         };
     };
-
-    onChangeDelivery (value) {
-console.log(value);
-        this.props.changeDelivery(value);
-    }
 
     onPhoneChange(phone) {
         this.props.changePhone(phone)
@@ -67,9 +62,10 @@ console.log(value);
                 "address" : this.props.address,
                 "address_comment" : this.props.comment,
                 "phone" : this.props.phone
-            }
+            },
+            "isvirtual" : 1
         }
-        console.log(orderData);
+        // console.log(orderData);
         this.props.orderCard(orderData);
 
     }
@@ -141,33 +137,6 @@ console.log(this.props.delivery)
         this.props.changeAddress(address);
     }
 
-    onSelectAddress(address) {
-        this.props.selectAddress(address);
-    }
-
-    renderAddresses () {
-        if (this.props.delivery == DELIVERY_NP && this.props.city && this.props.NPsklads.length) {
-            return (
-                <DropDown
-                    label="Адрес"
-                    elements={this.props.NPsklads}
-                    onValueChange={this.onChangeAddress.bind(this)}
-                    selected={this.props.address}
-                    valueExtractor={ (value) => value.title}
-                    setDefaultValueToStore={this.setDefaultSkladToStore.bind(this)}
-                />
-            )
-        }
-        return (
-            <LabelOnInput
-                label={'Адрес'}
-                placeholder={'введите адрес'}
-                onChangeText={this.onChangeAddress.bind(this)}
-                value={this.props.address}
-            />
-        )
-    }
-
     componentWillReceiveProps(nextProp) {
         if (nextProp.orderCardSuccess) {
             this.showAlert();
@@ -202,28 +171,8 @@ console.log(this.props.delivery)
                         value={this.props.county}
                     />
                 </CardItem>
-                <CardItem style={{
-                    marginTop: 21,
-                    flex:0,
-                    height: 85,
-                    flexDirection:'column',
-                    justifyContent: 'flex-end',
-                    alignItems: 'flex-start'
-                }}>
-                    <DropDown
-                        label="Способ доставки"
-                        elements={[
-                            {title: 'Курьер', id: DELIVERY_CURIER},
-                            {title: 'Новая почта', id: DELIVERY_NP}
-                        ]}
-                        valueExtractor={ (value) => value.id}
-                        selected={this.props.delivery}
-                        onValueChange={this.onChangeDelivery.bind(this)}
-                    />
-                </CardItem>
 
                 <CardItem
-                    display={this.props.showCities}
                     style={{
                     marginTop: 22,
                     flex:11,
@@ -245,14 +194,17 @@ console.log(this.props.delivery)
                 </CardItem>
 
                 <CardItem
-                    display={this.props.showAdress}
                     style={{
                     flex:15,
                     // height: 65,
                     // marginTop:22,
                 }}>
-
-                    {this.renderAddresses()}
+                    <LabelOnInput
+                        label={'Адрес'}
+                        placeholder={'введите адрес'}
+                        onChangeText={this.onChangeAddress.bind(this)}
+                        value={this.props.address}
+                    />
                 </CardItem>
                 <CardItem
                     style={{
@@ -373,4 +325,4 @@ export default connect(
         selectCity,
         selectAddress,
         cleanNPCities
-    })(OrderCardComponent);
+    })(OrderVirtualCardComponent);
