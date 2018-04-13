@@ -142,9 +142,9 @@ console.log(this.state.rowHeight)
                     КАСКО
                 </Header>
                     <CardItem style={{
-                        marginTop: 18,
-                        flex: this.state.rowHeight,
-                        height:60,
+                        marginTop: 15,
+                        flex: 3,
+                        height:80,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
@@ -159,8 +159,8 @@ console.log(this.state.rowHeight)
                     </CardItem>
                     <CardItem style={{
                         marginTop: 18,
-                        flex:2,
-                        height:60,
+                        flex:3,
+                        height:70,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
