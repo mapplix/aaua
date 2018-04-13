@@ -150,6 +150,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-brightness')
     compile project(':react-native-background-task')
     compile (project(':react-native-fcm')){
             exclude group: "com.google.firebase"

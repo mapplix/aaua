@@ -3,6 +3,7 @@ package com.aaua;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.capslock.RNDeviceBrightness.RNDeviceBrightness;
 import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceBrightness(),
             new BackgroundTaskPackage(),
             new FIRMessagingPackage(),
             new MapsPackage()
