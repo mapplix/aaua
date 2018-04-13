@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import CustomMarker from './CustomMarker';
 import MapFiltersComponent from './MapFiltersComponent';
 import {selectCategory} from '../../Actions/DiscountsAction';
+import {Actions} from 'react-native-router-flux';
 
 class MapComponent extends Component {
 
@@ -30,16 +31,15 @@ class MapComponent extends Component {
         if (this.props.places.length) {
             return this.props.places.map(marker => {
                 if (marker.lat) {
+console.log(marker);
                     const latitude = parseFloat(marker.lat);
                     const longitude = parseFloat(marker.lon);
                     return (
                         <Marker
                             key={marker.id}
                             coordinate={{latitude: latitude, longitude: longitude}}
+                            onPress={() => Actions.MarkerInfo(marker)}
                             >
-                            <Callout>
-                                <CustomMarker {...marker}/>
-                            </Callout>
                         </Marker>
                     )
                 }
@@ -143,7 +143,10 @@ const styles = {
     modal: {
         height: 325,
         marginBottom: 25,
-        backgroundColor: 'rgba(0,0,0,0)'
+        backgroundColor: 'rgba(0,0,0,0)',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     },
     modalText: {
         fontFamily: 'SFUIText-Regular',

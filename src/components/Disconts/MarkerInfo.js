@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, WebView, Image} from 'react-native';
-import {MainCard, CardItem} from '../common';
+import {MainCard, CardItem, Header} from '../common';
 import {BASE_URL} from '../../Actions/constants';
 
 class MarkerInfo extends Component {
@@ -49,6 +49,9 @@ class MarkerInfo extends Component {
 
         return (
             <MainCard>
+                <Header back>
+                    {this.props.title || ''}
+                </Header>
                 <CardItem>
                     <View
                         style={{
@@ -71,13 +74,11 @@ class MarkerInfo extends Component {
                     <View
                         style={{
                             flex:4,
-                            alignItems: 'center',
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
                             justifyContent: 'center',
                         }}
                     >
-                        <Text>
-                            {this.props.title}
-                        </Text>
                         <WebView
                             style={{
                                 flex:1,

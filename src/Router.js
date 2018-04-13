@@ -43,6 +43,7 @@ import AAUAMainComponent from './components/AAUA_card/MainComponent';
 import AAUAAddCardComponent from './components/AAUA_card/AddCardComponent';
 import AAUAOrderCardComponent from './components/AAUA_card/OrderCardComponent';
 import MyAAUACardsComponent from './components/AAUA_card/MyAAUACardsComponent';
+import OrderVirtualCardComponent from './components/AAUA_card/OrderVirtualCardComponent';
 import QRcode from './components/AAUA_card/QRcode';
 
 import OrderingComponent from './components/Store/OrderingComponent';
@@ -293,6 +294,7 @@ console.log('router will unmount');
                                         component={AAUAMainComponent} title="Карта AAUA"/>
                                     <Scene hideNavBar key="add_aaua_card" component={AAUAAddCardComponent}
                                            title="Заказать карту"/>
+                                    <Scene hideNavBar key="order_virtual_aaua_card" component={OrderVirtualCardComponent}/>
                                     <Scene
                                         hideNavBar
                                         key="my_aaua_cards"
