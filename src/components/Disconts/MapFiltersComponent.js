@@ -60,43 +60,43 @@ class MapFiltersComponent extends Component {
                 }
                 </View>
 
-                    <View style={[
-                        modalRow,
-                        {
-                            flex: 2,
-                            marginBottom: 12
-                        }
-                        ]}>
-                        <TouchableOpacity style={{
-                            flex:1,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                        onPress={() => this.props.onCloseModal()}>
-                            <Text style={{
-                                fontFamily: 'SFUIText-Regular',
-                                color:'#423486',
-                                fontSize: 16
-                            }}>
-                                Закрыть
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            flex:1,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                        onPress={this.applyFilters.bind(this)}
-                        >
-                            <Text style={{
-                                fontFamily: 'SFUIText-Semibold',
-                                color:'#423486',
-                                fontSize: 16
-                            }}>
-                                Применить
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                <View style={[
+                    modalRow,
+                    {
+                        flex: 2,
+                        marginBottom: 12
+                    }
+                    ]}>
+                    <TouchableOpacity style={{
+                        flex:1,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    onPress={() => this.props.onCloseModal()}>
+                        <Text style={{
+                            fontFamily: 'SFUIText-Regular',
+                            color:'#423486',
+                            fontSize: 16
+                        }}>
+                            Закрыть
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{
+                        flex:1,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    onPress={this.applyFilters.bind(this)}
+                    >
+                        <Text style={{
+                            fontFamily: 'SFUIText-Semibold',
+                            color:'#423486',
+                            fontSize: 16
+                        }}>
+                            Применить
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </ModalCard>
         )
     }
