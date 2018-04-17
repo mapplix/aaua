@@ -120,6 +120,11 @@ console.log(nextProps);
         }
     }
 
+    setDefaultVolumeToStore(itemValue) {
+        this.setState({carType:itemValue.value});
+        this.props.changeVolume(itemValue.value);
+    }
+
     render() {
         console.log(this.props.loadingPrice)
         return (
@@ -146,6 +151,7 @@ console.log(nextProps);
                         ]}
                         onValueChange={this.onChangeVolume.bind(this)}
                         selected={this.props.carType}
+                        setDefaultValueToStore={this.setDefaultVolumeToStore.bind(this)}
                     />
                 </CardItem>
                 <CardItem style={{
