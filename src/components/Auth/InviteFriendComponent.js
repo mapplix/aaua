@@ -15,14 +15,12 @@ import {showAlert} from '../Modals';
 class InviteFriendComponent extends Component {
 
     onChangeText(text) {
-        console.log(text.trim());
-
-        this.props.changePhone(text);
+        text.replace(/\s/g,'');
+        this.props.changePhone(text.trim());
     }
 
     onSubmit() {
         const {token, phone} = this.props;
-        console.log(phone.replace(/\s/g,''));
         this.props.sendInvitation(phone.replace(/\s/g,''))
     }
     
