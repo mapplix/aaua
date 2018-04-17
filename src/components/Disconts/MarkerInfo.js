@@ -11,16 +11,24 @@ class MarkerInfo extends Component {
                 return (
                     <View
                         style={{
+                            flex:1,
+                            alignSelf: 'stretch',
                             flexDirection: 'row',
-                            justifyContent: 'space-around',
+                            justifyContent: 'space-between',
                             alignItems: 'center',
+                            borderBottomColor: '#1b1b1b',
+                            borderBottomWidth: 1,
                         }}
                         key={service.name}
                     >
-                        <Text>
+                        <Text style={{
+                            fontSize: 18
+                        }}>
                             {service.name}
                         </Text>
-                        <Text>
+                        <Text style={{
+                            fontSize: 18
+                        }}>
                             {service.price}
                         </Text>
                     </View>
@@ -30,8 +38,6 @@ class MarkerInfo extends Component {
     }
 
     render() {
-        console.log(this.props.contacts);
-
         const htmlSrc = `
             <!DOCTYPE html>
             <html lang="ru">
@@ -46,13 +52,14 @@ class MarkerInfo extends Component {
             
             </html>`;
 
-
+        const {cardStyle} = styles;
+console.log(this.props);
         return (
             <MainCard>
                 <Header back>
                     {this.props.title || ''}
                 </Header>
-                <CardItem>
+                <CardItem style={[cardStyle, {margin: 20}]}>
                     <View
                         style={{
                             flex:2,
@@ -64,21 +71,16 @@ class MarkerInfo extends Component {
                         <Image
                             resizeMode='center'
                             style={{
-                                width: 300,
-                                height: 300
+                                width: '100%',
+                                height: '100%'
                             }}
                             source={{uri: BASE_URL+this.props.img}}
                         />
 
                     </View>
-                    <View
-                        style={{
-                            flex:4,
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
-                            justifyContent: 'center',
-                        }}
-                    >
+                    <View style={{
+                        flex:4
+                    }}>
                         <WebView
                             style={{
                                 flex:1,
@@ -91,23 +93,81 @@ class MarkerInfo extends Component {
                             scrollEnabled={true}
                             source={{ html: htmlSrc, baseUrl:'' }}
                         />
-                        <Text>
-                            {this.props.website}
-                        </Text>
                     </View>
                 </CardItem>
                 <CardItem>
-                    <View style={{
+                    <View style={[{
                         flex: 1,
                         justifyContent: 'flex-start',
-                    }}>
+                    }, cardStyle]}>
+                        <View
+                            style={{
+                                flex:1,
+                                alignSelf: 'stretch',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Text style={{
+                                fontSize: 20,
+                                fontWeight: '500'
+                            }}>
+                                Назва послуги
+                            </Text>
+                            <Text style={{
+                                fontSize: 20,
+                                fontWeight: '500'
+                            }}>
+                                Скидка
+                            </Text>
+                        </View>
                         {
                             this.renderServices()
                         }
+                        <View
+                            style={{
+                                flex:1,
+                                alignSelf: 'stretch',
+                                flexDirection: 'row',
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text style={{
+                                fontSize: 16,
+                                fontWeight: '500'
+                            }}>
+                                График {this.props.website}
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                flex:1,
+                                alignSelf: 'stretch',
+                                flexDirection: 'row',
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text style={{
+                                fontSize: 16,
+                                fontWeight: '400'
+                            }}>
+                                {this.props.website}
+                            </Text>
+                        </View>
                     </View>
                 </CardItem>
             </MainCard>
         )
+    }
+}
+
+const styles = {
+    cardStyle: {
+        marginRight: 30,
+        marginLeft: 30,
     }
 }
 
