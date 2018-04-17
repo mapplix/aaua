@@ -29,7 +29,7 @@ class QRcode extends Component {
             }>
                 <CardItem
                     style={{
-                        backgroundColor: '#294',
+                        backgroundColor: '#FFF',
                         flex: 1
                     }}
                 >
@@ -37,7 +37,7 @@ class QRcode extends Component {
                         <Text
                             style={{
                                 fontSize: 30,
-                                color: '#bcbcb3'
+                                color: '#1b1b1b'
                             }}
                         >
                             X
@@ -46,7 +46,7 @@ class QRcode extends Component {
                 </CardItem>
                 <CardItem
                     style={{
-                        backgroundColor: '#294',
+                        backgroundColor: '#FFF',
                         justifyContent: 'center',
                         flex: 2
                     }}
@@ -59,7 +59,7 @@ class QRcode extends Component {
                 </CardItem>
                 <CardItem
                     style={{
-                        backgroundColor:'#294',
+                        backgroundColor:'#FFF',
                         flex: 5,
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -87,7 +87,7 @@ class QRcode extends Component {
                 </CardItem>
                 <CardItem
                     style={{
-                        backgroundColor: '#294',
+                        backgroundColor: '#FFF',
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
                         alignItems: 'center',
@@ -115,13 +115,13 @@ export default connect(mapStateToProps)(QRcode)
 
 const styles = {
     container: {
-        backgroundColor: '#294',
+        backgroundColor: '#FFF',
         paddingLeft: 30,
         paddingRight: 30,
     },
     text: {
         // backgroundColor: '#294',
-        color: '#bcbcb3',
+        color: '#1b1b1b',
         fontSize: 18,
         alignSelf: 'center'
     }

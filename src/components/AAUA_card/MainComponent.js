@@ -73,7 +73,6 @@ class MainComponent extends Component {
     }
 
     render() {
-console.log(this.props.myCards == null);
         const {modal, modalTextContainer, modalText} = styles;
         return (
             <MainCard>
