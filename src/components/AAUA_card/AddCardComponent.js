@@ -83,7 +83,6 @@ class AddCardComponent extends Component {
 }
 
 const mapStateToProps = ({AAUA_Card, auth}) => {
-    console.log(auth);
     return {
         token: auth.user.token,
         card_number: AAUA_Card.card_number,

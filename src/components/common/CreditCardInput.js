@@ -4,14 +4,27 @@ import {DEVICE_OS, iOS} from '../../Actions/constants';
 
 class CreditCardInput extends Component {
 
+    state= {
+        currentText: ''
+    }
+
     handleChange(text) {
 
         const validNumber = text.replace(/\-/g,'');
-        if (validNumber.length == 4 || validNumber.length == 8 || validNumber.length == 12) {
-            text = text+'-';
+        let string = text;
+        if (validNumber.length == 5 || validNumber.length == 9 || validNumber.length == 13) {
+            let start = 0;
+            let end = text.length - 1;
+            let stringBegin = text.slice(start, end);
+            string = stringBegin+'-'+text.slice(-1);
+            if (stringBegin.slice(-1) == '-') {
+                string = text.slice(start, end-1)+'-'+text.slice(-1);
+            }
+
+            this.setState({currentText: string});
         }
 
-        this.props.onChangeText(text)
+        this.props.onChangeText(string)
     }
 
     render() {
