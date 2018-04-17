@@ -26,8 +26,8 @@ const Item = ({onPress, imageSrc, children}) => {
             }}>
                 <Image
                     style={{
-                        height: 51 * RATIO,
-                        width: 127 * RATIO,
+                        height: 102 * RATIO,
+                        width: 160  * RATIO,
                     }}
                     source={imageSrc}
                 />

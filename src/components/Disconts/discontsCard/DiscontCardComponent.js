@@ -84,7 +84,7 @@ console.log(this.props)
                         <Image
                             style={{
                                 flex: 1,
-                                height: 138,
+                                height: 128,
                                 width: null
                             }}
                             source={{uri:BASE_URL+selectedCard.code}}
@@ -98,8 +98,8 @@ console.log(this.props)
 
 const styles = {
     imageStyle: {
-        height: 60,
-        width: 232
+        height: 80,
+        width: 250
     }
 }
 
