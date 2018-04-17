@@ -22,24 +22,23 @@ class MapComponent extends Component {
     };
 
     onChangeCategory(id) {
-        console.log('onChangeCategory', id);
         this.props.selectCategory(this.props.token, id);
     }
 
     renderMarkers() {
-        console.log(this.props);
         if (this.props.places.length) {
             return this.props.places.map(marker => {
                 if (marker.lat) {
-console.log(marker);
                     const latitude = parseFloat(marker.lat);
                     const longitude = parseFloat(marker.lon);
                     return (
                         <Marker
                             key={marker.id}
                             coordinate={{latitude: latitude, longitude: longitude}}
-                            onPress={() => Actions.MarkerInfo(marker)}
                             >
+                            <Callout onPress={() => Actions.MarkerInfo(marker)}>
+                                <CustomMarker {...marker}/>
+                            </Callout>
                         </Marker>
                     )
                 }
@@ -141,7 +140,7 @@ const styles = {
         bottom: 24
     },
     modal: {
-        height: 325,
+        maxHeight: "60%",
         marginBottom: 25,
         backgroundColor: 'rgba(0,0,0,0)',
         flexDirection: 'row',
