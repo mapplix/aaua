@@ -46,7 +46,6 @@ class OrderCardComponent extends Component {
     };
 
     onChangeDelivery (value) {
-console.log(value);
         this.props.changeDelivery(value);
     }
 
@@ -69,7 +68,6 @@ console.log(value);
                 "phone" : this.props.phone
             }
         }
-        console.log(orderData);
         this.props.orderCard(orderData);
 
     }
@@ -108,13 +106,11 @@ console.log(value);
                 this.setState({searchedItems: []});
             }
         })
-console.log(searchedItems);
         this.setState({searchedItems: searchedItems.slice(0, 30)});
     };
 
     onChangeCity(title){
         if (title.length >= 2) {
-console.log(this.props.delivery)
             if (this.props.delivery == DELIVERY_NP) {
                 this.props.getNPCities(title);
             } else {
@@ -137,7 +133,6 @@ console.log(this.props.delivery)
     }
 
     onChangeAddress(address) {
-        console.log(address)
         this.props.changeAddress(address);
     }
 
@@ -328,9 +323,7 @@ const styles = {
         color: '#423486'
     },
     footerWrapper: {
-        height: 40,
-        // marginLeft: 45,
-        // marginRight: 45,
+        height: 40
     }
 }
 

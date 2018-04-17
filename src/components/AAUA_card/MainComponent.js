@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -9,7 +9,7 @@ import {
 import CardComponent from './CardComponent';
 import {Actions} from 'react-native-router-flux';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants'
-import {getMyCard} from '../../Actions/AAUA_CardAction';
+import {getMyCard, orderCard} from '../../Actions/AAUA_CardAction';
 import {connect} from 'react-redux';
 import {DEVICE_OS, iOS} from '../../Actions/constants';
 import QRCode from 'react-native-qrcode';
@@ -31,6 +31,29 @@ class MainComponent extends Component {
 
     componentWillMount() {
         this.props.getMyCard(this.props.token);
+    }
+
+    orderVirtualCard() {
+        const orderData = {
+            "token" : this.props.token,
+            "isvirtual" : 1
+        }
+        this.props.orderCard(orderData);
+    }
+    showAlert() {
+        Alert.alert(
+            'Ваша виртуальная карта создана',
+            'Спасибо за покупку',
+            [
+                {text: 'Закрыть', onPress: () => {Actions.AAUA_main();}},
+            ],
+        )
+    }
+
+    componentWillReceiveProps(nextProp) {
+        if (nextProp.orderCardSuccess) {
+            this.showAlert();
+        }
     }
 
     renderQR() {
@@ -133,11 +156,11 @@ class MainComponent extends Component {
                         height: 150
                     }}>
                         <TouchableOpacity
-                            onPress={ () => Actions.order_virtual_aaua_card()}
+                            onPress={this.orderVirtualCard.bind(this)}
                             style={modalTextContainer}
                         >
                             <Text style={modalText}>
-                                Заказать виртуальную
+                                Заказать виртуальную карту
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={modalTextContainer}
@@ -189,8 +212,9 @@ const mapStateToProps = ({AAUA_Card, auth}) => {
     return {
         user: auth.user,
         token: auth.user.token,
-        myCards: AAUA_Card.myCards
+        myCards: AAUA_Card.myCards,
+        orderCardSuccess: AAUA_Card.orderCardSuccess,
     }
 }
 
-export default connect(mapStateToProps,{getMyCard})(MainComponent);
+export default connect(mapStateToProps,{getMyCard, orderCard})(MainComponent);
