@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, ScrollView, Platform, BackHandler} from 'react-native';
+import {View, Text, Image, ScrollView, Platform, BackHandler, AppState} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -18,6 +18,10 @@ let listener = null
 
 class SubscriptionComponent extends Component {
 
+    state = {
+        appState: AppState.currentState
+    }
+
     addToBalance() {
         if (this.props.bought_at != null) {
             showAlert(
@@ -35,9 +39,9 @@ class SubscriptionComponent extends Component {
     }
 
     componentDidMount() {
+        AppState.addEventListener('change', this._handleAppStateChange);
         if (Platform.OS == "android" && listener == null) {
             listener = BackHandler.addEventListener("hardwareBackPress", () => {
-console.log('hardwareBackPress', Actions.currentScene)
                 let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards', 'messagesList']
                 if (Actions.currentScene == '_mainScreen') {
                     BackHandler.exitApp();
@@ -46,7 +50,6 @@ console.log('hardwareBackPress', Actions.currentScene)
                     Actions.mainScreen()
                 }
                 if (Actions.currentScene == 'message') {
-console.log('back from message')
                     Actions.push('messagesList');
                 }
                 else {
@@ -55,6 +58,17 @@ console.log('back from message')
                 return true;
             })
         }
+    }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            this.props.getData(this.props.token);
+        }
+        this.setState({appState: nextAppState});
     }
 
     renderPrice() {
@@ -167,7 +181,6 @@ const styles = {
 }
 
 const mapStateToProps = ({subscription, auth}) => {
-console.log(subscription);
     return {
         price: subscription.price,
         bought_at: subscription.bought_at,

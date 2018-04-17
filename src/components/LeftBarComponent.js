@@ -214,15 +214,14 @@ const styles = {
     }
 }
 
-const mapStateToProps = ({auth}) => {
-
+const mapStateToProps = ({auth, subscription}) => {
     var userName = '';
     var userSurName = '';
     var status = false;
     if (auth.user) {
         userName = auth.user.profile.name;
         userSurName = auth.user.profile.surname ? auth.user.profile.surname : '';
-        status = auth.user.status == 'active' ? true : false
+        status = subscription.bought_at == null ? false : true;
     }
     return {
         userName: userName + userSurName,
