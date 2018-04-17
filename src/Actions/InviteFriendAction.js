@@ -20,13 +20,17 @@ export const changePhone = (phone) => {
 
 export const sendInvitation = (emailPhone) => {
     return (dispatch) => {
-        console.log(emailPhone)
         var email = '';
         var phone = '';
         if (emailPhone.includes('@')) {
             email = emailPhone
         } else {
-            phone = emailPhone
+            phone = emailPhone;
+            if (!['+'].includes(phone.slice(0))) {
+                if (!['38'].includes(phone.slice(0, 1))) {
+                    phone = '+38'+emailPhone;
+                }
+            }
         }
 
         const obj = {
@@ -56,7 +60,6 @@ console.log(INVITE_FRIEND_URL, data, obj, signature);
 }
 
 const onInviteSended = (dispatch, response) => {
-console.log('onInviteSended', response);
     if (response.error == 0) {
         dispatch({
             type: INVITE_SENDED_SUCCESS,
