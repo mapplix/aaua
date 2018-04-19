@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Switch, TouchableOpacity, Linking} from 'react-native';
+import {View, Text, Switch, TouchableOpacity, Linking, Share} from 'react-native';
 import {MainCard, CardItem, Header, Icon, ButtonRoundet} from '../common';
 import {RATIO} from '../../styles/constants'
 import Permissions from 'react-native-permissions'
@@ -27,6 +27,21 @@ class SettingsComponent extends Component {
                 return Linking.openURL(url);
             }
         }).catch(err => console.error('An error occurred', err));
+    }
+
+    shareLink() {
+        Share.share({
+            message: 'https://aaua.com.ua',
+            url: 'https://aaua.com.ua',
+            title: 'Наше приложение'
+        }, {
+            // Android only:
+            dialogTitle: 'Поделиться с друзьями',
+            // iOS only:
+            excludedActivityTypes: [
+                'com.apple.UIKit.activity.PostToTwitter'
+            ]
+        })
     }
 
     render(){
@@ -83,14 +98,17 @@ class SettingsComponent extends Component {
                     </Text>
                 </CardItem>
                 <CardItem style={cardStyle}>
-                    <View style={sliderContainer}>
-                        <Icon
-                            imageSrc={require('../../images/icons/share.png')}
-                        />
-                    </View>
-                    <Text>
-                        Поделиться в социальных сетях
-                    </Text>
+                    <TouchableOpacity
+                        onPress={this.shareLink.bind(this)} >
+                        <View style={sliderContainer}>
+                            <Icon
+                                imageSrc={require('../../images/icons/share.png')}
+                            />
+                        </View>
+                        <Text>
+                            Поделиться в социальных сетях
+                        </Text>
+                    </TouchableOpacity>
                 </CardItem>
                 <CardItem style={titleContainer}>
                     <View style={{

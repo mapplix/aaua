@@ -6,29 +6,18 @@ import {BASE_URL} from '../../Actions/constants';
 class MarkerInfo extends Component {
 
     renderServices() {
+        const {priceText, serviceText, serviceContainer} = styles;
         if (this.props.services) {
             return this.props.services.map( (service) => {
                 return (
                     <View
-                        style={{
-                            flex:1,
-                            alignSelf: 'stretch',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            borderBottomColor: '#1b1b1b',
-                            borderBottomWidth: 1,
-                        }}
+                        style={serviceContainer}
                         key={service.name}
                     >
-                        <Text style={{
-                            fontSize: 18
-                        }}>
+                        <Text style={serviceText}>
                             {service.name}
                         </Text>
-                        <Text style={{
-                            fontSize: 18
-                        }}>
+                        <Text style={priceText}>
                             {service.price}
                         </Text>
                     </View>
@@ -52,14 +41,15 @@ class MarkerInfo extends Component {
             
             </html>`;
 
-        const {cardStyle} = styles;
+        const {contactsContainer, servicesWrapper, contactRow, iconWrapper} = styles;
+        const {title, img, rezhim, website} = this.props;
 console.log(this.props);
         return (
             <MainCard>
                 <Header back>
-                    {this.props.title || ''}
+                    {title || ''}
                 </Header>
-                <CardItem style={[cardStyle, {margin: 20}]}>
+                {/*<CardItem style={[cardStyle, {margin: 20}]}>
                     <View
                         style={{
                             flex:2,
@@ -158,6 +148,56 @@ console.log(this.props);
                             </Text>
                         </View>
                     </View>
+                </CardItem>*/}
+                <CardItem>
+                    <Image
+                        resizeMethod="scale"
+                        resizeMode='stretch'
+                        style={{
+                            width: '100%',
+                            height: '100%'
+                        }}
+                        source={{uri: BASE_URL+img}}
+                    />
+                </CardItem>
+                <CardItem>
+                    <View style={contactsContainer}>
+                        <View style={contactRow}>
+                            <View style={iconWrapper}>
+                                <Image
+                                    style={{
+                                        width: 20,
+                                        height: 20
+                                    }}
+                                    source={require('../../images/icons/webSite.png')}
+                                />
+                            </View>
+                            <Text style={contactsText}>
+                                { website}
+                            </Text>
+                        </View>
+                        <View style={contactRow}>
+                            <View style={iconWrapper}>
+                                <Image
+                                    style={{
+                                        width: 20,
+                                        height: 20
+                                    }}
+                                    source={require('../../images/icons/rezhim.png')}
+                                />
+                            </View>
+                            <Text style={contactsText}>
+                                { rezhim }
+                            </Text>
+                        </View>
+                    </View>
+                </CardItem>
+                <CardItem>
+                    <View style={servicesWrapper}>
+                    {
+                        this.renderServices()
+                    }
+                    </View>
                 </CardItem>
             </MainCard>
         )
@@ -168,6 +208,63 @@ const styles = {
     cardStyle: {
         marginRight: 30,
         marginLeft: 30,
+    },
+    servicesWrapper: {
+        flex: 1,
+        // backgroundColor: '#288',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingRight: 15,
+        paddingLeft: 15,
+
+    },
+    serviceContainer: {
+        flex:1,
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderColor: '#adada4',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingRight: 15,
+        paddingLeft: 15,
+        marginBottom: 8,
+        backgroundColor: 'rgb(233, 233, 233)'
+    },
+    priceText: {
+        fontFamily: 'SFUIText-Bold',
+        fontSize: 21,
+        color: '#423486'
+    },
+    serviceText: {
+        fontSize: 16,
+        color: '#1b1b1b',
+        fontWeight: '500'
+    },
+    contactsContainer: {
+        flex: 1,
+        paddingBottom: 31,
+        paddingTop: 27,
+        paddingLeft: 32,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+    },
+    contactRow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    iconWrapper: {
+        marginRight: 23,
+    },
+    contactsText: {
+        fontFamily: 'SFUIText-Regular',
+        fontSize: 16,
+        color: '#1b1b1b'
     }
 }
 
