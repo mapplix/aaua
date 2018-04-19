@@ -54,7 +54,7 @@ class QRcode extends Component {
                     <Text
                         style={text}
                     >
-                        Это Ваша карта “AAUA”. Чтобы ею воспользоваться, покажите этот экран оператору
+                        Это Ваша карта “AAUA”. Чтобы ею воспользоваться, покажите этот экран кассиру
                     </Text>
                 </CardItem>
                 <CardItem

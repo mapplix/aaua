@@ -23,18 +23,6 @@ class ForgotPassComponent extends Component {
         this.props.sendData(this.props.phone)
     }
 
-    componentWillReceiveProps(nextProps) {
-console.log(nextProps);
-        if (nextProps.newPass != null) {
-            showAlert(
-                'Новый пароль',
-                nextProps.newPass,
-                'OK',
-                () => {Actions.reset('auth')}
-            );
-        }
-    }
-
     render() {
         return (
             <MainCard>
