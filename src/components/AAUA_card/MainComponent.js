@@ -51,6 +51,7 @@ class MainComponent extends Component {
     }
 
     componentWillReceiveProps(nextProp) {
+console.log('componentWillReceiveProps AAUA main', this.props.orderCardSuccess, nextProp.orderCardSuccess)
         if (nextProp.orderCardSuccess) {
             this.showAlert();
         }
@@ -128,6 +129,7 @@ class MainComponent extends Component {
                             height: 62 * RATIO,
                             width: 62 * WIDTH_RATIO
                         }}
+                        isDisabled={this.props.myCards != null}
                         imageSrc={require('../../images/icons/order_card.png')}
                         onPress={() => this.setState({isOpen: true})}
                     >
