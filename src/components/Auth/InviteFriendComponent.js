@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Share} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -32,6 +32,21 @@ class InviteFriendComponent extends Component {
                 'Закрыть'
             )    
         }
+    }
+
+    shareLink() {
+        Share.share({
+            message: 'https://aaua.com.ua',
+            url: 'https://aaua.com.ua',
+            title: 'Наше приложение'
+        }, {
+            // Android only:
+            dialogTitle: 'Поделиться с друзьями',
+            // iOS only:
+            excludedActivityTypes: [
+                'com.apple.UIKit.activity.PostToTwitter'
+            ]
+        })
     }
 
     render() {
@@ -98,14 +113,16 @@ class InviteFriendComponent extends Component {
                     flex:0,
                     height: 96 * RATIO,
                 }}>
+                    <TouchableOpacity
+                        onPress={this.shareLink.bind(this)} >
+                        <Image style={{
+                            width: 75,
+                            height: 75
+                        }}
+                               source={require('../../images/icons/share_round.png')}>
 
-                    <Image style={{
-                        width: 75,
-                        height: 75
-                    }}
-                           source={require('../../images/icons/share_round.png')}>
-
-                    </Image>
+                        </Image>
+                    </TouchableOpacity>
                 </CardItem>
             </MainCard>
         )
