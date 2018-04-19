@@ -4,7 +4,6 @@ import {Text, TouchableOpacity} from 'react-native';
 const ButtonRoundet = (props) => {
     const {onPress, children, isDisabled} = props;
     const {buttonStyle, textStyle} = style;
-console.log(props);
     return (
         <TouchableOpacity
             disabled={isDisabled}

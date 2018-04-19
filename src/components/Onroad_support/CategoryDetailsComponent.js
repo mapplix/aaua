@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {MainCard,
     CardItem,
     ButtonRoundet,
@@ -80,6 +80,7 @@ console.log(nextProps);
                         />
                     </CardItem>
                     <CardItem style={checkboxesContainer}>
+                        <ScrollView >
                         {
                             this.props.details.map((item) => {
                                 return (
@@ -91,6 +92,7 @@ console.log(nextProps);
                                 )
                             })
                         }
+                        </ScrollView>
                     </CardItem>
                     {/*<CardItem style={{
                         flex: 18,
