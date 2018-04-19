@@ -25,16 +25,16 @@ class CustomMarker extends Component {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 300,
-                width: 300,
+                height: 210,
+                width: 210,
                 maxWidth: 600
             }}>
                     <WebView
                         style={{
                             flex:1,
                             alignSelf: 'stretch',
-                            width: 300,
-                            height: 300,
+                            width: 200,
+                            height: 200,
                             maxWidth: 600
                          }}
                         javaScriptEnabled={false}
