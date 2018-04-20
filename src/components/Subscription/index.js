@@ -14,8 +14,6 @@ import {showAlert} from '../Modals';
 import {Actions} from 'react-native-router-flux';
 import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
-let listener = null
-
 class SubscriptionComponent extends Component {
 
     state = {
@@ -36,39 +34,6 @@ class SubscriptionComponent extends Component {
 
     componentWillMount() {
         this.props.getData(this.props.token);
-    }
-
-    componentDidMount() {
-        AppState.addEventListener('change', this._handleAppStateChange);
-        if (Platform.OS == "android" && listener == null) {
-            listener = BackHandler.addEventListener("hardwareBackPress", () => {
-                let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards', 'messagesList']
-                if (Actions.currentScene == '_mainScreen') {
-                    BackHandler.exitApp();
-                }
-                if (routs.includes(Actions.currentScene)) {
-                    Actions.mainScreen()
-                }
-                if (Actions.currentScene == 'message') {
-                    Actions.push('messagesList');
-                }
-                else {
-                    Actions.pop();
-                }
-                return true;
-            })
-        }
-    }
-
-    componentWillUnmount() {
-        AppState.removeEventListener('change', this._handleAppStateChange);
-    }
-
-    _handleAppStateChange = (nextAppState) => {
-        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-            this.props.getData(this.props.token);
-        }
-        this.setState({appState: nextAppState});
     }
 
     renderPrice() {

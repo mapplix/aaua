@@ -22,7 +22,7 @@ const LabelOnInput = (props) => {
                     {...props}
                     placeholderTextColor='#b6b9bf'
                     multiline={false}
-                    onSubmitEditing={() => {console.log('enter pressed')}}
+                    onSubmitEditing={() => {}}
                     placeholder={placeholder}
                     secureTextEntry = {secureTextEntry}
                     value={value}

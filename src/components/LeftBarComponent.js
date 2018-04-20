@@ -12,6 +12,7 @@ import {LeftBarMenuItem, RightBarMenuItem, ButtonRoundet} from './common';
 import {RATIO}from '../styles/constants';
 import {connect} from 'react-redux';
 import {logOut} from '../Actions/AuthAction';
+import {getData} from '../Actions/SubscriptionAction'
 
 class LeftBarComponent extends Component {
 
@@ -27,6 +28,12 @@ class LeftBarComponent extends Component {
                 {text: 'Закрыть', onPress: () => {console.log('close alert')}},
             ],
         )
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.token != null && !this.props.bought_at) {
+            this.props.getData(nextProps.token);
+        }
     }
 
     renderStatus() {
@@ -215,18 +222,25 @@ const styles = {
 }
 
 const mapStateToProps = ({auth, subscription}) => {
+console.log(subscription);
     var userName = '';
     var userSurName = '';
     var status = false;
+    var token = null;
+    var bought_at = false;
     if (auth.user) {
         userName = auth.user.profile.name;
         userSurName = auth.user.profile.surname ? auth.user.profile.surname : '';
         status = subscription.bought_at == null ? false : true;
+        bought_at = subscription.bought_at;
+        token = auth.user.token;
     }
     return {
         userName: userName + userSurName,
-        isActiveStatus: status
+        isActiveStatus: status,
+        token: token,
+        bought_at: bought_at
     }
 }
 
-export default connect(mapStateToProps,{logOut})(LeftBarComponent);
+export default connect(mapStateToProps,{logOut, getData})(LeftBarComponent);

@@ -10,9 +10,6 @@ class DropDown extends Component {
         if (elements.length) {
 
 const value = selected != null ? selected : elements[0];
-console.log('value',value);
-console.log('selected',selected);
-console.log('elements',elements);
             return (
                 <Dropdown
                     containerStyle={{
