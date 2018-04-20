@@ -104,13 +104,11 @@ class OrderVirtualCardComponent extends Component {
                 this.setState({searchedItems: []});
             }
         })
-console.log(searchedItems);
         this.setState({searchedItems: searchedItems.slice(0, 30)});
     };
 
     onChangeCity(title){
         if (title.length >= 2) {
-console.log(this.props.delivery)
             if (this.props.delivery == DELIVERY_NP) {
                 this.props.getNPCities(title);
             } else {
@@ -133,7 +131,6 @@ console.log(this.props.delivery)
     }
 
     onChangeAddress(address) {
-        console.log(address)
         this.props.changeAddress(address);
     }
 
@@ -196,8 +193,6 @@ console.log(this.props.delivery)
                 <CardItem
                     style={{
                     flex:15,
-                    // height: 65,
-                    // marginTop:22,
                 }}>
                     <LabelOnInput
                         label={'Адрес'}

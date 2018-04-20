@@ -143,7 +143,7 @@ console.log(ORDER_CARD_CITY_SELECTED);
         case MY_AAUA_CARD_FAIL:
             return {...state, error: action.payload, addCardError: null}
         case MY_AAUA_CARD_LOADED:
-            return {...state, myCards: action.payload, loading: false, addCardError: null}
+            return {...state, myCards: action.payload, loading: false, addCardError: null, orderCardSuccess: false}
         case AAUA_CARD_NUMBER_CHANGE:
             return {...state, card_number: action.payload, addCardError: null}
         default: return state;

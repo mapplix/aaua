@@ -125,7 +125,6 @@ const styles = {
 }
 
 const mapStateToProps = ({AAUA_Card, auth}) => {
-console.log(AAUA_Card)
     return {
         myCard: AAUA_Card.myCards,
         loading: AAUA_Card.loading,
