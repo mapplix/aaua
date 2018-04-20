@@ -41,8 +41,8 @@ class MarkerInfo extends Component {
             
             </html>`;
 
-        const {contactsContainer, servicesWrapper, contactRow, iconWrapper} = styles;
-        const {title, img, rezhim, website} = this.props;
+        const {contactsContainer, servicesWrapper, contactRow, iconWrapper, contactsText} = styles;
+        const {title, img, rezhim, website, address, phones} = this.props;
 console.log(this.props);
         return (
             <MainCard>
@@ -162,6 +162,36 @@ console.log(this.props);
                 </CardItem>
                 <CardItem>
                     <View style={contactsContainer}>
+
+                        <View style={contactRow}>
+                            <View style={iconWrapper}>
+                                <Image
+                                    style={{
+                                        width: 21,
+                                        height: 21
+                                    }}
+                                    source={require('../../images/icons/markerPhone.png')}
+                                />
+                            </View>
+                            <Text style={contactsText}>
+                                { phones}
+                            </Text>
+                        </View>
+                        <View style={contactRow}>
+                            <View style={iconWrapper}>
+                                <Image
+                                    style={{
+                                        width: 15,
+                                        height: 21
+                                    }}
+                                    source={require('../../images/icons/markerAddress.png')}
+                                />
+                            </View>
+                            <Text style={contactsText}>
+                                { address}
+                            </Text>
+                        </View>
+
                         <View style={contactRow}>
                             <View style={iconWrapper}>
                                 <Image

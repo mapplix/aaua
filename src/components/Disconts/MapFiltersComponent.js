@@ -104,7 +104,7 @@ class MapFiltersComponent extends Component {
 
 const styles = {
     modalCard: {
-        height: 300,
+        // height: 300,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',

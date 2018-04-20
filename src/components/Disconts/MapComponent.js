@@ -140,7 +140,7 @@ const styles = {
         bottom: 24
     },
     modal: {
-        maxHeight: "60%",
+        maxHeight: HEIGHT <= 640 ? "85%" : "65%",
         marginBottom: 25,
         backgroundColor: 'rgba(0,0,0,0)',
         flexDirection: 'row',
