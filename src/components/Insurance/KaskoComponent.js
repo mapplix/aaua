@@ -53,7 +53,6 @@ console.log(brand);
     }
 
     onChangeCarModel(model) {
-console.log('onChangeCarModel', model);
         this.props.selectModel(model);
     }
 
@@ -64,7 +63,7 @@ console.log('onChangeCarModel', model);
             "token" : token,
             "bid" : {
                 "brand_id" : carBrandId,
-                "modela_id" : carModel,
+                "modela_id" : carModel.id,
                 "year" : year
             },
 

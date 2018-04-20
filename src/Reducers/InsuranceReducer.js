@@ -19,7 +19,7 @@ import {
 
 const INITIAL_STATE = {
     volume: null,
-    registration: 1515546,
+    registration: null,
     car: 1,
     carBrand: '',
     carBrandId: null,
@@ -46,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
         case INSURANCE_CAR_BRAND_CHANGE:
             return {...state, carBrand: action.payload};
         case INSURANCE_CAR_BRAND_SELECT:
-            return {...state, carBrandId: action.payload.id, carBrand: action.payload.title}
+            return {...state, carBrandId: action.payload.id, carBrand: action.payload.title, carModel: null}
         case INSURANCE_YEAR_CHANGE:
             return {...state, year: action.payload};
         case INSURANCE_CHANGE_OSAGO_CITY:
@@ -58,13 +58,27 @@ export default (state = INITIAL_STATE, action) => {
         case SELECT_CAR_MODEL:
             return {...state, carModel: action.payload}
         case KASKO_ORDER_SUCCESS:
-            return {...state, kaskoOrderSuccess: true}
+            return {
+                ...state,
+                kaskoOrderSuccess: true,
+                carBrand: '',
+                carBrandId: null,
+                year: '',
+                carModels: [],
+                carModel: '',
+            }
         case CALCULATE_OSAGO_START:
             return {...state, osagoPriceLoading: true, osagoPrice: 0}
         case CALCULATE_OSAGO_SUCCESS:
             return {...state, osagoPriceLoading: false, osagoPrice: action.payload}
         case OSAGO_ORDER_SUCCESS:
-            return {...state, osagoOrderSuccess: true}
+            return {
+                ...state,
+                osagoOrderSuccess: true,
+                volume: null,
+                registration: null,
+                osagoPrice: 0
+            }
         case OSAGO_ORDER_FAIL:
             return {...state, osagoOrderSuccess: false}
         default: return state;
