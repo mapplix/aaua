@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ScrollView, Alert} from 'react-native';
+import {View, ScrollView, Alert, TouchableOpacity, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {
     changePass,
@@ -14,7 +14,6 @@ import {
     onChangeBrand,
     onSelectBrand
 } from '../../../Actions/RegisterAction'
-import {getBrands, getCities} from '../../../Actions/CitiesBrands'
 import {
     MainCard,
     CardItem,
@@ -26,7 +25,7 @@ import {
     Autocomplete,
     Spiner
 } from '../../common';
-import {showModal} from '../../Modals';
+import {showAlert} from '../../Modals';
 import {CITIES} from '../../../Actions/constants';
 
 class SecondStageComponent extends Component {
@@ -69,6 +68,7 @@ class SecondStageComponent extends Component {
         this.props.onSelectBrand(brandObj);
     }
     onChangeCity(title){
+console.log(title)
         if (title.length >= 2) {
             this.searchedCities(title);
         }
@@ -149,14 +149,13 @@ class SecondStageComponent extends Component {
 console.log(userData, this.props);
         if (name.length > 0 && cityId > 0
             && year.length> 0 && email.length
-            && password.length > 0 && confirm_password > 0
+            && password.length > 0 && confirm_password.length > 0
             && brandId > 0
         ) {
             if(this.validate(email)) {
-console.log(userData);
                 this.props.sendStep2(userData)
             } else {
-                showModal('Ошибка', 'не верный формат email', 'Закрыть')
+                showAlert('Ошибка', 'не верный формат email', 'Закрыть')
             }
 
         } else {
@@ -260,6 +259,7 @@ console.log(userData);
                         }}
                     >
                         <LabelOnInput
+                            keyboardType={'email-address'}
                             label={'Email'}
                             placeholder={'sample@index.com'}
                             onChangeText={this.onChangeEmail.bind(this)}
