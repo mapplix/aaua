@@ -30,5 +30,9 @@ export const getImageByCategoryId = (categoryId) => {
             return require('../images/icons/mall.png')
         case 17:
             return require('../images/icons/trc.png')
+        case 18:
+            return require('../images/icons/store-icon.png')
+        default:
+            return require('../images/icons/sto.png')
     }
 }

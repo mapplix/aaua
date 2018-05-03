@@ -11,7 +11,7 @@ import {
     DropDown} from '../common'
 import {changeYear, changeCar,
     changeCarBrand, orderKasko,
-    selectBrand, getCarModel, selectModel} from '../../Actions/InsuranceAction';
+    selectBrand, getCarModel, selectModel, resetData} from '../../Actions/InsuranceAction';
 import {DEVICE_OS, iOS} from '../../Actions/constants';
 import {getBrands} from '../../Actions/CitiesBrands';
 import {showAlert} from '../Modals';
@@ -128,6 +128,7 @@ console.log(orderData);
                 'Ваша заявка принята',
                 'Закрыть',
                 () => {
+                    this.props.resetData();
                     Actions.insuranceCategories()
             })
         }
@@ -224,4 +225,4 @@ const mapStateToProps = ({auth, insurance, citiesBrands}) => {
 
 export default connect(mapStateToProps,
     {changeYear, changeCar, changeCarBrand,
-        orderKasko, getBrands, selectBrand, getCarModel, selectModel})(KaskoComponent);
+        orderKasko, getBrands, selectBrand, getCarModel, selectModel, resetData})(KaskoComponent);

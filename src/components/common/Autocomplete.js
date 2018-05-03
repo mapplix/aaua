@@ -29,7 +29,6 @@ class Autocomplete extends Component {
                     onPress={
                         () => {
                             this.props.onSelect(item)
-                            // containerHeight = 65;
                             this.setState({searchedItems: []});
                         }
                     }
@@ -76,7 +75,6 @@ class Autocomplete extends Component {
     }
 
     render() {
-console.log(this.props.data);
         const {inputStyle, labelStyle, containerStyle} = styles;
         const {label, placeholder, value} = this.props;
         return (

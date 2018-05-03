@@ -22,7 +22,7 @@ const styles = {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 20
+        // marginBottom: 20
     },
     iconStyle: {
         width: 17,

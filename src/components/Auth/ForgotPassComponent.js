@@ -19,7 +19,6 @@ class ForgotPassComponent extends Component {
     }
 
     onSubmit = () => {
-        console.log('submit user data', this.props.phone);
         this.props.sendData(this.props.phone)
     }
 

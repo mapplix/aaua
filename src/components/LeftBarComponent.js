@@ -31,7 +31,7 @@ class LeftBarComponent extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.token != null && !this.props.bought_at) {
+        if (nextProps.token != this.props.token && !this.props.bought_at) {
             this.props.getData(nextProps.token);
         }
     }

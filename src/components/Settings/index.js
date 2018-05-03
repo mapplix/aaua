@@ -98,7 +98,9 @@ class SettingsComponent extends Component {
                     </Text>
                 </CardItem>
                 <CardItem style={cardStyle}>
-                    <TouchableOpacity
+                    <TouchableOpacity style={{
+                        flexDirection: 'row'
+                    }}
                         onPress={this.shareLink.bind(this)} >
                         <View style={sliderContainer}>
                             <Icon
@@ -116,7 +118,7 @@ class SettingsComponent extends Component {
                         marginBottom: 19 * RATIO
                     }}>
                         <Text style={phoneText}>
-                            Телефон службы поддержкии
+                            Телефон службы поддержки
                         </Text>
                     </View>
                     <View style={phoneContainer}>

@@ -14,7 +14,8 @@ import {
     CALCULATE_OSAGO_START,
     CALCULATE_OSAGO_SUCCESS,
     OSAGO_ORDER_SUCCESS,
-    OSAGO_ORDER_FAIL
+    OSAGO_ORDER_FAIL,
+    RESET_INSURANCE_DATA
 } from '../Actions/types';
 
 const INITIAL_STATE = {
@@ -81,6 +82,15 @@ export default (state = INITIAL_STATE, action) => {
             }
         case OSAGO_ORDER_FAIL:
             return {...state, osagoOrderSuccess: false}
+        case RESET_INSURANCE_DATA:
+            return {...state,
+                osagoOrderSuccess: false,
+                kaskoOrderSuccess: false,
+                osagoPrice: 0,
+                registration: null,
+                osagoCity: '',
+                osagoCityId: null,
+            }
         default: return state;
     }
 }

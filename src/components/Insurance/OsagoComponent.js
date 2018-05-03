@@ -12,7 +12,16 @@ import {
     DropDown} from '../common'
 import {RATIO} from '../../styles/constants';
 import {CITIES, DEVICE_OS, iOS} from '../../Actions/constants';
-import {changeRegistration, changeVolume, orderOsago, changeOsagoCity, selectOsagoCity, getCarType, calculateOsago} from '../../Actions/InsuranceAction';
+import {
+    changeRegistration,
+    changeVolume,
+    orderOsago,
+    changeOsagoCity,
+    selectOsagoCity,
+    getCarType,
+    calculateOsago,
+    resetData
+} from '../../Actions/InsuranceAction';
 import {getCities} from '../../Actions/CitiesBrands';
 import {Actions} from 'react-native-router-flux';
 import {showAlert} from '../Modals';
@@ -99,10 +108,15 @@ console.log(nextProps);
                 'Ваша заявка принята',
                 'Закрыть',
                 () => {
+                    this.props.resetData();
                     Actions.insuranceCategories()
                 })
         }
     }
+
+    // componentWillUnmount() {
+    //     console.log('unmount');
+    // }
 
     renderPrice() {
         if (this.props.loadingPrice) {
@@ -126,7 +140,7 @@ console.log(nextProps);
     }
 
     render() {
-        console.log(this.props.loadingPrice)
+        console.log(this.props)
         return (
             <MainCard>
                 <Header back>
@@ -233,4 +247,14 @@ console.log(insurance);
     }
 }
 
-export default connect(mapStateToProps, {changeRegistration, changeVolume, orderOsago, getCities, changeOsagoCity, selectOsagoCity, getCarType, calculateOsago})(OsagoComponent);
+export default connect(mapStateToProps, {
+    changeRegistration,
+    changeVolume,
+    orderOsago,
+    getCities,
+    changeOsagoCity,
+    selectOsagoCity,
+    getCarType,
+    calculateOsago,
+    resetData
+})(OsagoComponent);

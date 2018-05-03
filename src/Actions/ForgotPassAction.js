@@ -10,17 +10,12 @@ import {
 } from './constants';
 import axios from 'axios';
 import md5 from 'js-md5'
+import {Actions} from 'react-native-router-flux';
 
 export const changePhone = (phone) => {
     return {
         type: PHONE_CHANGE,
         payload: phone
-    }
-}
-
-export const submitUserData = () => {
-    return {
-        type: FORGOT_PASS_SUBMIT
     }
 }
 
@@ -55,6 +50,7 @@ console.log(data, signature, FORGOT_PASS_URL);
 const onSubmitSuccess = (dispatch, data) => {
 console.log('forgot password submit success', data);
    if (data.error == 0) {
+       Actions.reset('auth')
         dispatch({
             type: FORGOT_PASS_SUBMIT_SUCCESS,
             payload: data.new_password

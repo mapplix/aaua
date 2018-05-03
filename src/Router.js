@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, ActivityIndicator, AsyncStorage, Platform} from 'react-native';
+import {Dimensions, ActivityIndicator, AsyncStorage, Platform, BackHandler} from 'react-native';
 import {Router, Scene, Stack, Drawer, Tabs, Actions} from 'react-native-router-flux';
 
 {/* AUTH */}
@@ -65,6 +65,7 @@ import FCM, { FCMEvent,
 import {CHECK_TOKEN_URL, SECRET_KEY} from './Actions/constants'
 import axios from 'axios';
 import md5 from 'js-md5';
+import Geolocation from 'react-native-geolocation-service';
 
 /*Firebase Notificaion*/
 FCM.on(FCMEvent.Notification, async (notif) => {
@@ -101,6 +102,8 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     });
 });
 
+let listener = null;
+
 class RouterComponent extends Component {
 
     constructor() {
@@ -113,32 +116,17 @@ class RouterComponent extends Component {
     }
 
     componentWillMount() {
-console.log('router component will mount')
-        // AsyncStorage.clear();
         this.props.getBrands();
         this.props.getCities();
-        // this.props.getNPCities();
     }
 
     componentDidMount() {
-        // AsyncStorage.getAllKeys((err, keys) => {
-        //     AsyncStorage.multiGet(keys, (err, stores) => {
-        //         stores.map((result, i, store) => {
-        //             // get at each store's key/value so you can work with it
-        //             let key = store[i][0];
-        //             let value = store[i][1];
-        //             console.log(key)
-        //         });
-        //     });
-        // });
-
         /*Check if User logged in*/
         AsyncStorage.getItem('user')
             .then((obj) => {
-console.log(obj);
                 const user = JSON.parse(obj);
                 if (user !== null) {
-
+console.log('user from store', user);
                     const obj = {
                         "token": user.token,
                         "phone" : user.profile.phone,
@@ -179,7 +167,6 @@ console.log(obj);
                             }
                         })
                 } else {
-console.log('user = null')
                     this.setState({
                         hasToken: false,
                         hasCard: false,
@@ -195,10 +182,6 @@ console.log('user = null')
         this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
             // optional, do some component related stuff
         });
-
-        // initial notification contains the notification that launchs the app. If user launchs app by clicking banner, the banner notification info will be here rather than through FCM.on event
-        // sometimes Android kills activity when app goes to background, and when resume it broadcasts notification before JS is run. You can use FCM.getInitialNotification() to capture those missed events.
-        // initial notification will be triggered all the time even when open app by icon so send some action identifier when you send notification
         FCM.getInitialNotification().then(notif => {
             console.log(notif)
         });
@@ -206,14 +189,26 @@ console.log('user = null')
         this.props.getPushToken();
     }
 
-    componentWillUnmount() {
-console.log('router will unmount');
-        // stop listening for events
-        // this.notificationListener.remove();
+    onBackPress() {
+        if (Actions.state.index === 0) {
+            let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards', 'messagesList', 'history']
+            if (Actions.currentScene == 'mainScreen') {
+                BackHandler.exitApp();
+            }
+           if (routs.includes(Actions.currentScene)) {
+                Actions.mainScreen()
+            }
+            if (Actions.currentScene == 'message') {
+                Actions.push('messagesList');
+            }
+            else {
+                Actions.pop();
+            }
+            return true;
+        }
     }
 
     render() {
-        console.log(this.state);
         const {width} = Dimensions.get('window');
         if (!this.state.isLoaded) {
             return (
@@ -221,7 +216,11 @@ console.log('router will unmount');
             )
         } else {
             return (
-                <Router>
+                <Router
+                    backAndroidHandler={
+                        this.onBackPress
+                    }
+                >
                     <Stack
                         hideNavBar
                         key="root"
@@ -275,10 +274,8 @@ console.log('router will unmount');
                                  */}
                                 <Scene hideNavBar key="mainScreen" component={MainComponent} title="main_screen"/>
                                 <Scene hideNavBar key="wallet" component={WalletComponent} title="Кошелек"/>
-                                <Stack>
-                                    <Scene hideNavBar key="subscription" component={SubscriptionComponent}
-                                           title="Годовая подписка"/>
-                                </Stack>
+                                <Scene hideNavBar key="subscription" component={SubscriptionComponent}
+                                       title="Годовая подписка"/>
                                 <Stack hideNavBar key="store">
                                     <Scene hideNavBar key="categories" component={CategoriesComponent} title="Store"/>
                                     <Scene key="detail" component={DetailsComponent} title="Details"/>

@@ -101,6 +101,7 @@ export const CALCULATE_OSAGO_START = 'calculate_osago_start';
 export const CALCULATE_OSAGO_SUCCESS = 'calculate_osago_success';
 export const OSAGO_ORDER_SUCCESS = 'osago_order_success';
 export const OSAGO_ORDER_FAIL = 'osago_order_fail';
+export const RESET_INSURANCE_DATA = 'reset_insurance_data'
 
 export const CARD_NUMBER_CHANGE = 'card_number_change';
 

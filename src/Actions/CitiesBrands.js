@@ -36,7 +36,7 @@ export const getBrands = () => {
                 )
                     .then(brands => {
                         saveItem('brands', JSON.stringify(brands.data.data));
-                        onBradsLoaded(dispatch, brands.data)
+                        onBradsLoaded(dispatch, brands.data.data)
                     })
             } else {
                 onBradsLoaded(dispatch, JSON.parse(cachedBrands))
@@ -69,7 +69,7 @@ export const getCities = () => {
                     )
                         .then(cities => {
                             saveItem('cities', JSON.stringify(cities.data.data));
-                            onCitiesLoaded(dispatch, cities.data)
+                            onCitiesLoaded(dispatch, cities.data.data)
                         })
                 } else {
                     onCitiesLoaded(dispatch, JSON.parse(cachedCities))

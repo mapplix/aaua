@@ -19,7 +19,8 @@ import {
     CALCULATE_OSAGO_START,
     CALCULATE_OSAGO_SUCCESS,
     OSAGO_ORDER_SUCCESS,
-    OSAGO_ORDER_FAIL
+    OSAGO_ORDER_FAIL,
+    RESET_INSURANCE_DATA
 } from '../Actions/types';
 import {
     SECRET_KEY,
@@ -294,4 +295,10 @@ const getCarTypesSucces = (dispatch, types) => {
         type: KASKO_LOAD_CAR_TYPES_SUCCESS,
         payload: types.data
     })
+}
+
+export const resetData = () => {
+    return {
+        type: RESET_INSURANCE_DATA
+    }
 }

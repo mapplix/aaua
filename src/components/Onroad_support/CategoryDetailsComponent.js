@@ -80,7 +80,6 @@ console.log(nextProps);
                         />
                     </CardItem>
                     <CardItem style={checkboxesContainer}>
-                        <ScrollView >
                         {
                             this.props.details.map((item) => {
                                 return (
@@ -92,7 +91,6 @@ console.log(nextProps);
                                 )
                             })
                         }
-                        </ScrollView>
                     </CardItem>
                     {/*<CardItem style={{
                         flex: 18,
@@ -108,12 +106,11 @@ console.log(nextProps);
                         />
                     </CardItem>*/}
                     <CardItem style={{
-                        flex: 14,
-                        height: 60*RATIO,
-                        paddingTop: 30,
+                        flex: 10,
+                        paddingTop: 15,
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
+                        alignItems: 'flex-start'
                     }}>
                         <ButtonRoundet
                             // onPress={() => Actions.orderOnRoadSupport({category: this.props.category})}
@@ -144,12 +141,12 @@ const styles = {
         alignItems: 'center',
     },
     checkboxesContainer: {
-        flex: 61,
+        flex: 63,
         paddingTop: 35,
         paddingRight: 70,
         // height: 280 * RATIO,
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'flex-start',
         paddingLeft: 42 * WIDTH_RATIO
     },

@@ -64,6 +64,7 @@ class FirstStageComponent extends Component {
     }
 
     openSecondStage() {
+console.log(this.props.phone.length > 0, this.props.code.length);
         if (this.props.phone.length > 0 && this.props.code.length > 0) {
             if (this.props.isAdault && this.props.isAgrie && this.props.isRead) {
                 const userData = {
@@ -99,13 +100,6 @@ class FirstStageComponent extends Component {
                 'OK'
             );
         }
-        /*if (nextProps.sms != null) {
-            showAlert(
-                'Код',
-                nextProps.sms.toString(),
-                'OK'
-            );
-        }*/
     }
 
     componentDidMount() {

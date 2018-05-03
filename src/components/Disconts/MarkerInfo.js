@@ -49,106 +49,6 @@ console.log(this.props);
                 <Header back>
                     {title || ''}
                 </Header>
-                {/*<CardItem style={[cardStyle, {margin: 20}]}>
-                    <View
-                        style={{
-                            flex:2,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            // backgroundColor:'#288'
-                        }}
-                    >
-                        <Image
-                            resizeMode='center'
-                            style={{
-                                width: '100%',
-                                height: '100%'
-                            }}
-                            source={{uri: BASE_URL+this.props.img}}
-                        />
-
-                    </View>
-                    <View style={{
-                        flex:4
-                    }}>
-                        <WebView
-                            style={{
-                                flex:1,
-                                alignSelf: 'stretch',
-                            }}
-                            javaScriptEnabled={false}
-                            domStorageEnabled={false}
-                            startInLoadingState={false}
-                            scalesPageToFit={false}
-                            scrollEnabled={true}
-                            source={{ html: htmlSrc, baseUrl:'' }}
-                        />
-                    </View>
-                </CardItem>
-                <CardItem>
-                    <View style={[{
-                        flex: 1,
-                        justifyContent: 'flex-start',
-                    }, cardStyle]}>
-                        <View
-                            style={{
-                                flex:1,
-                                alignSelf: 'stretch',
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <Text style={{
-                                fontSize: 20,
-                                fontWeight: '500'
-                            }}>
-                                Назва послуги
-                            </Text>
-                            <Text style={{
-                                fontSize: 20,
-                                fontWeight: '500'
-                            }}>
-                                Скидка
-                            </Text>
-                        </View>
-                        {
-                            this.renderServices()
-                        }
-                        <View
-                            style={{
-                                flex:1,
-                                alignSelf: 'stretch',
-                                flexDirection: 'row',
-                                justifyContent: 'flex-start',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Text style={{
-                                fontSize: 16,
-                                fontWeight: '500'
-                            }}>
-                                График {this.props.website}
-                            </Text>
-                        </View>
-                        <View
-                            style={{
-                                flex:1,
-                                alignSelf: 'stretch',
-                                flexDirection: 'row',
-                                justifyContent: 'flex-start',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Text style={{
-                                fontSize: 16,
-                                fontWeight: '400'
-                            }}>
-                                {this.props.website}
-                            </Text>
-                        </View>
-                    </View>
-                </CardItem>*/}
                 <CardItem>
                     <Image
                         resizeMethod="scale"
@@ -275,9 +175,10 @@ const styles = {
     },
     contactsContainer: {
         flex: 1,
-        paddingBottom: 31,
+        paddingBottom: 25,
         paddingTop: 27,
-        paddingLeft: 32,
+        paddingLeft: 15,
+        paddingRight: 5,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
@@ -286,7 +187,9 @@ const styles = {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingRight: 15,
+        minHeight: 30,
     },
     iconWrapper: {
         marginRight: 23,
