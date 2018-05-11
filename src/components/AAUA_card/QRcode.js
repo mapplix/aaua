@@ -33,7 +33,7 @@ class QRcode extends Component {
                         flex: 1
                     }}
                 >
-                    <TouchableOpacity onPress={Actions.AAUA_main}>
+                    <TouchableOpacity onPress={Actions.mainScreen}>
                         <Text
                             style={{
                                 fontSize: 30,

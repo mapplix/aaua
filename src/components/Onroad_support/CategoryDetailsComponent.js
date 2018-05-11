@@ -22,7 +22,6 @@ class CategoryDetailsComponent extends Component {
 
     onSubmit = () => {
         const {token, category, phone} = this.props;
-console.log(this.props);
         this.props.orderOnRoadSupport(token, category.id, phone)
     }
 
@@ -31,7 +30,6 @@ console.log(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
-console.log(nextProps);
         if (nextProps.orderSupportMessage != null) {
             showAlert(
                 'Спасибо',
@@ -56,10 +54,10 @@ console.log(nextProps);
             var imageUrl = require('../../images/icons/onroad1.png');
 
             if (this.props.category.id == '2') {
-                imageUrl = require('../../images/icons/onroad2.png');
+                imageUrl = require('../../images/icons/onroad3.png');
             }
             if (this.props.category.id == '3') {
-                imageUrl = require('../../images/icons/onroad3.png');
+                imageUrl = require('../../images/icons/onroad2.png');
             }
             if (this.props.category.id == '4') {
                 imageUrl = require('../../images/icons/onroad4.png');
@@ -92,19 +90,6 @@ console.log(nextProps);
                             })
                         }
                     </CardItem>
-                    {/*<CardItem style={{
-                        flex: 18,
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-end',
-                    }}>
-                        <PhoneInput
-                            label={'Номер телефона'}
-                            placeholder={'+380'}
-                            value={this.props.phone}
-                            onChangeText={this.onPhoneChange.bind(this)}
-                        />
-                    </CardItem>*/}
                     <CardItem style={{
                         flex: 10,
                         paddingTop: 15,
@@ -113,7 +98,6 @@ console.log(nextProps);
                         alignItems: 'flex-start'
                     }}>
                         <ButtonRoundet
-                            // onPress={() => Actions.orderOnRoadSupport({category: this.props.category})}
                             onPress={() => this.onSubmit()}
                             style={buttonStyle}
                         >

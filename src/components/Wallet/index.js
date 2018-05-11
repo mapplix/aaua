@@ -9,6 +9,7 @@ import {
     Header,
 } from '../common';
 import {RATIO} from '../../styles/constants';
+import {DEVICE_OS, iOS} from '../../Actions/constants';
 
 const WalletComponent = () => {
 
@@ -19,7 +20,7 @@ const WalletComponent = () => {
     const {amountContainer, amountStyle, textStyle} = styles;
     return (
         <MainCard>
-            <Header burger wallet>
+            <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                 {"Кошелек"}
             </Header>
             <CardItem style={{
@@ -32,7 +33,7 @@ const WalletComponent = () => {
             }}>
                 <View style={amountContainer}>
                     <Text style={amountStyle}>
-                        245
+                        0
                     </Text>
                     <Text style={textStyle}>
                         гривен
@@ -56,28 +57,16 @@ const WalletComponent = () => {
                     Пополнить баланс
                 </ButtonRoundet>
             </CardItem>
-            {/*<CardItem style={{
-                maxHeight: 70,
-                bottom: 2
+           <CardItem style={{
+                height: 70,
+                bottom: 2,
+               justifyContent: 'center',
+               alignItems: 'flex-start'
             }}>
-                <BottomMenu>
-                    <BottomMenuItem
-                        imageSrc={require('../../images/icons/wog.png')}
-                    >
-                        Бонусы WOG
-                    </BottomMenuItem>
-                    <BottomMenuItem
-                        imageSrc={require('../../images/icons/aaua.png')}
-                    >
-                        Бонусы AAUA
-                    </BottomMenuItem>
-                    <BottomMenuItem
-                        imageSrc={require('../../images/icons/mail.png')}
-                    >
-                        Уведомления
-                    </BottomMenuItem>
-                </BottomMenu>
-            </CardItem>*/}
+                <Text>
+                    Сервис в разработке
+                </Text>
+            </CardItem>
         </MainCard>
     )
 }

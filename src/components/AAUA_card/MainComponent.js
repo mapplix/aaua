@@ -4,7 +4,8 @@ import {
     MainCard,
     CardItem,
     Header,
-    ModalCard
+    ModalCard,
+    Spiner
 } from '../common';
 import CardComponent from './CardComponent';
 import {Actions} from 'react-native-router-flux';
@@ -35,23 +36,28 @@ class MainComponent extends Component {
 
     orderVirtualCard() {
         const orderData = {
-            "token" : this.props.token,
-            "isvirtual" : 1
+            "token": this.props.token,
+            "isvirtual": 1
         }
         this.props.orderCard(orderData);
     }
+
     showAlert() {
         Alert.alert(
             'Ваша виртуальная карта создана',
             'Спасибо за покупку',
             [
-                {text: 'Закрыть', onPress: () => {Actions.AAUA_main();}},
+                {
+                    text: 'Закрыть', onPress: () => {
+                    Actions.AAUA_main();
+                }
+                },
             ],
         )
     }
 
     componentWillReceiveProps(nextProp) {
-console.log('componentWillReceiveProps AAUA main', this.props.orderCardSuccess, nextProp.orderCardSuccess)
+        console.log('componentWillReceiveProps AAUA main', this.props.orderCardSuccess, nextProp.orderCardSuccess)
         if (nextProp.orderCardSuccess) {
             this.showAlert();
         }
@@ -61,12 +67,12 @@ console.log('componentWillReceiveProps AAUA main', this.props.orderCardSuccess, 
         if (this.props.myCards != null) {
             return (
                 <TouchableOpacity style={{
-                    flex:1,
+                    flex: 1,
                     flexDirection: 'row',
                     alignItems: 'flex-start',
                     justifyContent: 'flex-start'
                 }}
-                onPress={Actions.QRcode}
+                                  onPress={Actions.QRcode}
                 >
                     <View style={{
                         flexDirection: 'column',
@@ -98,95 +104,111 @@ console.log('componentWillReceiveProps AAUA main', this.props.orderCardSuccess, 
 
     render() {
         const {modal, modalTextContainer, modalText} = styles;
-        return (
-            <MainCard>
-                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
-                    {"КАРТА AAUA"}
-                </Header>
-                <CardItem style={{
-                    flex: 4,
-                    paddingTop: 21 * RATIO,
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    alignItems: 'flex-start'
-                }}>
-                    <CardComponent
-                        style={{
-                            marginLeft: 14 * WIDTH_RATIO,
-                            marginRight: 12 * WIDTH_RATIO,
-                        }}
-                        isDisabled={this.props.myCards != null}
-                        imageSrc={require('../../images/icons/add_card.png')}
-                        onPress={this.onAddCardPressed.bind(this)}
-                    >
-                        Добавить карту
-                    </CardComponent>
-                    <CardComponent
-                        style={{
-                            marginRight: 14 * WIDTH_RATIO,
-                        }}
-                        imageParentStyle ={{
-                            height: 62 * RATIO,
-                            width: 62 * WIDTH_RATIO
-                        }}
-                        isDisabled={this.props.myCards != null}
-                        imageSrc={require('../../images/icons/order_card.png')}
-                        onPress={() => this.setState({isOpen: true})}
-                    >
-                        Заказать карту
-                    </CardComponent>
-                </CardItem>
-                <CardItem
-                    style={{
-                        flex: 5,
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center'
-                    }}
-                >
-                    {
-                        this.renderQR()
-                    }
-                </CardItem>
-                <Modal style={modal}
-                       position={"bottom"}
-                       ref={"modal"}
-                       isOpen={this.state.isOpen} onClosed={() => this.setState({isOpen: false})}
-                >
-                    <ModalCard style={{
-                        flexDirection: 'column',
-                        height: 150
-                    }}>
-                        <TouchableOpacity
-                            onPress={this.orderVirtualCard.bind(this)}
-                            style={modalTextContainer}
-                        >
-                            <Text style={modalText}>
-                                Заказать виртуальную карту
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={modalTextContainer}
-                                          onPress={() => {Actions.order_aaua_card()}}
-                        >
-                            <Text style={modalText}>
+
+        if (this.props.loading) {
+            return (
+                <Spiner size={'large'}/>
+            )
+        } else {
+            if (this.props.myCards != null) {
+                Actions.QRcode();
+                return (
+                    <Spiner size={'large'}/>
+                )
+            } else {
+                return (
+                    <MainCard>
+                        <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
+                            {"КАРТА AAUA"}
+                        </Header>
+                        <CardItem style={{
+                            flex: 4,
+                            paddingTop: 21 * RATIO,
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'flex-start'
+                        }}>
+                            <CardComponent
+                                style={{
+                                    marginLeft: 14 * WIDTH_RATIO,
+                                    marginRight: 12 * WIDTH_RATIO,
+                                }}
+                                isDisabled={this.props.myCards != null}
+                                imageSrc={require('../../images/icons/add_card.png')}
+                                onPress={this.onAddCardPressed.bind(this)}
+                            >
+                                Добавить карту
+                            </CardComponent>
+                            <CardComponent
+                                style={{
+                                    marginRight: 14 * WIDTH_RATIO,
+                                }}
+                                imageParentStyle={{
+                                    height: 62 * RATIO,
+                                    width: 62 * WIDTH_RATIO
+                                }}
+                                isDisabled={this.props.myCards != null}
+                                imageSrc={require('../../images/icons/order_card.png')}
+                                onPress={() => this.setState({isOpen: true})}
+                            >
                                 Заказать карту
-                            </Text>
-                        </TouchableOpacity>
-                    </ModalCard>
-                    <ModalCard style={{
-                        height: 50,
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => this.setState({isOpen: false})}
-                            style={modalTextContainer}>
-                            <Text style={[modalText, {color: '#ffc200'}]}>
-                                Закрыть
-                            </Text>
-                        </TouchableOpacity>
-                    </ModalCard>
-                </Modal>
-            </MainCard>
-        )
+                            </CardComponent>
+                        </CardItem>
+                        <CardItem
+                            style={{
+                                flex: 5,
+                                flexDirection: 'column',
+                                justifyContent: 'flex-start',
+                                alignItems: 'center'
+                            }}
+                        >
+                            {
+                                this.renderQR()
+                            }
+                        </CardItem>
+                        <Modal style={modal}
+                               position={"bottom"}
+                               ref={"modal"}
+                               isOpen={this.state.isOpen} onClosed={() => this.setState({isOpen: false})}
+                        >
+                            <ModalCard style={{
+                                flexDirection: 'column',
+                                height: 150
+                            }}>
+                                <TouchableOpacity
+                                    onPress={this.orderVirtualCard.bind(this)}
+                                    style={modalTextContainer}
+                                >
+                                    <Text style={modalText}>
+                                        Заказать виртуальную карту
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={modalTextContainer}
+                                                  onPress={() => {
+                                                      Actions.order_aaua_card()
+                                                  }}
+                                >
+                                    <Text style={modalText}>
+                                        Заказать карту
+                                    </Text>
+                                </TouchableOpacity>
+                            </ModalCard>
+                            <ModalCard style={{
+                                height: 50,
+                            }}>
+                                <TouchableOpacity
+                                    onPress={() => this.setState({isOpen: false})}
+                                    style={modalTextContainer}>
+                                    <Text style={[modalText, {color: '#ffc200'}]}>
+                                        Закрыть
+                                    </Text>
+                                </TouchableOpacity>
+                            </ModalCard>
+                        </Modal>
+                    </MainCard>
+                )
+            }
+        }
     }
 }
 
@@ -216,6 +238,7 @@ const mapStateToProps = ({AAUA_Card, auth}) => {
         token: auth.user.token,
         myCards: AAUA_Card.myCards,
         orderCardSuccess: AAUA_Card.orderCardSuccess,
+        loading: AAUA_Card.loading,
     }
 }
 

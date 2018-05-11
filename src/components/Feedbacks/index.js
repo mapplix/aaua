@@ -90,7 +90,7 @@ console.log(phone);
                             onPress={()=> this.callNumber('tel:88005363656')}
                         >
                             <Text style={phoneNumber}>
-                                8 800 536 36 56
+                                0 800 505024
                             </Text>
                         </TouchableOpacity>
                     </View>

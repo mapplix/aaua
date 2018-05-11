@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Linking} from 'react-native';
 import {connect} from 'react-redux';
 import {
     MainCard,
@@ -224,6 +224,51 @@ console.log(nextProps);
                     >
                         Заказать
                     </ButtonRoundet>
+                </CardItem>
+                <CardItem style={{
+                    marginTop:38,
+                    flex: DEVICE_OS == iOS ? 4 : 5,
+                    flexDirection: 'column'
+                }}>
+                    <View style={{
+                        flexDirection:'column',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <View style={{
+                            alignSelf: 'stretch',
+                            justifyContent: 'center',
+                            alignItems:'center',
+                        }}>
+                            <Text>ИЛИ</Text>
+                        </View>
+                        <View style={{
+                            alignSelf: 'stretch',
+                            justifyContent: 'center',
+                            alignItems:'center',
+                        }}>
+                            <Text>
+                                Купите электронный {"\n"}страховой полис
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={{
+                        height: 50,
+                    }}>
+                        <ButtonRoundet
+                            style={{
+                                marginRight: 83,
+                                marginLeft: 83,
+                                height: 50,
+                                backgroundColor: '#FFC200',
+                                borderColor:'#FFC200'
+                            }}
+                            textStyle={{color:'#1B1B1B'}}
+                            onPress={() => Linking.openURL('https://aiwa-platform.firebaseapp.com/d/6VzKDxmKj5/t/Qnp0xWdPBq')}
+                        >
+                            Купить онлайн
+                        </ButtonRoundet>
+                    </View>
                 </CardItem>
             </MainCard>
         )
