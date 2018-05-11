@@ -42,7 +42,14 @@ class CustomMarker extends Component {
                         startInLoadingState={false}
                         scalesPageToFit={false}
                         scrollEnabled={true}
-                        source={{ html: "<html><div><img src='"+uri+"' height='300' width='300'/></div></html>" }}
+                        source={{ html: `<html>
+                                            <div style="height:300pt; width:300pt">
+                                                <img src="${uri}" style="
+                                                    margin-left: auto;
+                                                    margin-right: auto;
+                                                    width: 50%;"/>
+                                            </div>
+                                        </html>`}}
                     />
                 <Text>
                     {title}
