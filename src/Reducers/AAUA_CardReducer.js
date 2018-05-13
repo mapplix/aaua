@@ -129,8 +129,7 @@ console.log(ORDER_CARD_CITY_SELECTED);
         case ORDER_CARD:
             return {...state, loading: true, orderCardSuccess: false, addCardError: null};
         case ORDER_AAUA_CARD_SUCCESS:
-            // Actions.AAUA_main();
-            return {...state, orderCardSuccess: true, addCardError: null};
+            return {...state, orderCardSuccess: true, addCardError: null, loading: false};
         case ORDER_AAUA_CARD_FAIL:
             return {...state, error: 'Ошибка', orderCardSuccess: false, addCardError: null};
         case DELETE_AAUA_CARD:
@@ -139,9 +138,9 @@ console.log(ORDER_CARD_CITY_SELECTED);
         case CARD_NUMBER_CHANGE:
             return {...state, card_number: action.payload, addCardError: null};
         case MY_AAUA_CARD:
-            return {...state, loading: true, addCardError: null}
+            return {...state, loading: true, orderCardSuccess: false, addCardError: null}
         case MY_AAUA_CARD_FAIL:
-            return {...state, error: action.payload, addCardError: null}
+            return {...state, error: action.payload, addCardError: null, orderCardSuccess: false}
         case MY_AAUA_CARD_LOADED:
             return {...state, myCards: action.payload, loading: false, addCardError: null, orderCardSuccess: false}
         case AAUA_CARD_NUMBER_CHANGE:

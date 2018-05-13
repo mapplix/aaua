@@ -166,16 +166,16 @@ export const orderCard = (card) => {
             type: ORDER_CARD
         })
 
-        const obj = {
-            "token" : card.token,
-            "bid" : {
-                "city" : card.city,
-                "delivery" : card.delivery,
-                "address" : card.address,
-                "address_comment" : card.comment,
-                "phone" : card.phone
-            }
-        };
+        // const obj = {
+        //     "token" : card.token,
+        //     "bid" : {
+        //         "city" : card.city,
+        //         "delivery" : card.delivery,
+        //         "address" : card.address,
+        //         "address_comment" : card.comment,
+        //         "phone" : card.phone
+        //     }
+        // };
 
         const data = JSON.stringify(card);
         const signature = md5(SECRET_KEY + data)
@@ -247,6 +247,7 @@ console.log('getCardSuccess', card);
         dispatch({
             type: MY_AAUA_CARD_LOADED,
             payload: card.data.card
+            // payload: "77777723454555"
         })
     } else if (card.error >= 1) {
         dispatch({
