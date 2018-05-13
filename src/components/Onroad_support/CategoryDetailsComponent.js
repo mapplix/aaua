@@ -54,12 +54,10 @@ class CategoryDetailsComponent extends Component {
             var imageUrl = require('../../images/icons/onroad1.png');
 
             if (this.props.category.id == '2') {
-                imageUrl = require('../../images/icons/onroad3.png');
-            }
-            if (this.props.category.id == '3') {
                 imageUrl = require('../../images/icons/onroad2.png');
-            }
-            if (this.props.category.id == '4') {
+            } else if (this.props.category.id == '3') {
+                imageUrl = require('../../images/icons/onroad3.png');
+            } else if (this.props.category.id == '4') {
                 imageUrl = require('../../images/icons/onroad4.png');
             }
 
@@ -91,7 +89,7 @@ class CategoryDetailsComponent extends Component {
                         }
                     </CardItem>
                     <CardItem style={{
-                        flex: 10,
+                        flex: 18,
                         paddingTop: 15,
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
@@ -125,7 +123,7 @@ const styles = {
         alignItems: 'center',
     },
     checkboxesContainer: {
-        flex: 63,
+        flex: 47,
         paddingTop: 35,
         paddingRight: 70,
         // height: 280 * RATIO,
@@ -136,7 +134,7 @@ const styles = {
     },
     buttonStyle: {
         flex:0,
-        height: 43,
+        height: 45,
         marginLeft: 45,
         marginRight: 45
     }

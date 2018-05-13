@@ -26,12 +26,12 @@ class CategoriesComponent extends Component {
             var imageUrl = require('../../images/icons/onroad1.png');
 
             if (category.id == '2') {
+                console.log(category)
                 imageUrl = require('../../images/icons/onroad2.png');
-            }
-            if (category.id == '3') {
+            } else if (category.id == '3') {
+                console.log(category)
                 imageUrl = require('../../images/icons/onroad3.png');
-            }
-            if (category.id == '4') {
+            } else if (category.id == '4') {
                 imageUrl = require('../../images/icons/onroad4.png');
             }
             const {imageStyle, imageContainer, textContainer, textStyle, componentStyle} = styles;
