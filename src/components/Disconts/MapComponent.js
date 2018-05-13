@@ -47,6 +47,7 @@ class MapComponent extends Component {
     }
 
     renderContent() {
+console.log(this.props.places);
         const {
             container,
             map,

@@ -19,6 +19,8 @@ class CustomMarker extends Component {
     render() {
         const {title, img} = this.props;
         const uri = BASE_URL+img;
+        // const uri = "https://aaua.com.ua/images/discont/2018-05/74.jpg";
+        console.log(uri);
         return(
             <View style={{
                 flex:1,
@@ -47,7 +49,7 @@ class CustomMarker extends Component {
                                                 <img src="${uri}" style="
                                                     margin-left: auto;
                                                     margin-right: auto;
-                                                    width: 50%;"/>
+                                                    width: 48%;"/>
                                             </div>
                                         </html>`}}
                     />

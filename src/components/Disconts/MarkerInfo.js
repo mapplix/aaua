@@ -27,20 +27,6 @@ class MarkerInfo extends Component {
     }
 
     render() {
-        const htmlSrc = `
-            <!DOCTYPE html>
-            <html lang="ru">
-            <head>
-            <meta charset="utf-8">
-            <title>The Title</title>
-            </head>
-            
-            <body>
-            ${this.props.contacts}
-            </body>
-            
-            </html>`;
-
         const {contactsContainer, servicesWrapper, contactRow, iconWrapper, contactsText} = styles;
         const {title, img, rezhim, website, address, phones} = this.props;
 console.log(this.props);
@@ -49,16 +35,28 @@ console.log(this.props);
                 <Header back>
                     {title || ''}
                 </Header>
-                <CardItem>
-                    <Image
-                        resizeMethod="scale"
-                        resizeMode='stretch'
-                        style={{
-                            width: '100%',
-                            height: '100%'
-                        }}
-                        source={{uri: BASE_URL+img}}
-                    />
+                <CardItem
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <View style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        maxWidth: '75%'
+                    }}>
+                        <Image
+                            resizeMethod="scale"
+                            resizeMode='stretch'
+                            style={{
+                                width: '100%',
+                                height: '100%'
+                            }}
+                            source={{uri: BASE_URL+img}}
+                        />
+                    </View>
                 </CardItem>
                 <CardItem>
                     <View style={contactsContainer}>
