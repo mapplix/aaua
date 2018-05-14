@@ -54,9 +54,9 @@ class CategoryDetailsComponent extends Component {
             var imageUrl = require('../../images/icons/onroad1.png');
 
             if (this.props.category.id == '2') {
-                imageUrl = require('../../images/icons/onroad2.png');
-            } else if (this.props.category.id == '3') {
                 imageUrl = require('../../images/icons/onroad3.png');
+            } else if (this.props.category.id == '3') {
+                imageUrl = require('../../images/icons/onroad2.png');
             } else if (this.props.category.id == '4') {
                 imageUrl = require('../../images/icons/onroad4.png');
             }

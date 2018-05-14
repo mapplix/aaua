@@ -198,6 +198,7 @@ console.log('orderCardSuccess', data, data.error == 0);
         dispatch ({
             type: ORDER_AAUA_CARD_SUCCESS,
         })
+        Actions.AAUA_main();
     } else {
         dispatch ({
             type: ORDER_AAUA_CARD_FAIL,

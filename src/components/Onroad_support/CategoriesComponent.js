@@ -27,10 +27,10 @@ class CategoriesComponent extends Component {
 
             if (category.id == '2') {
                 console.log(category)
-                imageUrl = require('../../images/icons/onroad2.png');
+                imageUrl = require('../../images/icons/onroad3.png');
             } else if (category.id == '3') {
                 console.log(category)
-                imageUrl = require('../../images/icons/onroad3.png');
+                imageUrl = require('../../images/icons/onroad2.png');
             } else if (category.id == '4') {
                 imageUrl = require('../../images/icons/onroad4.png');
             }

@@ -191,7 +191,7 @@ console.log('user from store', user);
 
     onBackPress() {
         if (Actions.state.index === 0) {
-            let routs = ['subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards', 'messagesList', 'history']
+            let routs = ['QRcode', 'subscription', 'AAUA_main', 'my_aaua_cards', 'onroadCategories', 'tabs', 'discontCards', 'messagesList', 'history']
             if (Actions.currentScene == 'mainScreen') {
                 BackHandler.exitApp();
             }

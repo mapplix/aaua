@@ -58,7 +58,7 @@ console.log(itemValue)
 
     onSelectCity(city){
         this.props.selectOsagoCity(city);
-        this.setState({searchedCities: [], cityId:city});
+        this.setState({searchedCities: [], cityId:city, rowHeight:2});
         if (this.state.carType != null) {
             this.props.calculateOsago(this.props.token, city, this.state.carType)
         }
@@ -101,7 +101,7 @@ console.log(orderData);
     };
 
     componentWillReceiveProps(nextProps) {
-console.log(nextProps);
+
         if(nextProps.osagoOrderSuccess) {
             showAlert(
                 'Спасибо',
@@ -114,9 +114,9 @@ console.log(nextProps);
         }
     }
 
-    // componentWillUnmount() {
-    //     console.log('unmount');
-    // }
+    componentWillUnmount() {
+        this.props.resetData();
+    }
 
     renderPrice() {
         if (this.props.loadingPrice) {
@@ -149,7 +149,6 @@ console.log(nextProps);
                 <CardItem style={{
                     marginTop: 18,
                     flex: 2,
-                    height:60,
                     flexDirection:'column',
                     justifyContent: 'flex-end',
                     alignItems: 'flex-start'
@@ -191,7 +190,6 @@ console.log(nextProps);
                         justifyContent: 'flex-start',
                         alignItems: 'flex-end',
                         flex: 1,
-                        height: 70 * RATIO,
                     }}
                 >
                     <View style={{
@@ -208,8 +206,9 @@ console.log(nextProps);
                     </View>
                 </CardItem>
                 <CardItem style={{
-                    marginTop:38,
-                    flex: DEVICE_OS == iOS ? 4 : 5
+                    marginTop:20,
+                    flex: 1,
+
                 }}>
                     <ButtonRoundet
                         style={{
@@ -226,14 +225,15 @@ console.log(nextProps);
                     </ButtonRoundet>
                 </CardItem>
                 <CardItem style={{
-                    marginTop:38,
-                    flex: DEVICE_OS == iOS ? 4 : 5,
+                    marginTop:20,
+                    flex: 3,
                     flexDirection: 'column'
                 }}>
                     <View style={{
                         flexDirection:'column',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        marginBottom: 10
                     }}>
                         <View style={{
                             alignSelf: 'stretch',
@@ -248,7 +248,10 @@ console.log(nextProps);
                             alignItems:'center',
                         }}>
                             <Text>
-                                Купите электронный {"\n"}страховой полис
+                                купите электронный
+                            </Text>
+                            <Text>
+                                страховой полис
                             </Text>
                         </View>
                     </View>
