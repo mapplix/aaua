@@ -25,7 +25,6 @@ import {
 import {getCities} from '../../Actions/CitiesBrands';
 import {Actions} from 'react-native-router-flux';
 import {showAlert} from '../Modals';
-import { Dropdown } from 'react-native-material-dropdown';
 
 class OsagoComponent extends Component {
 
@@ -188,7 +187,7 @@ console.log(orderData);
                     style={{
                         flexDirection: 'row',
                         justifyContent: 'flex-start',
-                        alignItems: 'flex-end',
+                        alignItems: 'center',
                         flex: 1,
                     }}
                 >

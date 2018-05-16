@@ -90,6 +90,7 @@ export default (state = INITIAL_STATE, action) => {
                 registration: null,
                 osagoCity: '',
                 osagoCityId: null,
+                volume: null
             }
         default: return state;
     }

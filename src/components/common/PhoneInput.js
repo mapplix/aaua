@@ -3,6 +3,9 @@ import {View, Text, TextInput} from 'react-native';
 import {DEVICE_OS, iOS} from '../../Actions/constants';
 
 class PhoneInput extends Component {
+    state = {
+        value: this.props.value
+    }
 
     handleChange(text) {
 
@@ -11,6 +14,12 @@ class PhoneInput extends Component {
         }
 
         this.props.onChangeText(text)
+    }
+
+    handleOnFocus() {
+        if (this.props.value == '') {
+            this.props.onChangeText('+380')
+        }
     }
 
     render() {
@@ -35,6 +44,7 @@ class PhoneInput extends Component {
                 >
                     <TextInput
                         {...this.props}
+                        onFocus={this.props.onFocus ? this.props.onFocus : this.handleOnFocus.bind(this)}
                         placeholderTextColor='#b6b9bf'
                         multiline={false}
                         maxLength={13}

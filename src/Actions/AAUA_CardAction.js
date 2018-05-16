@@ -179,7 +179,7 @@ export const orderCard = (card) => {
 
         const data = JSON.stringify(card);
         const signature = md5(SECRET_KEY + data)
-console.log(ORDER_AAUA_CARD_URL,card, data, signature)
+console.log('--- ORDER CARD---', ORDER_AAUA_CARD_URL,card, data, signature)
         axios.post(ORDER_AAUA_CARD_URL, data, {
                 headers: {
                     'Signature' : signature,
@@ -248,7 +248,7 @@ console.log('getCardSuccess', card);
         dispatch({
             type: MY_AAUA_CARD_LOADED,
             payload: card.data.card
-            // payload: "77777723454555"
+            // payload: null
         })
     } else if (card.error >= 1) {
         dispatch({
