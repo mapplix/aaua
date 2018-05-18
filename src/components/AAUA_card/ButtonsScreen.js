@@ -30,15 +30,20 @@ class ButtonsScreen extends Component {
         Actions.order_aaua_card();
     }
 
-    // componentWillMount() {
-    //     this.props.getMyCard(this.props.token);
-    // }
+    componentWillMount() {
+        console.log('--- button screen will mount', this.props)
+        if (this.props.orderVirtualCardSuccess) {
+            this.showAlert();
+        }
+        // this.props.getMyCard(this.props.token);
+    }
 
     orderVirtualCard() {
         const orderData = {
             "token": this.props.token,
             "isvirtual": 1
         }
+        console.log('order virtual card')
         this.props.orderCard(orderData);
     }
 
@@ -48,17 +53,15 @@ class ButtonsScreen extends Component {
             'Спасибо за покупку',
             [
                 {
-                    text: 'Закрыть', onPress: () => {
-                    Actions.AAUA_main();
-                }
+                    text: 'Закрыть', onPress: () => {Actions.AAUA_main();}
                 },
             ],
         )
     }
 
     componentWillReceiveProps(nextProp) {
-        console.log('componentWillReceiveProps AAUA main', this.props.orderCardSuccess, nextProp.orderCardSuccess)
-        if (nextProp.orderCardSuccess) {
+        console.log('componentWillReceiveProps AAUA main', this.props.orderVirtualCardSuccess, nextProp.orderVirtualCardSuccess)
+        if (nextProp.orderVirtualCardSuccess) {
             this.showAlert();
         }
     }
@@ -185,7 +188,7 @@ const mapStateToProps = ({AAUA_Card, auth}) => {
         user: auth.user,
         token: auth.user.token,
         myCards: AAUA_Card.myCards,
-        orderCardSuccess: AAUA_Card.orderCardSuccess,
+        orderVirtualCardSuccess: AAUA_Card.orderVirtualCardSuccess,
         loading: AAUA_Card.loading,
     }
 }

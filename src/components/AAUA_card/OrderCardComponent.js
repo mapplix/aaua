@@ -69,7 +69,6 @@ class OrderCardComponent extends Component {
             }
         }
         this.props.orderCard(orderData);
-
     }
 
     setDefaultSkladToStore(address) {
@@ -164,6 +163,7 @@ class OrderCardComponent extends Component {
     }
 
     componentWillReceiveProps(nextProp) {
+        console.log('--- order component---- receiver props', nextProp);
         if (nextProp.orderCardSuccess) {
             this.showAlert();
         }

@@ -37,6 +37,7 @@ const INITIAL_STATE = {
     addCardError: null,
     loading: false,
     orderCardSuccess: false,
+    orderVirtualCardSuccess: false,
     card_number: '',
     showCities: 'flex',
     showNPCities: 'none',
@@ -65,6 +66,7 @@ export default (state = INITIAL_STATE, action) => {
         case DELIVERY_CHANGE:
             return {...state,
                 orderCardSuccess: false,
+                orderVirtualCardSuccess: false,
                 city: null,
                 delivery: action.payload,
                 address: null,
@@ -73,6 +75,7 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 orderCardSuccess: false,
+                orderVirtualCardSuccess: false,
                 showCities: 'none',
                 showNPCities: 'flex',
                 showNPSklads: 'flex',
@@ -87,6 +90,7 @@ console.log(ORDER_CARD_CITY_SELECTED);
                 npCities: [],
                 city: action.payload,
                 orderCardSuccess: false,
+                orderVirtualCardSuccess: false,
                 address: null,
                 addCardError: null
             }
@@ -95,6 +99,7 @@ console.log(ORDER_CARD_CITY_SELECTED);
                 ...state,
                 city: action.payload,
                 orderCardSuccess: false,
+                orderVirtualCardSuccess: false,
                 address: null,
                 // showCities: 'flex',
                 // showNPCities: 'none',
@@ -107,42 +112,48 @@ console.log(ORDER_CARD_CITY_SELECTED);
             return {...state,
                 address: action.payload,
                 orderCardSuccess: false,
+                orderVirtualCardSuccess: false,
                 addCardError: null};
         case NP_CITIES_CLEAN:
             return {
                 ...state,
                 npCities: null,
                 orderCardSuccess: false,
+                orderVirtualCardSuccess: false,
                 address: null,
                 addCardError: null
             }
         case CHANGE_NP_SKLAD:
-            return {...state, address: action.payload, orderCardSuccess: false, addCardError: null};
+            return {...state, address: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
         case COMMENT_CHANGE:
-            return {...state, comment: action.payload, orderCardSuccess: false, addCardError: null};
+            return {...state, comment: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
         case ADD_CARD:
-            return {...state, orderCardSuccess: false, addCardError: null};
+            return {...state, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
         case ADD_CARD_SUCCESS:
             return {...state, addCardError: null};
         case ADD_CARD_FAIL:
-            return {...state, addCardError: action.payload, orderCardSuccess: false,};
+            return {...state, addCardError: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false};
         case ORDER_CARD:
-            return {...state, loading: true, orderCardSuccess: false, addCardError: null};
+            return {...state, loading: true, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
         case ORDER_AAUA_CARD_SUCCESS:
-            return {...state, orderCardSuccess: true, addCardError: null, loading: false};
+            return {...state,
+                orderCardSuccess: action.payload == 'virtual' ? false : true,
+                orderVirtualCardSuccess: action.payload == 'virtual' ? true : false,
+                addCardError: null,
+                loading: false};
         case ORDER_AAUA_CARD_FAIL:
-            return {...state, error: 'Ошибка', orderCardSuccess: false, addCardError: null};
+            return {...state, error: 'Ошибка', orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
         case DELETE_AAUA_CARD:
             Actions.AAUA_main();
-            return {...state, myCards: [], orderCardSuccess: false, addCardError: null};
+            return {...state, myCards: [], orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
         case CARD_NUMBER_CHANGE:
             return {...state, card_number: action.payload, addCardError: null};
         case MY_AAUA_CARD:
-            return {...state, loading: true, orderCardSuccess: false, addCardError: null}
+            return {...state, loading: true, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null}
         case MY_AAUA_CARD_FAIL:
-            return {...state, error: action.payload, addCardError: null, orderCardSuccess: false}
+            return {...state, error: action.payload, addCardError: null,orderVirtualCardSuccess: false,  orderCardSuccess: false}
         case MY_AAUA_CARD_LOADED:
-            return {...state, myCards: action.payload, loading: false, addCardError: null, orderCardSuccess: false}
+            return {...state, myCards: action.payload, loading: false, addCardError: null,orderVirtualCardSuccess: false,  orderCardSuccess: false}
         case AAUA_CARD_NUMBER_CHANGE:
             return {...state, card_number: action.payload, addCardError: null}
         default: return state;

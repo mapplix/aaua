@@ -187,18 +187,19 @@ console.log('--- ORDER CARD---', ORDER_AAUA_CARD_URL,card, data, signature)
                 }
             }
         )
-            .then(response => orderCardSuccess(dispatch, response.data))
+            .then(response => orderCardSuccess(dispatch, response.data, card.isvirtual == 1))
 
     }
 }
 
-export const orderCardSuccess = (dispatch, data) => {
+export const orderCardSuccess = (dispatch, data, virtual) => {
 console.log('orderCardSuccess', data, data.error == 0);
     if (data.error == 0) {
         dispatch ({
             type: ORDER_AAUA_CARD_SUCCESS,
+            payload: virtual ? 'virtual' : 'notVirtual'
         })
-        Actions.AAUA_main();
+        // Actions.AAUA_main();
     } else {
         dispatch ({
             type: ORDER_AAUA_CARD_FAIL,
