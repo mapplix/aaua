@@ -197,7 +197,7 @@ console.log(orderData);
                         backgroundColor: '#fafafa',
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'flex-start'
                     }}>
                         {
                             this.renderPrice()
@@ -224,7 +224,7 @@ console.log(orderData);
                     </ButtonRoundet>
                 </CardItem>
                 <CardItem style={{
-                    marginTop:20,
+                    marginTop:10,
                     flex: 3,
                     flexDirection: 'column'
                 }}>
@@ -232,7 +232,8 @@ console.log(orderData);
                         flexDirection:'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        marginBottom: 10
+                        marginBottom: 20,
+                        backgroundColor: '#282'
                     }}>
                         <View style={{
                             alignSelf: 'stretch',

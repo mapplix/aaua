@@ -50,7 +50,7 @@ class ButtonsScreen extends Component {
     showAlert() {
         Alert.alert(
             'Ваша виртуальная карта создана',
-            'Спасибо за покупку',
+            'Спасибо за заказ',
             [
                 {
                     text: 'Закрыть', onPress: () => {Actions.AAUA_main();}
