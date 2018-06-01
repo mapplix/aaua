@@ -198,7 +198,10 @@ console.log(IMAGES_LOAD_URL, data, signature);
                             for (var image in images.data.data) {
                                 imagesArray.push({
                                     id : index,
-                                    url : BASE_URL + images.data.data[image].pic
+                                    url : BASE_URL + images.data.data[image].pic,
+                                    title : images.data.data[image].title,
+                                    is_content : images.data.data[image].is_content,
+                                    content : images.data.data[image].content,
                                 })
                                 index++
                             }

@@ -6,7 +6,8 @@ import {
     TouchableHighlight,
     AsyncStorage,
     Platform,
-    BackHandler
+    BackHandler,
+    TouchableOpacity,
 } from "react-native";
 import {
     MainCard,
@@ -34,11 +35,21 @@ class MainComponent extends Component {
         })
     }
 
+    renderImageSlide( item) {
+console.log(item);
+        return (
+            <TouchableOpacity key={item.index} style={{flex: 1}}>
+                <Image source={{ uri: item.item }} style={{flex: 1, width: "100%", height: "100%"}} />
+            </TouchableOpacity>
+        )
+    }
+
     render() {
         const images = [];
         this.props.images.map( image => {
             images.push(image.url)
         })
+console.log(images, this.props.images);
         return (
             <MainCard>
                 <Header burger >
@@ -48,6 +59,14 @@ class MainComponent extends Component {
                     flex:8,
                 }}>
                     <ImageSlider
+                        onPress={(image) =>{
+                            this.props.images.map( imgObj => {
+                                if (imgObj.url == image.image && imgObj.is_content) {
+                                    Actions.imageContent({image: imgObj});
+                                    console.log(imgObj);
+                                }
+                            })
+                        }}
                         images={images}
                         autoPlayWithInterval={4000}
                     />

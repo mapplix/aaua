@@ -7,11 +7,11 @@ import {
     Header,
     Spiner
 } from '../common';
-import {RATIO} from '../../styles/constants';
+import {RATIO, WIDTH_RATIO} from '../../styles/constants';
 import {connect} from 'react-redux';
 import {getData, buySubscription} from '../../Actions/SubscriptionAction';
 import {showAlert} from '../Modals';
-import {Actions} from 'react-native-router-flux';
+import DetailsItem from './DetailsItem';
 import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 
 class SubscriptionComponent extends Component {
@@ -55,12 +55,13 @@ class SubscriptionComponent extends Component {
     }
 
     render() {
-        const {textStyle, textContainer, imageContainer} = styles;
+        const {textStyle, textContainer, imageContainer, checkboxesContainer} = styles;
         return (
             <MainCard>
                 <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     {"ГОДОВАЯ ПОДПИСКА"}
                 </Header>
+                <ScrollView>
                 <CardItem style={imageContainer}>
                     <Image
                         resizeMode={'contain'}
@@ -96,20 +97,44 @@ class SubscriptionComponent extends Component {
                         Купить
                     </ButtonRoundet>
                 </CardItem>
-                <CardItem style={textContainer}>
-                    <ScrollView style={{flex: 1}}>
-                        <Text style={textStyle}>
-                            В годовую подписку входит:
-                            {"\n"}{"\n"}- Действует 365 дней
-                            {"\n"}{"\n"}- Активна бонусная система AAUA
-                            {"\n"}{"\n"}- Бесплатная техническая поддержка в дороге:эвакуатор,
-                                            зарядка аккумулятора и подвоз топлива.
-                            {"\n"}{"\n"}- Пакет "Юридический стандарт"
-                            {"\n"}{"\n"}- Бесплатная юридическая поддержка в дороге.
-                            {"\n"}{"\n"}- Безлимитный Консьерж-сервис 24/7
-                        </Text>
-                    </ScrollView>
+                <CardItem style={checkboxesContainer}>
+                    <Text style={textStyle}>
+                        В годовую подписку входит:
+                    </Text>
+                    <DetailsItem >
+                        Действует 365 дней
+                    </DetailsItem>
+                    <DetailsItem >
+                        Активна бонусная система AAUA
+                    </DetailsItem>
+                    <DetailsItem >
+                        Бесплатный ассистанс на дороге:
+                        эвакуатор, подзарядка аккумулятора, замена колеса, аварийное вскрытие дверей.
+                    </DetailsItem>
+                    <DetailsItem >
+                        Консультации по вопросам взаимодействия с представителями дорожной полиции.
+                    </DetailsItem>
+                    <DetailsItem >
+                        Первичные консультации в случае ДТП.
+                    </DetailsItem>
+                    <DetailsItem >
+                        Доступ к базе образцов документов.
+                    </DetailsItem>
+                    <DetailsItem >
+                        Консультации по вопросам взаимодействия с страховой компанией.
+                    </DetailsItem>
+                    <DetailsItem >
+                        Консультации по вопросам обжалования штрафов.
+                    </DetailsItem>
+                    <DetailsItem >
+                        Консультации по вопросам выплат от страховой компании.
+                    </DetailsItem>
+                    <DetailsItem >
+                        Консьерж-сервис 24/7
+                    </DetailsItem>
+
                 </CardItem>
+                </ScrollView>
             </MainCard>
         )
     }
@@ -144,7 +169,16 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center',
-    }
+    },
+    checkboxesContainer: {
+        flex: 47,
+        paddingTop: 35,
+        paddingRight: 70,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        paddingLeft: 35 * WIDTH_RATIO
+    },
 }
 
 const mapStateToProps = ({subscription, auth}) => {

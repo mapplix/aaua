@@ -31,7 +31,6 @@ class ButtonsScreen extends Component {
     }
 
     componentWillMount() {
-        console.log('--- button screen will mount', this.props)
         if (this.props.orderVirtualCardSuccess) {
             this.showAlert();
         }
@@ -56,6 +55,7 @@ class ButtonsScreen extends Component {
                     text: 'Закрыть', onPress: () => {Actions.AAUA_main();}
                 },
             ],
+            { cancelable: false }
         )
     }
 

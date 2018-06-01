@@ -12,6 +12,7 @@ import LicenceComponent from './components/Auth/Register/LicenceComponent';
 
 import LeftBarComponent from './components/LeftBarComponent';
 import MainComponent from './components/MainComponent';
+import ImageContent from './components/ImageContent';
 import WalletComponent from './components/Wallet/';
 
 import SubscriptionComponent from './components/Subscription/';
@@ -65,7 +66,6 @@ import FCM, { FCMEvent,
 import {CHECK_TOKEN_URL, SECRET_KEY} from './Actions/constants'
 import axios from 'axios';
 import md5 from 'js-md5';
-import Geolocation from 'react-native-geolocation-service';
 
 /*Firebase Notificaion*/
 FCM.on(FCMEvent.Notification, async (notif) => {
@@ -111,7 +111,10 @@ class RouterComponent extends Component {
         this.state = {
             hasToken: false,
             isLoaded: false,
-            hasCard: false
+            hasCard: false,
+            latitude: null,
+            longitude: null,
+            error: null,
         };
     }
 
@@ -215,126 +218,127 @@ console.log('user from store', user);
                 <ActivityIndicator />
             )
         } else {
-            return (
-                <Router
-                    backAndroidHandler={
-                        this.onBackPress
-                    }
-                >
-                    <Stack
-                        hideNavBar
-                        key="root"
-                        titleStyle={{alignSelf: 'center'}}
-                    >
-
-                        <Stack
-                            initial={!this.state.hasToken}
-                            key="auth"
-                            hideNavBar
-                        >
-                            <Scene title="login" key="login" component={LoginForm}/>
-                            <Stack
-                                hideNavBar
-                                key="register"
-                            >
-                                <Scene
-                                    hideNavBar
-                                    title="Персональные данные"
-                                    key="firstStage"
-                                    component={FirstStageComponent}/>
-                                <Scene
-
-                                    hideNavBar
-                                    title="Персональные данные"
-                                    key="secondStage"
-                                    component={SecondStageComponent}/>
-                                <Scene hideNavBar key="licence" component={LicenceComponent}/>
-                            </Stack>
-                            <Scene title="Пригласи друга" key="invite" component={InviteFriendComponent}/>
-                            <Scene title="Востановление пароля" key="forgot" component={ForgotPassComponent}/>
-                        </Stack>
-
-                        <Drawer
-                            drawerBackgroundColor={'transparent'}
-                            initial={this.state.hasToken}
-                            hideNavBar
-                            key="drawer"
-                            contentComponent={LeftBarComponent}
-                            drawerImage={MenuIcon}
-                            drawerWidth={width}
-                            tapToClose={true}
-                            openDrawerOffset={0.2}
-                            panCloseMask={0.2}
-                            negotiatePan={true}
-                        >
-                            <Stack key="drawerWrapper">
-                                {/*
-                                 Wrapper Scene needed to fix a bug where the tabs would
-                                 reload as a modal ontop of itself
-                                 */}
-                                <Scene hideNavBar key="mainScreen" component={MainComponent} title="main_screen"/>
-                                <Scene hideNavBar key="wallet" component={WalletComponent} title="Кошелек"/>
-                                <Scene hideNavBar key="subscription" component={SubscriptionComponent}
-                                       title="Годовая подписка"/>
-                                <Stack hideNavBar key="store">
-                                    <Scene hideNavBar key="categories" component={CategoriesComponent} title="Store"/>
-                                    <Scene key="detail" component={DetailsComponent} title="Details"/>
-                                    <Scene key="goods" component={GoodsListComponent} title="Goods"/>
-                                    <Scene hideNavBar key="specialOffer" component={SpecialOfferComponent}/>
-                                    <Scene hideNavBar key="basketList" component={BasketListComponent}/>
-                                    <Scene hideNavBar key="basketOrdering" component={OrderingComponent} title="Goods"/>
-                                </Stack>
-                                <Stack hideNavBar key="AAUA_card">
-                                    <Scene
-                                        hideNavBar
-                                        key="AAUA_main"
-                                        component={AAUAMainComponent} title="Карта AAUA"/>
-                                    <Scene hideNavBar key="add_aaua_card" component={AAUAAddCardComponent}
-                                           title="Заказать карту"/>
-                                    <Scene hideNavBar key="order_virtual_aaua_card" component={OrderVirtualCardComponent}/>
-                                    <Scene
-                                        hideNavBar
-                                        key="my_aaua_cards"
-                                        component={MyAAUACardsComponent}
-                                        title="Карта AAUA"/>
-                                    <Scene hideNavBar key="order_aaua_card" component={AAUAOrderCardComponent}
-                                           title="Добавить карту"/>
-                                    <Scene hideNavBar key="QRcode" component={QRcode}/>
-
-                                </Stack>
-                                <Stack hideNavBar key="onroadSupport">
-                                    <Scene hideNavBar key="onroadCategories" component={OnroadCategoriesComponent}/>
-                                    <Scene hideNavBar key="onroadDetails" component={OnroadCategoriesDetailsComponent}/>
-                                    <Scene hideNavBar key="orderOnRoadSupport" component={OrderSupport}/>
-                                </Stack>
-                                    <Stack key="discontCards">
-                                        <Scene initial hideNavBar key="tabs" component={TabsComponent}/>
-                                        <Scene hideNavBar key="discontCard" component={DiscontCardComponent}/>
-                                        <Scene hideNavBar key="discontsMap" component={DiscontMapComponent}/>
-                                        <Scene hideNavBar key="MarkerInfo" component={MarkerInfo}/>
-                                    </Stack>
-                                <Stack hideNavBar key="insurance">
-                                    <Scene hideNavBar key="insuranceCategories" component={InsuranceComponent}/>
-                                    <Scene hideNavBar key="kaskoComponent" component={KaskoComponent}/>
-                                    <Scene hideNavBar key="osagoComponent" component={OsagoComponent}/>
-                                </Stack>
-                                <Stack>
-                                    <Scene hideNavBar key="history" component={HistoryComponent}/>
-                                    <Scene hideNavBar key="ordering" component={OrderingComponent}/>
-                                </Stack>
-                                <Scene hideNavBar key="AnQ" component={AnQComponent}/>
-                                <Scene hideNavBar key="feedback" component={FeedbackComponent}/>
-                                <Scene hideNavBar key="settings" component={SettingsComponent}/>
-                                <Stack hideNavBar key="messages">
-                                    <Scene hideNavBar key="messagesList" component={MessagesListComponent}/>
-                                    <Scene hideNavBar key="message" component={MessageComponent}/>
-                                </Stack>
-                            </Stack>
-                        </Drawer>
-                    </Stack>
-                </Router>
-            )
         }
+        return (
+            <Router
+                backAndroidHandler={
+                    this.onBackPress
+                }
+            >
+                <Stack
+                    hideNavBar
+                    key="root"
+                    titleStyle={{alignSelf: 'center'}}
+                >
+
+                    <Stack
+                        initial={!this.state.hasToken}
+                        key="auth"
+                        hideNavBar
+                    >
+                        <Scene title="login" key="login" component={LoginForm}/>
+                        <Stack
+                            hideNavBar
+                            key="register"
+                        >
+                            <Scene
+                                hideNavBar
+                                title="Персональные данные"
+                                key="firstStage"
+                                component={FirstStageComponent}/>
+                            <Scene
+
+                                hideNavBar
+                                title="Персональные данные"
+                                key="secondStage"
+                                component={SecondStageComponent}/>
+                            <Scene hideNavBar key="licence" component={LicenceComponent}/>
+                        </Stack>
+                        <Scene title="Пригласи друга" key="invite" component={InviteFriendComponent}/>
+                        <Scene title="Востановление пароля" key="forgot" component={ForgotPassComponent}/>
+                    </Stack>
+
+                    <Drawer
+                        drawerBackgroundColor={'transparent'}
+                        initial={this.state.hasToken}
+                        hideNavBar
+                        key="drawer"
+                        contentComponent={LeftBarComponent}
+                        drawerImage={MenuIcon}
+                        drawerWidth={width}
+                        tapToClose={true}
+                        openDrawerOffset={0.2}
+                        panCloseMask={0.2}
+                        negotiatePan={true}
+                    >
+                        <Stack key="drawerWrapper">
+                            {/*
+                             Wrapper Scene needed to fix a bug where the tabs would
+                             reload as a modal ontop of itself
+                             */}
+                            <Scene hideNavBar key="mainScreen" component={MainComponent} title="main_screen"/>
+                            <Scene hideNavBar key="imageContent" component={ImageContent}/>
+                            <Scene hideNavBar key="wallet" component={WalletComponent} title="Кошелек"/>
+                            <Scene hideNavBar key="subscription" component={SubscriptionComponent}
+                                   title="Годовая подписка"/>
+                            <Stack hideNavBar key="store">
+                                <Scene hideNavBar key="categories" component={CategoriesComponent} title="Store"/>
+                                <Scene key="detail" component={DetailsComponent} title="Details"/>
+                                <Scene key="goods" component={GoodsListComponent} title="Goods"/>
+                                <Scene hideNavBar key="specialOffer" component={SpecialOfferComponent}/>
+                                <Scene hideNavBar key="basketList" component={BasketListComponent}/>
+                                <Scene hideNavBar key="basketOrdering" component={OrderingComponent} title="Goods"/>
+                            </Stack>
+                            <Stack hideNavBar key="AAUA_card">
+                                <Scene
+                                    hideNavBar
+                                    key="AAUA_main"
+                                    component={AAUAMainComponent} title="Карта AAUA"/>
+                                <Scene hideNavBar key="add_aaua_card" component={AAUAAddCardComponent}
+                                       title="Заказать карту"/>
+                                <Scene hideNavBar key="order_virtual_aaua_card" component={OrderVirtualCardComponent}/>
+                                <Scene
+                                    hideNavBar
+                                    key="my_aaua_cards"
+                                    component={MyAAUACardsComponent}
+                                    title="Карта AAUA"/>
+                                <Scene hideNavBar key="order_aaua_card" component={AAUAOrderCardComponent}
+                                       title="Добавить карту"/>
+                                <Scene hideNavBar key="QRcode" component={QRcode}/>
+
+                            </Stack>
+                            <Stack hideNavBar key="onroadSupport">
+                                <Scene hideNavBar key="onroadCategories" component={OnroadCategoriesComponent}/>
+                                <Scene hideNavBar key="onroadDetails" component={OnroadCategoriesDetailsComponent}/>
+                                <Scene hideNavBar key="orderOnRoadSupport" component={OrderSupport}/>
+                            </Stack>
+                            <Stack key="discontCards">
+                                <Scene initial hideNavBar key="tabs" component={TabsComponent}/>
+                                <Scene hideNavBar key="discontCard" component={DiscontCardComponent}/>
+                                <Scene hideNavBar key="discontsMap" component={DiscontMapComponent}/>
+                                <Scene hideNavBar key="MarkerInfo" component={MarkerInfo}/>
+                            </Stack>
+                            <Stack hideNavBar key="insurance">
+                                <Scene hideNavBar key="insuranceCategories" component={InsuranceComponent}/>
+                                <Scene hideNavBar key="kaskoComponent" component={KaskoComponent}/>
+                                <Scene hideNavBar key="osagoComponent" component={OsagoComponent}/>
+                            </Stack>
+                            <Stack>
+                                <Scene hideNavBar key="history" component={HistoryComponent}/>
+                                <Scene hideNavBar key="ordering" component={OrderingComponent}/>
+                            </Stack>
+                            <Scene hideNavBar key="AnQ" component={AnQComponent}/>
+                            <Scene hideNavBar key="feedback" component={FeedbackComponent}/>
+                            <Scene hideNavBar key="settings" component={SettingsComponent}/>
+                            <Stack hideNavBar key="messages">
+                                <Scene hideNavBar key="messagesList" component={MessagesListComponent}/>
+                                <Scene hideNavBar key="message" component={MessageComponent}/>
+                            </Stack>
+                        </Stack>
+                    </Drawer>
+                </Stack>
+            </Router>
+        )
     }
 }
 

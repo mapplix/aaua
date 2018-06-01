@@ -17,9 +17,15 @@ import {Actions} from 'react-native-router-flux';
 
 class MapComponent extends Component {
 
-    state = {
-        isOpen: false,
-    };
+    constructor() {
+        super();
+        this.state = {
+            isOpen: false,
+            latitude: 50.447662,
+            longitude: 30.474047,
+            error: null,
+        };
+    }
 
     onChangeCategory(id) {
         this.props.selectCategory(this.props.token, id);
@@ -44,6 +50,25 @@ class MapComponent extends Component {
                 }
             })
         }
+    }
+
+    componentDidMount() {
+        this.watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                console.log(position);
+                this.setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    error: null,
+                });
+            },
+            (error) => console.log(error.message ),
+            { enableHighAccuracy: true, timeout: 40000, maximumAge: 1000, distanceFilter: 10 },
+        );
+    }
+
+    componentWillUnmount(){
+        navigator.geolocation.clearWatch(this.watchId);
     }
 
     renderContent() {
@@ -71,8 +96,8 @@ console.log(this.props.places);
                                     map
                                 }
                                 initialRegion={{
-                                    latitude: 50.447662,
-                                    longitude: 30.474047,
+                                    latitude: this.state.latitude,
+                                    longitude: this.state.longitude,
                                     latitudeDelta: 0.0922,
                                     longitudeDelta: 0.0421,
                                 }}

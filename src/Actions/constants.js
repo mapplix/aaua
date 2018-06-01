@@ -2,10 +2,10 @@ import {Platform, AsyncStorage} from 'react-native';
 import md5 from 'js-md5';
 import axios from 'axios';
 
-// export const BASE_URL = 'http://aaua.taxi898.com.ua';
-export const BASE_URL = 'https://aaua.com.ua';
-// export const API_URL = 'http://aaua.taxi898.com.ua/admin.php?r=api/';
-export const API_URL = 'https://aaua.com.ua/admin.php?r=api/';
+export const BASE_URL = 'http://aaua.taxi898.com.ua';
+// export const BASE_URL = 'https://aaua.com.ua';
+export const API_URL = 'http://aaua.taxi898.com.ua/admin.php?r=api/';
+// export const API_URL = 'https://aaua.com.ua/admin.php?r=api/';
 export const AUTH_URL = API_URL + 'auth';
 export const SMS_CODE_URL = API_URL + 'register_step1';
 export const REGISTER_2_URL = API_URL + 'register_step2';

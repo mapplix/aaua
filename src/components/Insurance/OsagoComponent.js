@@ -35,12 +35,11 @@ class OsagoComponent extends Component {
             searchedCities: [],
             rowHeight: 2,
             cityId: null,
-            carType: null
+            carType: 1
         };
     };
 
     onChangeVolume(itemValue){
-console.log(itemValue)
         this.props.changeVolume(itemValue);
         this.setState({carType:itemValue});
         if (this.state.cityId != null) {
@@ -68,7 +67,6 @@ console.log(itemValue)
         const orderData = {
             token, carType, cityId
         }
-console.log(orderData);
         this.props.orderOsago(orderData);
     }
 
@@ -113,6 +111,11 @@ console.log(orderData);
         }
     }
 
+    componentWillMount() {
+        this.setState({cityId: this.props.cityId})
+        this.props.calculateOsago(this.props.token, this.props.cityId, this.state.carType)
+    }
+
     componentWillUnmount() {
         this.props.resetData();
     }
@@ -139,7 +142,7 @@ console.log(orderData);
     }
 
     render() {
-        console.log(this.props)
+        console.log('--OSAGE RENDER--', this.props);
         return (
             <MainCard>
                 <Header back>
@@ -233,7 +236,6 @@ console.log(orderData);
                         justifyContent: 'center',
                         alignItems: 'center',
                         marginBottom: 20,
-                        backgroundColor: '#282'
                     }}>
                         <View style={{
                             alignSelf: 'stretch',

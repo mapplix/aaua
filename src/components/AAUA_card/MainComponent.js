@@ -11,18 +11,15 @@ import QRcode from './QRcode';
 class MainComponent extends Component {
 
     componentWillMount() {
-        console.log('---MAIN component will mount')
         this.props.getMyCard(this.props.token);
     }
 
     render() {
         if (this.props.loading) {
-            console.log('--- LOADING ---')
             return (
                 <Spiner size={'large'}/>
             )
         } else {
-            console.log('--- LOADING == FALSE ---', this.props);
             if (this.props.myCards != null) {
                 return (
                     <QRcode />

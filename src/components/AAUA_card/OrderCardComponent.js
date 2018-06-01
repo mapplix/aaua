@@ -82,6 +82,7 @@ class OrderCardComponent extends Component {
             [
                 {text: 'Закрыть', onPress: () => {Actions.AAUA_main();}},
             ],
+            { cancelable: false }
         )
     }
 
