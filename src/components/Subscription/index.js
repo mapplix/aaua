@@ -155,7 +155,9 @@ const styles = {
         fontFamily: 'SFUIText-Regular',
         alignSelf: 'stretch',
         fontSize: 13,
-        color:'#1B1B1B'
+        fontWeight: '500',
+        color:'#1B1B1B',
+        paddingBottom: 15
     },
     textContainer: {
         top: 0,

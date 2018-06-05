@@ -87,7 +87,7 @@ console.log(phone);
                             imageSrc={require('../../images/icons/feedback_phone.png')}
                         />
                         <TouchableOpacity
-                            onPress={()=> this.callNumber('tel:88005363656')}
+                            onPress={()=> this.callNumber('tel:0800505024')}
                         >
                             <Text style={phoneNumber}>
                                 0 800 505024

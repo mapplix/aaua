@@ -172,3 +172,12 @@ export const DISCOUNT_PLACES_LOADED = 'discount_places_loaded';
 export const INVITE_FRIEND_CHANGE_PHONE = 'invite_friend_change_phone';
 export const INVITE_SENDED_SUCCESS = 'invite_sended_success';
 export const INVITE_SENDED_FAIL = 'invite_sended_fail';
+
+/* STORE */
+export const STORE_GET_CATEGORIES = 'store_get_categories';
+export const STORE_GET_CATEGORIES_SUCCESS = 'store_get_categories_success';
+export const STORE_GET_CATEGORIES_FAIL = 'store_get_categories_fail';
+export const STORE_GET_PRODUCTS_BY_CATEGORY_ID = 'store_get_products_by_category_id';
+export const STORE_GET_PRODUCTS_BY_CATEGORY_ID_SUCCESS = 'store_get_products_by_category_id_success';
+export const STORE_GET_PRODUCTS_BY_CATEGORY_ID_FAIL = 'store_get_products_by_category_id_fail';
+export const STORE_GET_PRODUCT_BY_ID = 'store_get_product_by_id';

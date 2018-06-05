@@ -60,12 +60,13 @@ console.log(images, this.props.images);
                 }}>
                     <ImageSlider
                         onPress={(image) =>{
-                            this.props.images.map( imgObj => {
-                                if (imgObj.url == image.image && imgObj.is_content) {
-                                    Actions.imageContent({image: imgObj});
-                                    console.log(imgObj);
-                                }
-                            })
+                            Actions.imageContent({images: this.props.images, index: image.id});
+                            // this.props.images.map( imgObj => {
+                            //     if (imgObj.url == image.image && imgObj.is_content) {
+                            //         Actions.imageContent({images: imgObj});
+                            //         console.log(imgObj);
+                            //     }
+                            // })
                         }}
                         images={images}
                         autoPlayWithInterval={4000}

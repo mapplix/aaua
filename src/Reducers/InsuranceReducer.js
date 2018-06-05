@@ -88,8 +88,8 @@ export default (state = INITIAL_STATE, action) => {
                 kaskoOrderSuccess: false,
                 osagoPrice: 0,
                 registration: null,
-                osagoCity: '',
-                osagoCityId: null,
+                // osagoCity: '',
+                // osagoCityId: null,
                 volume: null
             }
         default: return state;

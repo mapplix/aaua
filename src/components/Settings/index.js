@@ -129,7 +129,7 @@ class SettingsComponent extends Component {
                               imageSrc={require('../../images/icons/feedback_phone.png')}
                         />
                         <Text style={phoneNumber}>
-                            8 800 536 36 56
+                            0 800 505024
                         </Text>
                     </View>
                     <View style={{

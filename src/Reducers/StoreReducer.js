@@ -1,38 +1,34 @@
 import {
-    COUNTER_CHANGE,
-    BUY_GOODS
+    STORE_GET_CATEGORIES,
+    STORE_GET_CATEGORIES_SUCCESS,
+    STORE_GET_CATEGORIES_FAIL,
+    STORE_GET_PRODUCTS_BY_CATEGORY_ID,
+    STORE_GET_PRODUCTS_BY_CATEGORY_ID_SUCCESS,
+    STORE_GET_PRODUCTS_BY_CATEGORY_ID_FAIL,
+    STORE_GET_PRODUCTS_BY_ID,
 } from '../Actions/types';
-import {Actions} from 'react-native-router-flux';
+const INITIAL_STATE = {
+    categories: [],
+    products: [],
+    error: null,
+    loading: false
+}
 
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case NAME_CHANGE:
-            return {...state, name: action.payload};
-        case CITY_CHANGE:
-            return {...state, city: action.payload};
-        case CAR_CHANGE:
-            return {...state, car: action.payload};
-        case EMAIL_CHANGE:
-            return {...state, email: action.payload};
-        case YEAR_CHANGE:
-            return {...state, year: action.payload};
-        case PASSWORD_CHANGE:
-            return {...state, password: action.payload};
-        case CONFIRM_PASSWORD_CHANGE:
-            return {...state, confirm_password: action.payload};
-        case PHONE_CHANGE:
-            return {...state, phone: action.payload};
-        case CODE_CHANGE:
-            return {...state, code: action.payload};
-        case SUBMIT_USER_DATA:
-            Actions.mainScreen();
+        case STORE_GET_CATEGORIES:
             return {...state, loading: true};
-        case CHECK_ADAULT:
-            return {...state, isAdault: state.isAdault ? false : true};
-        case CHECK_AGRIE:
-            return {...state, isAgrie: state.isAgrie ? false : true};
-        case CHECK_READ:
-            return {...state, isRead: state.isRead ? false : true};
+        case STORE_GET_CATEGORIES_SUCCESS:
+            return {...state, loading: false, categories: action.payload};
+        case STORE_GET_CATEGORIES_FAIL:
+            return {...state, loading: false, categories: [], error: action.payload};
+
+        case STORE_GET_PRODUCTS_BY_CATEGORY_ID:
+            return {...state, loading: true};
+        case STORE_GET_PRODUCTS_BY_CATEGORY_ID_SUCCESS:
+            return {...state, loading: false, products: action.payload};
+        case STORE_GET_PRODUCTS_BY_CATEGORY_ID_FAIL:
+            return {...state, loading: false, products: [], error: action.payload};
         default: return state;
     }
 }

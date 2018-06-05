@@ -119,7 +119,7 @@ class Header extends Component{
                 <View>
                     <Text style={textStyle}>
                         {
-                            this.props.children.toUpperCase()
+                            this.props.children ? this.props.children.toUpperCase() : ''
                         }
                     </Text>
                 </View>
