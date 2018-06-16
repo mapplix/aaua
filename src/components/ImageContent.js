@@ -14,16 +14,7 @@ export default class ImageContent extends Component {
     renderContent() {
 
         return this.props.images.map( image => {
-            let html = `<html lang="he">
-                    <head>
-                    <meta charset="utf-8">
-                    </head>
-                    
-                    <body>
-                    ${image.content}
-                    </body>
-                    
-                    </html>`;
+
             return (
                 <View
                     key={image.id}
@@ -40,7 +31,7 @@ export default class ImageContent extends Component {
                             height: HEIGHT,
                         }}
                         automaticallyAdjustContentInsets = {false}
-                        source={{ html: html, baseUrl:'' }}
+                        source={{ html: image.content, baseUrl:'' }}
                     />
                 </View>
             )
@@ -49,8 +40,6 @@ export default class ImageContent extends Component {
     }
 
     render() {
-console.log('-- render image content --', this.props);
-
         return (
             <MainCard>
                 <Header back/>
@@ -59,7 +48,7 @@ console.log('-- render image content --', this.props);
                         index={this.props.index}
                         style={{flex:1}}
                         showsPagination={false}
-                        showsButtons={true}>
+                        showsButtons={false}>
                         {
                             this.renderContent()
                         }

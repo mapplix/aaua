@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, PermissionsAndroid} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -52,19 +52,42 @@ class MapComponent extends Component {
         }
     }
 
+    requestPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    'title': 'AAUA запрашивает доступ к геоданным',
+                    'message': 'При помощи геолокации мы сможем определить Ваш адрес автоматически'
+                }
+            )
+            console.log(granted);
+            if (granted) {
+                console.log("You can use the geolocation")
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        console.log(position);
+                        this.setState({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            error: null,
+                        });
+                    },
+                    (error) => console.log(error.message ),
+                    { enableHighAccuracy: false, timeout: 40000, maximumAge: 1000, distanceFilter: 10 },
+                );
+            } else {
+                console.log("Camera permission denied")
+            }
+        } catch (err) {
+            console.warn(err)
+        }
+    }
+
     componentDidMount() {
-        this.watchId = navigator.geolocation.watchPosition(
-            (position) => {
-                console.log(position);
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    error: null,
-                });
-            },
-            (error) => console.log(error.message ),
-            { enableHighAccuracy: true, timeout: 40000, maximumAge: 1000, distanceFilter: 10 },
-        );
+
+        this.requestPermission()
+
     }
 
     componentWillUnmount(){
