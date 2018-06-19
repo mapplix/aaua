@@ -3,7 +3,8 @@ import {
     CITIES_LOADED,
     NP_CITES_LOADED,
     NP_SKLADS_LOADED,
-    IMAGES_LOADED
+    IMAGES_LOADED,
+    WOG_BONUSES_LOADED
 } from '../Actions/types';
 
 const INITIAL_STATE = {
@@ -11,7 +12,8 @@ const INITIAL_STATE = {
     brands: [],
     NPcities: [],
     NPsklads: [],
-    sliderImages: []
+    sliderImages: [],
+    bonuses_wog: 0
 }
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
@@ -25,6 +27,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, NPsklads: action.payload};
         case IMAGES_LOADED:
             return {...state, sliderImages: action.payload};
+        case WOG_BONUSES_LOADED:
+            return {...state, bonuses_wog: action.payload};
         default: return state;
     }
 }

@@ -21,7 +21,7 @@ import {BottomMenuItem} from "./common/BottomMenuItem";
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import {setUserFromSession, updateStatus} from '../Actions/AuthAction';
-import {getSliderImages} from '../Actions/CitiesBrands';
+import {getSliderImages, getBonusesWog} from '../Actions/CitiesBrands';
 import {countMessages} from '../Actions/MessagesActions';
 
 class MainComponent extends Component {
@@ -32,6 +32,7 @@ class MainComponent extends Component {
             this.props.setUserFromSession(userObj)
             this.props.getSliderImages(userObj.token)
             this.props.countMessages(userObj.token)
+            this.props.getBonusesWog(userObj.token)
         })
     }
 
@@ -113,10 +114,10 @@ const mapStateToProps = ({auth, citiesBrands, messages}) => {
     return {
         // token: auth.user.token,
         bonus: auth.user ? auth.user.bonus : 0,
-        bonus_wog: auth.user ? auth.user.bonus_wog : 0,
+        bonus_wog: auth.user ? citiesBrands.bonuses_wog : 0,
         images: citiesBrands.sliderImages,
         messagesCounter: messages.messagesCounter
     }
 }
 
-export default connect(mapStateToProps, {setUserFromSession, getSliderImages, countMessages})(MainComponent);
+export default connect(mapStateToProps, {setUserFromSession, getSliderImages, countMessages, getBonusesWog})(MainComponent);

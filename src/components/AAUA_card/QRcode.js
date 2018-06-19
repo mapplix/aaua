@@ -8,7 +8,7 @@ import DeviceBrightness from 'react-native-device-brightness';
 
 class QRcode extends Component {
     state = {
-        luminous: 0.3
+        luminous: 0.5
     }
 
     componentDidMount() {

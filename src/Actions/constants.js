@@ -2,10 +2,10 @@ import {Platform, AsyncStorage} from 'react-native';
 import md5 from 'js-md5';
 import axios from 'axios';
 
-export const BASE_URL = 'http://aaua.taxi898.com.ua';
-// export const BASE_URL = 'https://aaua.com.ua';
-export const API_URL = 'http://aaua.taxi898.com.ua/admin.php?r=api/';
-// export const API_URL = 'https://aaua.com.ua/admin.php?r=api/';
+// export const BASE_URL = 'http://aaua.taxi898.com.ua'; //test
+export const BASE_URL = 'https://aaua.com.ua';
+// export const API_URL = 'http://aaua.taxi898.com.ua/admin.php?r=api/'; //test
+export const API_URL = 'https://aaua.com.ua/admin.php?r=api/';
 export const AUTH_URL = API_URL + 'auth';
 export const SMS_CODE_URL = API_URL + 'register_step1';
 export const REGISTER_2_URL = API_URL + 'register_step2';
@@ -37,6 +37,7 @@ export const GET_CAR_TYPES_URL = API_URL + 'getTypesCar';
 export const BID_KASKO_URL = API_URL + 'bidKasko';
 export const BID_OSAGO_URL = API_URL + 'bidOsago';
 export const CALCULATE_OSAGO_URL = API_URL + 'osagoCalc';
+export const WOG_BONUSES_URL = API_URL + 'getWogBonuce';
 
 export const SECRET_KEY = 'hmnc7TGjffdhgjs';
 export const iOS = 2;
@@ -70,9 +71,9 @@ export const getItem = async (item) => {
 }
 
 /*STORE*/
-export const STORE_BASE_URL = '';
-export const STORE_API_URL = '';
-export const STORE_CATEGORIES_URL = STORE_API_URL + 'wp-json/aaua/api/categories/';
+export const STORE_BASE_URL = 'http://aauaecommerce.mapplix.com/';
+export const STORE_API_URL = 'http://aauaecommerce.mapplix.com/';
+export const STORE_CATEGORIES_URL = STORE_API_URL + 'api/categories/';
 export const STORE_PRODUCTS_URL = STORE_API_URL + 'wp-json/aaua/api/products/';
 export const STORE_PRODUCT_BY_ID_URL = STORE_API_URL + 'wp-json/aaua/api/product/';
 export const STORE_PRODUCT_SET_COUNTER_URL = STORE_API_URL + 'wp-json/aaua/api/products/set_views';

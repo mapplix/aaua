@@ -3,7 +3,8 @@ import {
     CITIES_LOADED,
     NP_CITES_LOADED,
     NP_SKLADS_LOADED,
-    IMAGES_LOADED
+    IMAGES_LOADED,
+    WOG_BONUSES_LOADED
 } from '../Actions/types';
 import axios from 'axios';
 import md5 from 'js-md5';
@@ -16,6 +17,7 @@ import {
     IMAGES_LOAD_URL,
     saveItem,
     BASE_URL,
+    WOG_BONUSES_URL,
     removeItem
 } from './constants';
 import {AsyncStorage} from 'react-native';
@@ -221,5 +223,35 @@ const onImagesLoaded = (dispatch, images) => {
     dispatch({
         type:IMAGES_LOADED,
         payload: images
+    })
+}
+
+export const getBonusesWog = (token) => {
+    return (dispatch) => {
+        const obj = {
+            "token": token,
+        };
+
+        const data = JSON.stringify(obj);
+        const signature = md5(SECRET_KEY + data)
+console.log(WOG_BONUSES_URL, data, signature);
+        axios.post(WOG_BONUSES_URL, data, {
+                headers: {
+                    'Signature': signature,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+            .then(bonuses => {
+console.log(bonuses);
+                onBonusesLoaded(dispatch, bonuses.data.data)
+            })
+    }
+}
+
+const onBonusesLoaded = (dispatch, bonuses) => {
+    dispatch({
+        type:WOG_BONUSES_LOADED,
+        payload: bonuses
     })
 }

@@ -181,3 +181,5 @@ export const STORE_GET_PRODUCTS_BY_CATEGORY_ID = 'store_get_products_by_category
 export const STORE_GET_PRODUCTS_BY_CATEGORY_ID_SUCCESS = 'store_get_products_by_category_id_success';
 export const STORE_GET_PRODUCTS_BY_CATEGORY_ID_FAIL = 'store_get_products_by_category_id_fail';
 export const STORE_GET_PRODUCT_BY_ID = 'store_get_product_by_id';
+
+export const WOG_BONUSES_LOADED = 'wog_bonuses_loaded';
