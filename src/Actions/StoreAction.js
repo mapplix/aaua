@@ -5,7 +5,10 @@ import {
     STORE_GET_PRODUCTS_BY_CATEGORY_ID,
     STORE_GET_PRODUCTS_BY_CATEGORY_ID_SUCCESS,
     STORE_GET_PRODUCTS_BY_CATEGORY_ID_FAIL,
-    STORE_GET_PRODUCT_BY_ID
+    STORE_GET_PRODUCT_BY_ID,
+    STORE_GET_PRODUCT_BY_ID_SUCCESS,
+    ADD_TO_BASKET,
+    CLEAN_BASKET
 } from '../Actions/types';
 import {
     STORE_CATEGORIES_URL,
@@ -24,20 +27,49 @@ export const getCategories = (token, phone) => {
         dispatch({
             type: STORE_GET_CATEGORIES
         })
-
+console.log(token, phone)
         let signatureString = token+":"+phone;
         const signature = btoa(signatureString);
-console.log('STORE get categories - ', signature, STORE_CATEGORIES_URL);
-        axios.get(STORE_CATEGORIES_URL, {
-                headers: {
-                    'Signature' : signature,
-                }
+console.log('STORE get categories - ', signatureString, signature, STORE_CATEGORIES_URL);
+        // axios.get(STORE_CATEGORIES_URL, {
+        //         headers: {
+        //             'Signature' : signature,
+        //         }
+        //     }
+        // )
+        //     .then(categories => onGetCategoriesSuccess(dispatch, categories.data))
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
+        let categories = [
+            {
+                "id":163,
+                "name":"Cars",
+                "slug":"cars",
+                "image":false
+            },
+            {
+                "id":170,
+                "name":"Clothing",
+                "slug":"clothing",
+                "image":false,
+                "sub_categories":[
+                    {
+                        "id":171,
+                        "name":"Hoodies",
+                        "slug":"hoodies",
+                        "image":false
+                    },
+                    {
+                        "id":175,
+                        "name":"T-shirts",
+                        "slug":"t-shirts",
+                        "image":false
+                    }
+                ]
             }
-        )
-            .then(categories => onGetCategoriesSuccess(dispatch, categories.data))
-            .catch((error) => {
-                console.log(error)
-            })
+        ]
+        onGetCategoriesSuccess(dispatch, categories)
     }
 }
 
@@ -48,7 +80,7 @@ const onGetCategoriesSuccess = (dispatch, categories) => {
     })
 }
 
-export const getProductsByCategoriesId = (token, phone) => {
+export const getProductsByCategoriesId = (token, phone, categoryId) => {
     return (dispatch) => {
 
         dispatch({
@@ -64,7 +96,7 @@ export const getProductsByCategoriesId = (token, phone) => {
         let signatureString = token+":"+phone;
         const signature = btoa(signatureString);
 console.log('STORE get products - ', signature, STORE_PRODUCTS_URL);
-        axios.get(STORE_PRODUCTS_URL, {
+        /*axios.get(STORE_PRODUCTS_URL, {
                 headers: {
                     'Signature' : signature,
                 }
@@ -73,7 +105,50 @@ console.log('STORE get products - ', signature, STORE_PRODUCTS_URL);
             .then(products => onGetProductsSuccess(dispatch, products.data))
             .catch((error) => {
                 console.log(error)
-            })
+            })*/
+        let products =  [
+            {
+                "id":60,
+                "name":"Woo Logo",
+                "photo":"http://wp.dev/wp-content/uploads/2013/06/hoodie_6_front.jpg",
+                "price":"35",
+                "bonus_price":"",
+                "views": "1",
+                "gallery":[
+                    "http://wp.dev/wp-content/uploads/2013/06/hoodie_6_back.jpg"
+                ],
+                "status":"instock",
+                "categories":{
+                    "id":171,
+                    "name":"Hoodies"
+                },
+                "brands":{
+                    "id":172,
+                    "name":"Coca Cola"
+                }
+            },
+            {
+                "id":61,
+                "name":"Woo Logo",
+                "photo":"http://wp.dev/wp-content/uploads/2013/06/hoodie_6_front.jpg",
+                "price":"35",
+                "bonus_price":"",
+                "views": "1",
+                "gallery":[
+                    "http://wp.dev/wp-content/uploads/2013/06/hoodie_6_back.jpg"
+                ],
+                "status":"instock",
+                "categories":{
+                    "id":171,
+                    "name":"Hoodies"
+                },
+                "brands":{
+                    "id":172,
+                    "name":"Coca Cola"
+                }
+            }
+        ]
+        onGetProductsSuccess(dispatch, products);
     }
 }
 
@@ -91,16 +166,10 @@ export const getProductById = (token, phone) => {
             type: STORE_GET_PRODUCT_BY_ID
         })
 
-        // const obj = {
-        //     "token" : token,
-        // };
-        //
-        // const data = JSON.stringify(obj);
-
         let signatureString = token+":"+phone;
         const signature = btoa(signatureString);
         console.log('STORE get products - ', signature, STORE_PRODUCT_BY_ID_URL);
-        axios.get(STORE_PRODUCT_BY_ID_URL, {
+        /*axios.get(STORE_PRODUCT_BY_ID_URL, {
                 headers: {
                     'Signature' : signature,
                 }
@@ -109,37 +178,43 @@ export const getProductById = (token, phone) => {
             .then(product => onGetProductsSuccess(dispatch, product.data))
             .catch((error) => {
                 console.log(error)
-            })
+            })*/
+        let product = {
+            "id":"60",
+            "name":"Woo Logo",
+            "photo":"http://wp.dev/wp-content/uploads/2013/06/hoodie_6_front.jpg",
+            "price":"35",
+            "bonus_price":"",
+            "views": "1",
+            "gallery":[
+                "http://wp.dev/wp-content/uploads/2013/06/hoodie_6_back.jpg"
+            ],
+            "status":"instock",
+            "categories":{
+                "id":171,
+                "name":"Hoodies"
+            }
+        }
+        onGetProductSuccess(dispatch, product)
     }
 }
 
-export const setDefaultViewCounter = () => {
-
+const onGetProductSuccess = (dispatch, product) => {
+    dispatch ({
+        type: STORE_GET_PRODUCT_BY_ID_SUCCESS,
+        payload: product
+    })
 }
 
-export const increaseViewCounter = () => {
-
+export const addToBasket = (productId) => {
+    return {
+        type: ADD_TO_BASKET ,
+        payload: productId
+    }
 }
 
-/*
-Orders
- */
-//MAKE ORDER
-export const makeOrder = () => {
-
-}
-
-//UPDATE ORDER
-export const updateOrder = () => {
-
-}
-
-//GET ORDER BY USER ID
-export const getOrderByUserId = () => {
-
-}
-
-//GET ORDER DETAILS
-export const getOrderDetails = () => {
-
+export const cleanBasket = () => {
+    return {
+        type: CLEAN_BASKET
+    }
 }

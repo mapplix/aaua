@@ -13,6 +13,7 @@ import OrderingReducer from './OrderingReducer'
 import MessagesReducer from './MessagesReducer'
 import DiscountsReducer from './DiscountsReducer'
 import InviteFriendReducer from './InviteFriendReducer'
+import StoreReducer from './StoreReducer'
 
 export default combineReducers({
     auth: AuthReducer,
@@ -29,4 +30,5 @@ export default combineReducers({
     messages: MessagesReducer,
     discounts: DiscountsReducer,
     inviteFriend: InviteFriendReducer,
+    store: StoreReducer,
 })

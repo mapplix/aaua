@@ -73,7 +73,7 @@ export const getItem = async (item) => {
 /*STORE*/
 export const STORE_BASE_URL = 'http://aauaecommerce.mapplix.com/';
 export const STORE_API_URL = 'http://aauaecommerce.mapplix.com/';
-export const STORE_CATEGORIES_URL = STORE_API_URL + 'api/categories/';
+export const STORE_CATEGORIES_URL = STORE_API_URL + 'wp-json/aaua/api/categories/';
 export const STORE_PRODUCTS_URL = STORE_API_URL + 'wp-json/aaua/api/products/';
 export const STORE_PRODUCT_BY_ID_URL = STORE_API_URL + 'wp-json/aaua/api/product/';
 export const STORE_PRODUCT_SET_COUNTER_URL = STORE_API_URL + 'wp-json/aaua/api/products/set_views';

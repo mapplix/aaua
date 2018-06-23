@@ -10,8 +10,72 @@ import {
 import {WIDTH_RATIO, RATIO} from '../../styles/constants';
 import GoodsComponent from './GoodsComponent';
 import {Actions} from 'react-native-router-flux';
+import {getProductsByCategoriesId} from '../../Actions/StoreAction';
+import {connect} from 'react-redux';
 
 class GoodsListComponent extends Component {
+
+    componentWillMount() {
+        let {token, phone} = this.props;
+        this.props.getProductsByCategoriesId(token, phone, 163)
+    }
+
+    renderRows() {
+        console.log(this.props.products)
+        const products = [...this.props.products];
+        var i=0;
+        var rows = [];
+        while (i < products.length) {
+            rows.push(products.slice(i, i+2))
+            i = i+2;
+        }
+        return rows.map( (row, index) => {
+            console.log(row[0]);
+            return (
+                <CardItem
+                    key={row[0].id}
+                    style={styles.cardItemStyle}>
+                    <GoodsComponent
+                        onPress={() => Actions.detail()}
+                        imageSrc={{uri:row[0].photo}}
+                        price={row[0].price}
+                        isPresent
+                    >
+                        {
+                            row[0].name
+                        }
+                    </GoodsComponent>
+                    <GoodsComponent
+                        imageSrc={{uri:row[1].photo}}
+                        price={row[1].price}
+                        >
+                        {
+                            row[1].name
+                        }
+                    </GoodsComponent>
+                </CardItem>
+            )
+        })
+    }
+
+    renderContent() {
+        const {loading} = this.props
+        if (!loading) {
+            return (
+                <ScrollView style={{
+                    paddingLeft: 22,
+                    paddingRight: 22,
+                }}>
+                    {this.renderRows()}
+                </ScrollView>
+            )
+        } else {
+            return (
+                <Spiner />
+            )
+        }
+    }
+
     render() {
         const {
             cardItemStyle,
@@ -26,71 +90,9 @@ class GoodsListComponent extends Component {
                 <Header back basket>
                     автомасла
                 </Header>
-                <ScrollView style={{
-                    marginTop: 21
-                }}>
-                    <CardItem style={cardItemStyle}>
-                        <GoodsComponent
-                            onPress={() => Actions.detail()}
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                            isPresent
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                        <GoodsComponent
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                    </CardItem>
-                    <CardItem style={cardItemStyle}>
-                        <GoodsComponent
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                            isPresent
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                        <GoodsComponent
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                    </CardItem>
-                    <CardItem style={cardItemStyle}>
-                        <GoodsComponent
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                            isPresent
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                        <GoodsComponent
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                    </CardItem>
-                    <CardItem style={cardItemStyle}>
-                        <GoodsComponent
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                            isPresent
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                        <GoodsComponent
-                            imageSrc={require('../../images/avtoOil.png')}
-                            price={1750}
-                        >
-                            Моторное масло Shell Helix HX7 10W-40
-                        </GoodsComponent>
-                    </CardItem>
-                </ScrollView>
+                {
+                    this.renderContent()
+                }
             </MainCard>
         )
     }
@@ -142,4 +144,12 @@ const styles = {
     }
 }
 
-export default GoodsListComponent;
+const mapStateToProps = ({auth, store}) => {
+    return {
+        phone: auth.user.profile.phone,
+        token: auth.user.token,
+        products: store.products
+    }
+}
+
+export default connect(mapStateToProps, {getProductsByCategoriesId})(GoodsListComponent);

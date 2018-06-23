@@ -1,10 +1,84 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {
+    View,
+    Text,
+    ScrollView
+} from 'react-native';
 import {MainCard, CardItem, Header} from '../common';
 import Item from './Item';
 import {Actions} from 'react-native-router-flux';
+import {getCategories} from '../../Actions/StoreAction';
+import {connect} from 'react-redux';
+import {getImageByStoreCategoryId} from '../../Helpers/ImageHelper';
 
 class CategoriesComponent extends Component {
+
+    componentWillMount() {
+        let {phone, token} = this.props;
+        this.props.getCategories(token, phone)
+    }
+
+    openStoreCategories(categorieId) {
+        Actions.goods()
+    }
+
+    renderRows() {
+        console.log(this.props.categories)
+        const categories = [...this.props.categories];
+        var i=0;
+        var rows = [];
+        while (i < categories.length) {
+            rows.push(categories.slice(i, i+3))
+            i = i+3;
+        }
+        return rows.map( (row, index) => {
+console.log(row[0]);
+            return (
+                <CardItem
+                    key={row[0].id}
+                    style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'center'
+                }}>
+                    <Item
+                        onPress={Actions.specialOffer}
+                        imageSrc={getImageByStoreCategoryId(row[0].id)}
+                    >
+                        {
+                            row[0].name
+                        }
+                    </Item>
+                    <Item
+                        onPress={() => this.openStoreCategories(row[1])}
+                        imageSrc={getImageByStoreCategoryId(row[1].id)}
+                    >
+                        {
+                            row[1].name
+                        }
+                    </Item>
+                </CardItem>
+            )
+        })
+    }
+
+    renderContent() {
+        const {loading} = this.props
+        if (!loading) {
+            return (
+                <ScrollView style={{
+                    paddingLeft: 22,
+                    paddingRight: 22,
+                }}>
+                    {this.renderRows()}
+                </ScrollView>
+            )
+        } else {
+            return (
+                <Spiner />
+            )
+        }
+    }
 
     render() {
         return (
@@ -12,7 +86,7 @@ class CategoriesComponent extends Component {
                 <Header burger basket>
                     Магазин
                 </Header>
-                <ScrollView>
+                {/*<ScrollView>
                     <CardItem style={{
                         flexDirection: 'row',
                         justifyContent: 'space-around',
@@ -101,10 +175,21 @@ class CategoriesComponent extends Component {
                             Автохимия
                         </Item>
                     </CardItem>
-                </ScrollView>
+                </ScrollView>*/}
+                {
+                    this.renderContent()
+                }
             </MainCard>
         )
     }
 }
 
-export default CategoriesComponent;
+const mapStateToProps = ({auth, store}) => {
+    return {
+        phone: auth.user.profile.phone,
+        token: auth.user.token,
+        categories: store.categories
+    }
+}
+
+export default connect(mapStateToProps, {getCategories})(CategoriesComponent);
