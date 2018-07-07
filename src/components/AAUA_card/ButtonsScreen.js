@@ -129,6 +129,7 @@ class ButtonsScreen extends Component {
                         height: 150
                     }}>
                         <TouchableOpacity
+                            isDisabled={true}
                             onPress={this.orderVirtualCard.bind(this)}
                             style={modalTextContainer}
                         >
