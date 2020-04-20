@@ -15,30 +15,19 @@ import {
 import {WIDTH_RATIO, RATIO} from '../../styles/constants';
 import ImageSlider from 'react-native-image-slider';
 import {Actions} from 'react-native-router-flux';
-import {getProductById, addToBasket} from '../../Actions/StoreAction';
+import {getProductById, addToBasket, increseCounter} from '../../Actions/StoreAction';
 import {connect} from 'react-redux';
 
 class DetailsComponent extends Component {
 
-    componentWillMount() {
-        let {token, phone} = this.props;
-        this.props.getProductById(token, phone, 60)
-    }
-
     addToBascket() {
         let {addToBasket, product} = this.props;
         addToBasket(product);
-        Actions.basketList();
     }
 
     render() {
+        console.log('DETAILS render', this.props);
 let {product} = this.props;
-        const images = [
-            require('../../images/avtoOil.png'),
-            require('../../images/avtoOil.png'),
-            require('../../images/avtoOil.png'),
-        ];
-
         const {
             sliderContainer,
             imageContainer,
@@ -59,14 +48,14 @@ let {product} = this.props;
                 <MainCard>
                     <Header back basket>
                         {
-                            product.name
+                            this.props.category.name
                         }
                     </Header>
                     <ScrollView>
                         <CardItem style={imageContainer}>
                             <View style={sliderContainer}>
                                 <ImageSlider
-                                    images={images}
+                                    images={product.gallery}
                                     autoPlayWithInterval={4000}
                                     customSlide={({ index, item, style, width }) =>{
                                         return (
@@ -76,11 +65,14 @@ let {product} = this.props;
                                             alignItems:'center',
                                             backgroundColor:'#ffffff'
                                         }]}>
-                                            <Image source={item }
-                                                   style={{
-                                                        height: imageHeight,
-                                                        width: 215 * WIDTH_RATIO,
-                                                        flex: 1 }}
+                                            <Image
+                                                source={{uri:item}}
+                                                style={{
+                                                    height: imageHeight,
+                                                    width: 215 * WIDTH_RATIO,
+                                                    flex: 1
+                                                }}
+                                                resizeMode={'contain'}
                                             />
                                         </View>
                                         )
@@ -95,17 +87,22 @@ let {product} = this.props;
                                 </Text>
                                 <Text style={isPresentText}>
                                     {
-                                        product.status == 'instock' ? 'Вналичии' : 'Нет на складе'
+                                        product.status == 'instock' ? 'Вналичии' : 'Нет в наличии'
                                     }
                                 </Text>
                             </View>
 
                         </CardItem>
                         <CardItem style={descriptionContainer}>
-                            <CardComponent style={{
+                            <View style={{
+                                flex: 1,
                                 paddingTop: 22,
                                 justifyContent: 'flex-start',
-                                alignItems: 'flex-start'
+                                alignItems: 'center',
+                                marginBottom: 8,
+                                borderWidth:1,
+                                borderRadius:4,
+                                borderColor: '#bcbcb3',
                             }}>
                                 <Text style={
                                     descriptionTitle
@@ -119,28 +116,19 @@ let {product} = this.props;
                                         fontSize: 13,
                                         color: '#1b1b1b'
                                     }}>
-                                        Давно выяснено, что при оценке дизайна и композиции читаемый текст
-                                        мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более
-                                        или менее стандартное заполнение шаблона, а также реальное распределение букв и
-                                        пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст..
-                                        Здесь ваш текст.. Здесь ваш текст.." Многие программы электронной вёрстки и
-                                        редакторы HTML используют Lorem Ipsum в качестве текста по умолчанию, так что
-                                        поиск по ключевым словам "lorem ipsum" сразу показывает, как много веб-страниц
-                                        всё ещё дожидаются своего настоящего рождения. За прошедшие годы текст Lorem Ipsum
-                                        получил много версий. Некоторые версии появились по ошибке, некоторые - намеренно
-                                        (например, юмористические варианты).
+                                        {product.description}
                                     </Text>
                                 </View>
-                            </CardComponent>
+                            </View>
                         </CardItem>
                     </ScrollView>
                     <View style={fixedFooterStyle}>
                         <View>
                             <Text style={priceText}>
-                                {product.price} грн
+                                {product.price || 0} грн
                             </Text>
                             <Text style={bonusText}>
-                                {product.bonus_price} бонусов
+                                {product.bonus_price || 0} бонусов
                             </Text>
                         </View>
                         <View style={{
@@ -182,7 +170,8 @@ const styles = {
         flex: 2,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        alignSelf: 'stretch'
     },
     titleStyle: {
         fontFamily: 'SFUIText-Medium',
@@ -200,6 +189,9 @@ const styles = {
         flex: 40,
         paddingLeft: 14 * WIDTH_RATIO,
         paddingRight: 14 * WIDTH_RATIO,
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     textContainer: {
         marginRight: 17,
@@ -253,7 +245,9 @@ const mapStateToProps = ({auth, store}) => {
     return {
         phone: auth.user.profile.phone,
         token: auth.user.token,
-        product: store.product
+        // product: store.product,
+        basket: store.basket,
+        countBasket: store.countBasket
     }
 }
 

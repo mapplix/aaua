@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, Image, Animated, WebView} from 'react-native';
+import {View, Text, Animated} from 'react-native';
+import WebView from 'react-native-webview';
 import {BASE_URL} from '../../Actions/constants';
 
 class CustomMarker extends Component {

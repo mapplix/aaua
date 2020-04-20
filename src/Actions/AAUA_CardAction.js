@@ -1,36 +1,35 @@
 import {
-    ADD_CARD,
-    ORDER_CARD,
-    ADD_CARD_SUCCESS,
-    ADD_CARD_FAIL,
-    ORDER_AAUA_CARD_SUCCESS,
-    ORDER_AAUA_CARD_FAIL,
-    PHONE_CHANGE,
-    CITY_CHANGE,
-    NP_CITY_CHANGE,
-    COUNTRY_CHANGE,
-    DELIVERY_CHANGE,
-    ADDRESS_CHANGE,
-    COMMENT_CHANGE,
-    DELETE_AAUA_CARD,
-    ADD_AAUA_CARD,
-    CARD_NUMBER_CHANGE,
-    MY_AAUA_CARD,
-    AAUA_CARD_NUMBER_CHANGE,
-    MY_AAUA_CARD_LOADED,
-    MY_AAUA_CARD_FAIL,
-    AAUA_ORDERING_CHANGE_PHONE,
-    CHANGE_NP_SKLAD,
-    ORDER_CARD_CITY_SELECTED,
-    ORDER_CARD_CITY_CHANGE,
-    ORDER_CARD_SELECT_ADDRESS,
-    NP_CITIES_CLEAN
+  ADD_CARD,
+  ORDER_CARD,
+  ADD_CARD_SUCCESS,
+  ADD_CARD_FAIL,
+  ORDER_AAUA_CARD_SUCCESS,
+  ORDER_AAUA_CARD_FAIL,
+  NP_CITY_CHANGE,
+  DELIVERY_CHANGE,
+  ADDRESS_CHANGE,
+  COMMENT_CHANGE,
+  DELETE_AAUA_CARD,
+  ADD_AAUA_CARD,
+  MY_AAUA_CARD,
+  AAUA_CARD_NUMBER_CHANGE,
+  MY_AAUA_CARD_LOADED,
+  MY_AAUA_CARD_FAIL,
+  AAUA_ORDERING_CHANGE_PHONE,
+  CHANGE_NP_SKLAD,
+  ORDER_CARD_CITY_SELECTED,
+  ORDER_CARD_CITY_CHANGE,
+  ORDER_CARD_SELECT_ADDRESS,
+  NP_CITIES_CLEAN, DISCOUNTS_LOADING_CARDS,
+  AZS_LOADED,
+QR_ERROR
 } from '../Actions/types';
 import {
-    SECRET_KEY,
-    MY_AAUA_CARD_URL,
-    ORDER_AAUA_CARD_URL,
-    ADD_AAUA_CARD_URL
+  SECRET_KEY,
+  MY_AAUA_CARD_URL,
+  ORDER_AAUA_CARD_URL,
+  ADD_AAUA_CARD_URL, AZS_URL,
+    GET_WOG_QR
 } from './constants';
 import axios from 'axios';
 import md5 from 'js-md5'
@@ -121,6 +120,9 @@ export const addCard = (card) => {
 
         const data = JSON.stringify(obj);
         const signature = md5(SECRET_KEY + data)
+
+        console.log("ACTION ADD CARD", data, signature);
+
         axios.post(ADD_AAUA_CARD_URL, data, {
                 headers: {
                     'Signature' : signature,
@@ -135,6 +137,7 @@ export const addCard = (card) => {
 
 export const addCardSuccess = (dispatch, response) => {
 
+    console.log("ADD CARD RESPONSE", response);
     if (response.error == 0) {
         dispatch({
             type: ADD_CARD_SUCCESS,
@@ -217,7 +220,7 @@ export const deleteCard = (cardId) => {
 }
 
 export const getMyCard = (token) => {
-    return (dispatch) => {
+    return async (dispatch) => {
 
         dispatch({
             type: MY_AAUA_CARD
@@ -229,34 +232,60 @@ export const getMyCard = (token) => {
         const data = JSON.stringify(obj);
         const signature = md5(SECRET_KEY + data)
 console.log(MY_AAUA_CARD_URL, data, signature)
-        axios.post(MY_AAUA_CARD_URL, data, {
+        let card = await axios.post(MY_AAUA_CARD_URL, data, {
                 headers: {
                     'Signature' : signature,
                     'Content-Type': 'application/json',
                 }
             }
-        )
-            .then(card => getCardSuccess(dispatch, card.data))
-            .catch((error) => {
-                console.log(error)
+        );
+        if (card.data && card.data.error == 0) {
+            console.log("USER HAS CARD", card.data);
+            let QR = await axios.post(GET_WOG_QR, data, {
+                    headers: {
+                        'Signature' : signature,
+                        'Content-Type': 'application/json',
+                    }
+                }
+            );
+            let cardObj = {...card.data.data, qr: null};
+            console.log("QR FOR CARD - ", QR.data, cardObj);
+            // dispatch({
+            //     type:  QR_ERROR,
+            //     payload: 59
+            // })
+            if (QR.data && QR.data.error == 0) {
+                console.log("QR - ", QR.data.data);
+                cardObj.qr = QR.data.data;
+            } else {
+                console.log("GET QR WOG ERROR", QR.data.error_wog)
+                dispatch({
+                    type:  QR_ERROR,
+                    payload: QR.data.error_wog
+                })
+            }
+            getCardSuccess(dispatch, cardObj);
+        } else {
+            console.log("GET CARD ERROR - ", card.error)
+            dispatch({
+                type:  MY_AAUA_CARD_FAIL,
+                payload: 'Токен неверен либо устарел. Пройдите авторизацию'
             })
+        }
+            // .then(card => getCardSuccess(dispatch, card.data))
+            // .catch((error) => {
+            //     console.log(error)
+            // })
     }
 }
 
 const getCardSuccess = (dispatch, card) => {
 console.log('getCardSuccess', card);
-    if (card.error == 0) {
-        dispatch({
-            type: MY_AAUA_CARD_LOADED,
-            payload: card.data.card
-            // payload: null
-        })
-    } else if (card.error >= 1) {
-        dispatch({
-            type:  MY_AAUA_CARD_FAIL,
-            payload: 'Токен неверен либо устарел. Пройдите авторизацию'
-        })
-    }
+    dispatch({
+        type: MY_AAUA_CARD_LOADED,
+        payload: card
+        // payload: '12345678954'
+    })
 }
 
 export const changeComment = (text) => {
@@ -265,4 +294,36 @@ export const changeComment = (text) => {
         type: COMMENT_CHANGE,
         payload: text
     }
+}
+
+export const getAZSList = (token) => {
+
+  return (dispatch) => {
+
+    const obj = {
+      "token" : token,
+      "limit" : 20,
+      "offset" : 0,
+    };
+
+    const data = JSON.stringify(obj);
+
+    const signature = md5(SECRET_KEY + data)
+    console.log("getAZSList", AZS_URL, signature, token);
+
+    axios.post(AZS_URL, data, {
+        headers: {
+          'Signature' : signature,
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+      .then( items => {
+          console.log("AZS_LOADED", items);
+        dispatch({
+          type: AZS_LOADED,
+          payload: items.data
+        })
+      })
+  }
 }

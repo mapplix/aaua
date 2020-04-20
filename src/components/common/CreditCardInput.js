@@ -77,7 +77,7 @@ const styles = {
     inputStyle: {
         // placeholderTextColor: '#b6b9bf',
         fontFamily:'SFUIText-Regular',
-        color: '#b6b9bf',
+        color: '#111',
         fontSize: 15,
         lineHeight: 25,
         flex:1,
@@ -92,7 +92,7 @@ const styles = {
         fontFamily: 'SFUIText-Regular',
         fontSize: 14,
         alignSelf:'stretch',
-        color: '#3d3e40',
+          color: '#423486',
     },
 
 }

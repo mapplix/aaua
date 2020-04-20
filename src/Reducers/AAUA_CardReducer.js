@@ -27,13 +27,16 @@ import {
     DELIVERY_NP,
     NP_CITIES_CLEAN,
     ORDER_CARD_CITY_SELECTED,
-    ORDER_CARD_SELECT_ADDRESS
+    ORDER_CARD_SELECT_ADDRESS,
+  AZS_LOADED,
+    QR_ERROR
 } from '../Actions/types';
 import {Actions} from 'react-native-router-flux';
 
 const INITIAL_STATE = {
     myCards: null,
     error: '',
+    QrError: null,
     addCardError: null,
     loading: false,
     orderCardSuccess: false,
@@ -53,16 +56,19 @@ const INITIAL_STATE = {
     sklad: null,
     address: null,
     comment: null,
-    phone: null
+    phone: null,
+  azs: []
 }
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case AAUA_ORDERING_CHANGE_PHONE:
-            return {...state, phone: action.payload, addCardError: null};
+            return {...state, phone: action.payload, addCardError: null, QrError: null,};
         case COUNTRY_CHANGE:
-            return {...state, country: action.payload, addCardError: null};
+            return {...state, country: action.payload, addCardError: null, QrError: null,};
         case CITY_CHANGE:
-            return {...state, city: action.payload, addCardError: null};
+            return {...state, city: action.payload, addCardError: null, QrError: null,};
+        case AZS_LOADED:
+            return {...state, azs: action.payload, addCardError: null, QrError: null,};
         case DELIVERY_CHANGE:
             return {...state,
                 orderCardSuccess: false,
@@ -70,7 +76,9 @@ export default (state = INITIAL_STATE, action) => {
                 city: null,
                 delivery: action.payload,
                 address: null,
-                addCardError: null}
+                addCardError: null,
+                QrError: null,
+            }
         case NP_CITY_CHANGE:
             return {
                 ...state,
@@ -81,7 +89,8 @@ export default (state = INITIAL_STATE, action) => {
                 showNPSklads: 'flex',
                 showAdress: 'none',
                 address: null,
-                npCity: action.payload, addCardError: null
+                npCity: action.payload, addCardError: null,
+                QrError: null,
             }
         case ORDER_CARD_CITY_SELECTED:
 console.log(ORDER_CARD_CITY_SELECTED);
@@ -92,7 +101,8 @@ console.log(ORDER_CARD_CITY_SELECTED);
                 orderCardSuccess: false,
                 orderVirtualCardSuccess: false,
                 address: null,
-                addCardError: null
+                addCardError: null,
+                QrError: null
             }
         case ORDER_CARD_CITY_CHANGE:
             return {
@@ -105,7 +115,8 @@ console.log(ORDER_CARD_CITY_SELECTED);
                 // showNPCities: 'none',
                 // showNPSklads: 'none',
                 // showAdress: 'flex',
-                addCardError: null
+                addCardError: null,
+                QrError: null
             }
         case ORDER_CARD_SELECT_ADDRESS:
         case ADDRESS_CHANGE:
@@ -113,7 +124,9 @@ console.log(ORDER_CARD_CITY_SELECTED);
                 address: action.payload,
                 orderCardSuccess: false,
                 orderVirtualCardSuccess: false,
-                addCardError: null};
+                addCardError: null,
+                QrError: null
+            };
         case NP_CITIES_CLEAN:
             return {
                 ...state,
@@ -121,41 +134,59 @@ console.log(ORDER_CARD_CITY_SELECTED);
                 orderCardSuccess: false,
                 orderVirtualCardSuccess: false,
                 address: null,
-                addCardError: null
+                addCardError: null,
+                QrError: null
             }
         case CHANGE_NP_SKLAD:
-            return {...state, address: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
+            return {...state, address: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null, QrError: null};
         case COMMENT_CHANGE:
-            return {...state, comment: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
+            return {...state, comment: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null, QrError: null};
         case ADD_CARD:
-            return {...state, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
+            return {...state, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null, QrError: null};
         case ADD_CARD_SUCCESS:
-            return {...state, addCardError: null};
+            return {...state, addCardError: null, QrError: null};
         case ADD_CARD_FAIL:
-            return {...state, addCardError: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false};
+            return {...state, addCardError: action.payload, orderCardSuccess: false, orderVirtualCardSuccess: false, QrError: null};
         case ORDER_CARD:
-            return {...state, loading: true, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
+            return {...state, loading: true, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null, QrError: null};
         case ORDER_AAUA_CARD_SUCCESS:
             return {...state,
                 orderCardSuccess: action.payload == 'virtual' ? false : true,
                 orderVirtualCardSuccess: action.payload == 'virtual' ? true : false,
                 addCardError: null,
-                loading: false};
+                loading: false,
+                QrError: null
+            };
         case ORDER_AAUA_CARD_FAIL:
-            return {...state, error: 'Ошибка', orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
+            return {...state, error: 'Ошибка', orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null, QrError: null};
         case DELETE_AAUA_CARD:
             Actions.AAUA_main();
-            return {...state, myCards: [], orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null};
+            return {...state, myCards: [], orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null, QrError: null};
         case CARD_NUMBER_CHANGE:
-            return {...state, card_number: action.payload, addCardError: null};
+            return {...state, card_number: action.payload, addCardError: null, QrError: null};
         case MY_AAUA_CARD:
-            return {...state, loading: true, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null}
+            return {...state, loading: true, orderCardSuccess: false, orderVirtualCardSuccess: false, addCardError: null, QrError: null}
         case MY_AAUA_CARD_FAIL:
-            return {...state, error: action.payload, addCardError: null,orderVirtualCardSuccess: false,  orderCardSuccess: false}
+            return {...state, error: action.payload, addCardError: null,orderVirtualCardSuccess: false,  orderCardSuccess: false, QrError: null}
         case MY_AAUA_CARD_LOADED:
-            return {...state, myCards: action.payload, loading: false, addCardError: null,orderVirtualCardSuccess: false,  orderCardSuccess: false}
+            return {...state,
+                myCards: action.payload,
+                loading: false,
+                addCardError: null,
+                orderVirtualCardSuccess: false,
+                orderCardSuccess: false
+            }
         case AAUA_CARD_NUMBER_CHANGE:
-            return {...state, card_number: action.payload, addCardError: null}
+            return {...state, card_number: action.payload, addCardError: null, QrError: null}
+        case QR_ERROR:
+            console.log("REDUCER QR_ERROR", action.payload);
+            // let errorMessage = "Пройдите авторизацию";
+            // if (action.payload == 2) {
+            //     errorMessage = "Карта не активирована в Wog"
+            // } else if (action.payload == 3) {
+            //     errorMessage = "Что-то пошло не так, попробуйте позже"
+            // }
+            return {...state, QrError: action.payload, addCardError: null}
         default: return state;
     }
 }

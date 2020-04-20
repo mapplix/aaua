@@ -39,7 +39,7 @@ class PasswordInput extends Component{
 
 const styles = {
     containerStyle: {
-      //backgroundColor:"#289",
+      // backgroundColor:"#289",
         height: 63,
         marginLeft: 45,
         marginRight: 45,
@@ -50,14 +50,14 @@ const styles = {
     },
     labelStyle: {
         // backgroundColor: '#283',
-        marginLeft: 4,
+        // marginLeft: 4,
         marginBottom: 2,
         paddingTop:0,
         height: 22,
-        fontFamily: 'SFUIText-Regular',
-        fontSize: 14,
+      fontFamily: 'SFUIText-Medium',
+      fontSize: 14,
+      color: '#423486',
         width: 160,
-        color: '#3d3e40'
     },
     visibilityBtn:{
         position: 'absolute',
@@ -81,10 +81,10 @@ const styles = {
         paddingTop:0,
         marginTop:0,
         fontFamily: 'SFUIText-Regular',
-        color: '#b6b9bf',
+        color: '#111',
         fontSize: 15,
         flex:1,
-        borderBottomWidth: DEVICE_OS == iOS ? 1 : 0,
+        borderBottomWidth: 1,
         borderBottomColor: '#000'
     }
 }

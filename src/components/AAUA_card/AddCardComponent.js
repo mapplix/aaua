@@ -60,7 +60,7 @@ class AddCardComponent extends Component {
                         label={'Номер карты'}
                         value={this.props.card_number}
                         onChangeText={this.onCodeChange.bind(this)}
-                        placeholder={'XXXX XXXX XXXX XXXX'}
+                        placeholder={'XXXX XXXX XXXX XXX'}
                     />
                 </CardItem>
                 <CardItem style={{

@@ -48,6 +48,7 @@ const INITIAL_STATE = {
     isDisabled: true,
     smsError: null,
     sms: null,
+    smsSended: false,
     sendingStep2: false
 }
 export default (state = INITIAL_STATE, action) => {
@@ -100,6 +101,7 @@ export default (state = INITIAL_STATE, action) => {
                 loading: true,
                 error: '',
                 sms: null,
+                smsSended: true,
                 smsError: false};
         case SEND_SMS_SUCCESS:
             return {
@@ -108,26 +110,26 @@ export default (state = INITIAL_STATE, action) => {
                 error: '',
                 loading: false,
                 isDisabled: false,
+                // smsSended: false,
                 smsError: false
             };
         case SEND_SMS_FAIL:
             return {...state,
                 sms: null,
+                // smsSended: false,
                 smsError: action.payload,
                 loading: false};
         case SEND_STEP_1:
-            return {...state, loading: true, error: '', smsError: false};
+            return {...state, loading: true, error: '', smsSended: false, smsError: false};
         case STEP_1_SUCCESS:
             Actions.secondStage();
             return {
                 ...state,
                 token : action.payload.token,
                 username : action.payload.username,
-                error: '',
-                loading: false,
-                smsError: false};
+                loading: true, error: '', smsSended: false, smsError: false};
         case STEP_1_FAIL:
-            return {...state, user: '', error: 'Ошибка авторизации', loading: false};
+            return {...state, user: '', error: 'Ошибка авторизации', loading: false, smsSended: false, smsError: false};
         case SEND_STEP_2:
             return {...state,
                 loading: true,

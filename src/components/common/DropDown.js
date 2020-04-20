@@ -59,7 +59,7 @@ const value = selected != null ? selected : elements[0];
 
 const styles = {
     inputStyle: {
-        color: '#b6b9bf',
+      color: '#111',
         flex:1,
         alignSelf: 'stretch'
     },
@@ -67,10 +67,10 @@ const styles = {
         marginLeft: 4,
         paddingTop:2,
         height: 22,
-        fontFamily: 'SFUIText-Regular',
-        fontSize: 14,
+      fontFamily: 'SFUIText-Medium',
+      fontSize: 14,
+      color: '#423486',
         alignSelf:'stretch',
-        color: '#3d3e40',
     },
     containerStyle: {
         height: 90,

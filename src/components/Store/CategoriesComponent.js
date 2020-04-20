@@ -2,62 +2,106 @@ import React, {Component} from 'react';
 import {
     View,
     Text,
-    ScrollView
+    ScrollView,
+    FlatList
 } from 'react-native';
-import {MainCard, CardItem, Header} from '../common';
+import {
+    MainCard,
+    CardItem,
+    Header,
+    Spiner
+} from '../common';
 import Item from './Item';
 import {Actions} from 'react-native-router-flux';
 import {getCategories} from '../../Actions/StoreAction';
 import {connect} from 'react-redux';
-import {getImageByStoreCategoryId} from '../../Helpers/ImageHelper';
+import _ from 'lodash';
 
 class CategoriesComponent extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
+        console.log('***STORE CATEGORIES componentDidMount', this.props.categories)
         let {phone, token} = this.props;
         this.props.getCategories(token, phone)
     }
 
-    openStoreCategories(categorieId) {
-        Actions.goods()
+    shouldComponentUpdate(nextProps) {
+        return !_.isEqual(nextProps.categories, this.props.categories);
+    }
+
+    openStoreCategories(category) {
+        if (category.id == 17) { // if this is Specail offers category
+            Actions.specialOffer({subcategories: category.sub_categories})
+        } else {
+            Actions.goods({category: category})
+        }
+    }
+
+    renderRowItems(row) {
+        return row.map( (item, index) => {
+            return (
+                <View
+                    key={item.id}
+                    style={{
+                        flex: 1,
+                        margin: 1,
+                    }}
+                >
+                    <Item
+                        onPress={() => this.openStoreCategories(item)}
+                        imageSrc={{uri: item.image}}
+                    >
+                        {
+                            item.name
+                        }
+                    </Item>
+                </View>
+            )
+        })
     }
 
     renderRows() {
-        console.log(this.props.categories)
         const categories = [...this.props.categories];
-        var i=0;
-        var rows = [];
-        while (i < categories.length) {
-            rows.push(categories.slice(i, i+3))
-            i = i+3;
-        }
-        return rows.map( (row, index) => {
-console.log(row[0]);
+        // var i=0;
+        // var rows = [];
+        // while (i < categories.length) {
+        //     rows.push(categories.slice(i, i+3))
+        //     i = i+3;
+        // }
+        // return rows.map( (row, index) => {
+        //
+        //     return (
+        //         <CardItem
+        //             key={row[0].id}
+        //             style={{
+        //             flexDirection: 'row',
+        //             justifyContent: 'space-around',
+        //             alignItems: 'flex-start'
+        //         }}>
+        //             {
+        //                 this.renderRowItems(row)
+        //             }
+        //         </CardItem>
+        //     )
+        // })
+        return categories.map( item => {
             return (
-                <CardItem
-                    key={row[0].id}
+                <View
+                    key={item.id}
                     style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    alignItems: 'center'
-                }}>
+                        // flex: 1,
+                        margin: 1,
+                    }}
+                >
                     <Item
-                        onPress={Actions.specialOffer}
-                        imageSrc={getImageByStoreCategoryId(row[0].id)}
+                        onPress={() => this.openStoreCategories(item)}
+                        imageSrc={{uri: item.image}}
                     >
                         {
-                            row[0].name
+                            item.name
                         }
                     </Item>
-                    <Item
-                        onPress={() => this.openStoreCategories(row[1])}
-                        imageSrc={getImageByStoreCategoryId(row[1].id)}
-                    >
-                        {
-                            row[1].name
-                        }
-                    </Item>
-                </CardItem>
+                </View>
             )
         })
     }
@@ -66,12 +110,36 @@ console.log(row[0]);
         const {loading} = this.props
         if (!loading) {
             return (
-                <ScrollView style={{
-                    paddingLeft: 22,
-                    paddingRight: 22,
-                }}>
-                    {this.renderRows()}
-                </ScrollView>
+                <FlatList
+                    horizontal={false}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                        flex: 1,
+                        justifyContent: 'space-around',
+
+                    }}
+                    data={this.props.categories}
+                    renderItem={({item}) => {
+                        return (
+                            <View
+                                key={item.id}
+                                style={{
+                                    // flex: 1,
+                                    margin: 1,
+                                }}
+                            >
+                                <Item
+                                    onPress={() => this.openStoreCategories(item)}
+                                    imageSrc={{uri: item.image}}
+                                >
+                                    {
+                                        item.name
+                                    }
+                                </Item>
+                            </View>)
+                    }}
+                    keyExtractor={item => item.id}
+                />
             )
         } else {
             return (
@@ -81,101 +149,12 @@ console.log(row[0]);
     }
 
     render() {
+        console.log('***STORE CATEGORIES RENDER', this.props)
         return (
             <MainCard>
                 <Header burger basket>
                     Магазин
                 </Header>
-                {/*<ScrollView>
-                    <CardItem style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'center'
-                    }}>
-                        <Item
-                            onPress={Actions.specialOffer}
-                            imageSrc={require('../../images/icons/special_offers.png')}
-                        >
-                            Спецпредложение AAUA
-                        </Item>
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={
-                                require('../../images/icons/advokat.png')
-                            }
-                        >
-                            Пакет юридических{"\n"} услуг
-                        </Item>
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={require('../../images/icons/tech_support.png')}
-                        >
-                            Пакет технической{"\n"} поддержки в дороге
-                        </Item>
-                    </CardItem>
-                    <CardItem style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'center'
-                    }}>
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={require('../../images/icons/fuel.png')}
-                        >
-                            Топливо
-                        </Item>
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={require('../../images/icons/mobil.png')}
-                        >
-                            Мобильная связь
-                        </Item>
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={require('../../images/icons/auto_goods.png')}
-                        >
-                            Товары для авто
-                        </Item>
-                    </CardItem>
-                    <CardItem style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'center'
-                    }}>
-
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={require('../../images/icons/tyres.png')}
-                        >
-                            Шины
-                        </Item>
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={require('../../images/icons/disks.png')}
-                        >
-                            Диски
-                        </Item>
-                        <Item
-                            onPress={Actions.goods}
-                            imageSrc={require('../../images/icons/auto_oils.png')}
-                        >
-                            Автомасла
-                        </Item>
-                    </CardItem>
-                    <CardItem style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'center'
-                    }}>
-
-                        <Item
-                            onPress={() => console.log('dfsfsdfsdf')}
-                            imageSrc={require('../../images/icons/auto_cleaning.png')}
-                        >
-                            Автохимия
-                        </Item>
-                    </CardItem>
-                </ScrollView>*/}
                 {
                     this.renderContent()
                 }
@@ -188,7 +167,8 @@ const mapStateToProps = ({auth, store}) => {
     return {
         phone: auth.user.profile.phone,
         token: auth.user.token,
-        categories: store.categories
+        categories: store.categories,
+        loading: store.loading,
     }
 }
 

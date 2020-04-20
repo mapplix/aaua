@@ -5,7 +5,7 @@ import {RATIO, WIDTH_RATIO} from '../../styles/constants';
 
 let imageHeight = 175 * RATIO;
 
-const CategoryItem = ({imageSrc, children, onPress}) => {
+const CategoryItem = ({imageSrc, children, onPress, buttonText = "Заказать"}) => {
     const {
         container,
         imageStyle,
@@ -40,7 +40,7 @@ const CategoryItem = ({imageSrc, children, onPress}) => {
                     textStyle={{color:'#1B1B1B'}}
                     onPress={onPress}
                 >
-                    Заказать
+                    {buttonText}
                 </ButtonRoundet>
             </View>
         </View>

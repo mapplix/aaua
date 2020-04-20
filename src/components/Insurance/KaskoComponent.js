@@ -2,13 +2,14 @@ import React,{Component} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {
-    MainCard,
-    CardItem,
-    ButtonRoundet,
-    LabelOnInput,
-    Header,
-    Autocomplete,
-    DropDown} from '../common'
+  MainCard,
+  CardItem,
+  ButtonRoundet,
+  LabelOnInput,
+  Header,
+  Autocomplete,
+  DropDown, ClickableTextRow
+} from '../common'
 import {changeYear, changeCar,
     changeCarBrand, orderKasko,
     selectBrand, getCarModel, selectModel, resetData} from '../../Actions/InsuranceAction';
@@ -26,23 +27,19 @@ class KaskoComponent extends Component {
             enableScrollViewScroll: true,
             searchedCities: [],
             searchedBrands: [],
-            rowHeight: DEVICE_OS == iOS ? 1 : 2
+            rowHeight: DEVICE_OS == iOS ? 1 : 2,
+            carPrice: 0
         };
+
+        this.onChangeCarPrice = this.onChangeCarPrice.bind(this)
+        this.onOrder = this.onOrder.bind(this)
     };
 
     onChangeCar(itemValue){
         this.props.changeCar(itemValue);
     }
 
-    onChangeCarBrand(itemValue){
-        if (itemValue.length >= 2) {
-            this.searchedBrands(itemValue);
-        }
-        this.props.changeCarBrand(itemValue);
-    }
-
     onSelectBrand(brand) {
-console.log(brand);
         this.setState({searchedBrands: [], rowHeight:2});
         this.props.selectBrand(brand)
         this.props.getCarModel(brand.id)
@@ -56,7 +53,14 @@ console.log(brand);
         this.props.selectModel(model);
     }
 
+    onChangeCarPrice = (price) => {
+        this.setState({
+            carPrice: Number(price)
+        })
+    }
+
     onOrder() {
+        const {carPrice} = this.state;
         const {token, carModel, carBrandId, year} = this.props;
 
         const orderData = {
@@ -64,51 +68,23 @@ console.log(brand);
             "bid" : {
                 "brand_id" : carBrandId,
                 "modela_id" : carModel.id,
-                "year" : year
+                "year" : year,
+                "price" : carPrice
             },
 
         }
-console.log(orderData);
         this.props.orderKasko(orderData);
     }
 
-    searchedBrands = (searchedText) => {
-        var searchedItems = this.props.brands.filter(function(item) {
-            return item.title.toLowerCase().indexOf(searchedText.toLowerCase()) == 0;
-        });
-        if (searchedText.length <= 0) {
-            searchedItems = []
-        }
-        if (searchedItems.length == 1) {
-            this.onSelectBrand(searchedItems[0])
-            this.setState({searchedBrands: []});
-        }
-        this.props.brands.some(e => {
-            if (e.title.toLowerCase() === searchedText.toLowerCase().trim()) {
-                this.onSelectBrand(e)
-                this.setState({searchedBrands: []});
-            }
-        })
-        if (searchedItems.length == 0) {
-            this.setState({rowHeight:2})
-        } else if (searchedItems.length <= 10) {
-            this.setState({rowHeight:3})
-        } else if (searchedItems.length > 10) {
-            this.setState({rowHeight:6})
-        }
-        this.setState({searchedBrands: searchedItems.slice(0, 30)});
-    };
-
     renderCarModel() {
-        if (this.props.carModels.length > 0) {
+        if (this.props.carBrand) {
             return (
-                <DropDown
-                    label="Модель авто"
-                    elements={this.props.carModels}
-                    selected={this.props.carModel}
-                    valueExtractor={ (value) => value}
-                    onValueChange={this.onChangeCarModel.bind(this)}
-                />
+              <ClickableTextRow
+                  onPress={() => Actions.InsuranceCarsModelsScreen({brandId: this.props.carBrandId})}
+                  label={"Модель авто"}
+                  value={this.props.carModel ? this.props.carModel.title : null}
+                  placeholder={"Выберите авто"}
+                  />
             )
         } else {
             return (
@@ -135,32 +111,56 @@ console.log(orderData);
     }
 
     render() {
-console.log(this.state.rowHeight)
         return (
             <MainCard>
                 <Header back>
                     КАСКО
                 </Header>
+                    <CardItem
+                        style={{
+                            flex: 0,
+                            height: 70,
+                            marginVertical: 15,
+                            // marginBottom: 20,
+                            paddingTop: 20,
+                            flexDirection:'column',
+                            justifyContent: 'flex-end',
+                            alignItems: 'flex-start',
+                            // backgroundColor: '#178'
+                        }}
+                    >
+                        <LabelOnInput
+                            label={'Стоимость автомобиля в гривне'}
+                            placeholder={'0'}
+                            keyboardType = 'numeric'
+                            onChangeText={this.onChangeCarPrice}
+                            value={this.state.carPrice}
+                        />
+                    </CardItem>
                     <CardItem style={{
-                        marginTop: 15,
-                        flex: 3,
-                        height:80,
+                        // marginTop: 15,
+                        // backgroundColor: '#138',
+                        // flex: 2,
+                        flex: 0,
+                        height: 70,
+                        marginVertical: 10,
+                        // marginBottom: 30,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
                     }}>
-                        <DropDown
-                            label="Марка авто"
-                            elements={this.props.brands}
-                            selected={this.props.carBrand}
-                            valueExtractor={ (value) => value}
-                            onValueChange={this.onSelectBrand.bind(this)}
-                        />
+                      <ClickableTextRow
+                        onPress={ Actions.InsuranceCarsScreen}
+                        label={"Марка авто"}
+                        value={this.props.carBrand ? this.props.carBrand : null}
+                        placeholder={"Выберите авто"}
+                      />
                     </CardItem>
                     <CardItem style={{
-                        marginTop: 18,
-                        flex:3,
-                        height:70,
+                        flex: 0,
+                        height: 70,
+                        marginVertical: 10,
+                        // marginBottom: 30,
                         flexDirection:'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start'
@@ -169,9 +169,10 @@ console.log(this.state.rowHeight)
                     </CardItem>
                     <CardItem
                         style={{
-                            marginTop: 18,
-                            flex:2,
-                            height:60,
+                            flex: 0,
+                            height: 70,
+                            marginVertical: 10,
+                            // marginBottom: 30,
                             flexDirection:'column',
                             justifyContent: 'flex-end',
                             alignItems: 'flex-start'
@@ -199,9 +200,9 @@ console.log(this.state.rowHeight)
                                 borderColor:'#FFC200'
                             }}
                             textStyle={{color:'#1B1B1B'}}
-                            onPress={this.onOrder.bind(this)}
+                            onPress={this.onOrder}
                         >
-                            Заказать
+                            Получить предложение
                         </ButtonRoundet>
                     </CardItem>
             </MainCard>
@@ -219,6 +220,7 @@ const mapStateToProps = ({auth, insurance, citiesBrands}) => {
         year: insurance.year,
         carModels: insurance.carModels,
         carModel: insurance.carModel,
+        // carPrice: insurance.carPrice,
         kaskoOrderSuccess: insurance.kaskoOrderSuccess
     }
 }

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {Icon} from './'
+import BasketIcon from './BasketIcon';
 
 class Header extends Component{
 
@@ -10,9 +11,11 @@ class Header extends Component{
             return (
                 <TouchableOpacity
                     style={{
-
+                        flex: 1,
                         justifyContent: 'center',
                         alignItems: 'center',
+                        paddingTop:25,
+                        paddingBottom: 15,
                         // backgroundColor: '#382'
                     }}
                     onPress={this.props.onPressBack || Actions.pop}
@@ -31,10 +34,13 @@ class Header extends Component{
             return (
                 <TouchableOpacity
                     style={{
+                        flex: 1,
                         paddingTop:25,
-                        paddingRight:25,
+                        // paddingRight:25,
                         justifyContent: 'center',
                         alignItems: 'center',
+                        paddingBottom: 15,
+                        // backgroundColor: '#382'
                     }}
                     onPress={Actions.drawerOpen}
                 >
@@ -70,19 +76,7 @@ class Header extends Component{
         }
         if (this.props.basket) {
             return (
-                <TouchableOpacity
-                    style={{
-                        paddingTop:25,
-                        paddingRight:25,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                    onPress={Actions.drawerOpen}
-                >
-                    <Icon
-                        imageSrc={require('../../images/icons/basket.png')}
-                    />
-                </TouchableOpacity>
+                <BasketIcon />
             )
         }
 
@@ -90,7 +84,9 @@ class Header extends Component{
             return (
                 <TouchableOpacity
                     style={{
-                        paddingTop:25,
+                        // heigth: 50,
+                        // backgroundColor: "#189",
+                        paddingTop:5,
                         paddingRight:25,
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -136,15 +132,15 @@ const style = {
         fontFamily: 'SFUIText-Bold',
         fontSize: 13,
         color:'#1b1b1b',
+        paddingBottom: 15,
     },
     buttonContainer: {
         // backgroundColor: '#9f9f96',
         width: 70,
         height: 56,
-        // paddingBottom:13.3,
-        paddingLeft:15.6,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     },
     viewStyle: {
         elevation:5,
@@ -153,7 +149,7 @@ const style = {
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         height: 56,
-        paddingBottom: 15,
+        // paddingBottom: 15,
         marginBottom:1,
         borderBottomWidth:1,
         borderColor: '#fafafa',

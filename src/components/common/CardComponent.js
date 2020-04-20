@@ -25,17 +25,5 @@ const styles = {
         borderRadius:4,
         borderColor: '#bcbcb3',
     },
-
-    buttonStyle: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'stretch',
-        paddingRight: 10,
-        paddingLeft: 10,
-        backgroundColor: '#FFC200',
-        borderColor:'#FFC200',
-        marginRight: 1,
-        marginLeft: 1,
-    }
 }
 export {CardComponent};

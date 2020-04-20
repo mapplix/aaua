@@ -18,23 +18,20 @@ const style = {
     textStyle: {
         fontFamily: 'SFUIText-Medium',
         color: '#1b1b1b',
-        fontSize: 11,
-        marginLeft: 2,
-        marginRight: 2,
-        marginTop: 1,
-        minWidth: 12
+        fontSize: 8,
+        margin: 2
     },
     buttonStyle: {
         position: 'absolute',
         top: 0,
         left: -25,
+        minWidth: 15,
         backgroundColor: '#ffc200',
-        borderWidth: 1,
-        borderRadius: 15,
-        borderColor: '#ffc200',
+        borderRadius: 12,
         flexDirection: 'row',
+        paddingHorizontal: 2,
         alignSelf: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         }
     }
 

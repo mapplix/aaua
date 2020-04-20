@@ -3,47 +3,61 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.8.1",
+    "@react-native-community/geolocation": "^2.0.2",
+    "@react-native-community/netinfo": "^5.5.1",
+    "@react-native-community/viewpager": "^3.3.0",
     "axios": "^0.17.1",
+    "base-64": "^0.1.0",
+    "js-md5": "^0.7.3",
     "querystring": "^0.2.0",
-    "react": "16.2.0",
-    "react-native": "0.52.0",
+    "react": "16.9.0",
+    "react-native": "0.61.5",
     "react-native-button": "^2.2.0",
+    "react-native-cached-image": "^1.4.3",
     "react-native-device-brightness": "^1.2.0",
-    "react-native-fcm": "^13.3.3",
+    "react-native-fetch-blob": "^0.10.8",
     "react-native-flexi-radio-button": "^0.2.2",
+    "react-native-gesture-handler": "^1.6.0",
     "react-native-hide-show-password-input": "^1.0.7",
-    "react-native-image-slider": "git+https://github.com/PaulBGD/react-native-image-slider.git",
-    "react-native-keyboard-aware-scroll-view": "^0.4.3",
-    "react-native-maps": "^0.20.0",
-    "react-native-masked-input": "^1.0.3",
+    "react-native-image-slider": "^2.0.3",
+    "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-maps": "0.26.1",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-modalbox": "^1.4.2",
     "react-native-permissions": "^1.1.1",
-    "react-native-qrcode": "^0.2.6",
+    "react-native-qrcode-generator": "^1.0.0",
+    "react-native-qrcode-svg": "^6.0.3",
+    "react-native-reanimated": "^1.7.0",
     "react-native-router-flux": "^4.0.0-beta.28",
-    "react-native-screen-brightness": "^0.3.2",
+    "react-native-screens": "^2.2.0",
     "react-native-slideshow": "^1.0.1",
+    "react-native-svg": "^12.0.3",
+    "react-native-swiper": "^1.5.14",
     "react-native-tabs": "^1.0.9",
+    "react-native-webview": "^8.1.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "babel-jest": "22.1.0",
-    "babel-preset-react-native": "4.0.0",
-    "jest": "22.1.1",
-    "react-test-renderer": "16.2.0"
+    "@babel/core": "^7.8.6",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^0.0.7",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "metro-react-native-babel-preset": "^0.58.0",
+    "react-test-renderer": "16.9.0"
   },
   "jest": {
     "preset": "react-native"
-  },
-  "rnpm": {
-    "assets": [
-      "./assets/fonts/"
-    ]
   }
 }

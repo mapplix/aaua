@@ -1,300 +1,254 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
-    View,
-    Image,
-    Text,
-    TouchableOpacity,
-    Alert,
-    Dimensions,
-    Platform,
-    BackHandler,
-    AsyncStorage
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Dimensions,
+  Platform,
+  BackHandler,
+  AsyncStorage,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {showAlert} from '../Modals';
-import {loginUser, changePass, changePhone, getPushToken} from '../../Actions/AuthAction';
-import {getBrands, getCities} from '../../Actions/CitiesBrands'
 import {
-    MainCard,
-    CardItem,
-    ButtonRoundet,
-    ModalCard,
-    Spiner,
-    PasswordInput,
-    PhoneInput
+  loginUser,
+  changePass,
+  changePhone,
+  getPushToken,
+} from '../../Actions/AuthAction';
+import {getBrands, getCities} from '../../Actions/CitiesBrands';
+import {
+  MainCard,
+  CardItem,
+  ButtonRoundet,
+  ModalCard,
+  Spiner,
+  PasswordInput,
+  PhoneInput,
 } from '../common';
 import Modal from 'react-native-modalbox';
 import {MIN_HEIGHT, RATIO} from '../../styles/constants';
 import {getToken} from '../../Actions/constants';
 
-let listener = null
+let listener = null;
 
 class LoginForm extends Component {
+  state = {
+    isOpen: false,
+    token: false,
+  };
 
-    state = {
-        isOpen: false,
-        token: false
-    };
+  closeModal() {
+    this.setState({isOpen: false});
+  }
 
-    closeModal() {
-        this.setState({isOpen: false});
+  showAlert() {
+    showAlert(
+      'Ошибка',
+      'Не все поля заполнены или заполнены не верно',
+      'OK',
+      console.log('onSubmit'),
+    );
+  }
+
+  onLogin() {
+    console.log(this.props);
+    const {phone, password, pushToken} = this.props;
+    if (phone && password) {
+      this.props.loginUser(phone, password, pushToken);
+    } else {
+      this.showAlert();
     }
+  }
 
-    showAlert() {
-        showAlert(
-            'Ошибка',
-            'Не все поля заполнены или заполнены не верно',
-            'OK',
-            console.log('onSubmit')
-        );
-    }
+  onPhoneChange = formatted => {
+    this.props.changePhone(formatted);
+  };
 
-    onLogin() {
-        console.log(this.props);
-        const {phone, password, pushToken} = this.props;
-        if (phone && password) {
-            this.props.loginUser(phone, password, pushToken);
-        } else {
-            this.showAlert()
+  onPasswordChange(txt) {
+    this.props.changePass(txt);
+  }
+
+  componentDidMount() {
+    if (Platform.OS == 'android' && listener == null) {
+      listener = BackHandler.addEventListener('hardwareBackPress', () => {
+        if (this.state.isOpen) {
+          console.log(this.state);
+          this.closeModal();
+          return true;
         }
+        return false;
+      });
     }
+  }
 
-    onPhoneChange = (formatted) => {
-        this.props.changePhone(formatted);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loginError != false) {
+      showAlert('Ошибка', nextProps.loginError, 'OK');
     }
+  }
 
-    onPasswordChange(txt) {
-        this.props.changePass(txt)
+  renderButton() {
+    if (this.props.loading === false) {
+      return (
+        <ButtonRoundet
+          style={{
+            marginRight: 45,
+            marginLeft: 45,
+            height: 44,
+          }}
+          onPress={() => this.onLogin()}>
+          Вход
+        </ButtonRoundet>
+      );
     }
+    return <Spiner />;
+  }
 
-    componentDidMount() {
-        if (Platform.OS == "android" && listener == null) {
-            listener = BackHandler.addEventListener("hardwareBackPress", () => {
-                if (this.state.isOpen) {
-        console.log(this.state);
-                    this.closeModal();
-                    return true;
-                }
-                return false;
-            })
-        }
-    }
+  render() {
+    const {
+      footerLinksContainer,
+      linkStyle,
+      linkText,
+      modalText,
+      modalTextContainer,
+    } = styles;
+    return (
+      <MainCard>
+        <CardItem
+          style={{
+            flex: 0,
+            height: 270 * RATIO,
+            paddingTop: 47,
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }}>
+          <Image
+            style={{
+              width: 175 * RATIO,
+              height: 175 * RATIO,
+            }}
+            source={require('../../images/logo.png')}
+          />
+        </CardItem>
 
-    componentWillReceiveProps(nextProps) {
+        <CardItem
+          style={{
+            flex: 0,
+            height: 83 * RATIO,
+          }}>
+          <PhoneInput
+            label={'Номер телефона'}
+            placeholder={'+380'}
+            value={this.props.phone}
+            onChangeText={this.onPhoneChange.bind(this)}
+          />
+        </CardItem>
 
-        if (nextProps.loginError != false) {
-            showAlert(
-                'Ошибка',
-                nextProps.loginError,
-                'OK'
-            );
-        }
-    }
-
-    renderButton() {
-        if (this.props.loading === false) {
-            return (
-                <ButtonRoundet
-                    style={{
-                        marginRight: 45,
-                        marginLeft: 45,
-                        height: 44
-                    }}
-                    onPress={() => this.onLogin()}
-                >
-                    Вход
-                </ButtonRoundet>
-            )
-        }
-        return (
-            <Spiner />
-        )
-    }
-
-    render() {
-        const {
-            footerLinksContainer,
-            linkStyle,
-            linkText,
-            modalText,
-            modalTextContainer
-        } = styles;
-        return (
-            <MainCard>
-                <CardItem style={{
-                    flex:0,
-                    height: 270 * RATIO,
-                    paddingTop: 47,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent:'flex-start',
-                }}>
-                        <Image
-                            style={{
-                                width: 175 * RATIO,
-                                height: 175 * RATIO
-                            }}
-                            source={require('../../images/logo.png')}
-                        />
-                </CardItem>
-
-                <CardItem
-                    style={{
-                        flex:0,
-                        height: 83 * RATIO,
-                    }}
-                >
-                    <PhoneInput
-                        label={'Номер телефона'}
-                        placeholder={'+380'}
-                        value={this.props.phone}
-                        onChangeText={this.onPhoneChange.bind(this)}
-                    />
-                </CardItem>
-
-                <CardItem style={{
-                    // backgroundColor: '#282',
-                    flex:0,
-                    height: 92 * RATIO,
-                }}>
-                    <PasswordInput
-                        label={'Пароль'}
-                        placeholder={'пароль'}
-                        onChangeText={this.onPasswordChange.bind(this)}
-                        value={this.props.password}
-                    />
-                </CardItem>
-                <CardItem style={{
-                    flex:0,
-                    height: 125 * RATIO,
-                }}>
-                    { this.renderButton()}
-                </CardItem>
-                <CardItem>
-                    <View style={footerLinksContainer}>
-                        <View style={linkStyle}>
-                            <TouchableOpacity
-                                onPress={Actions.forgot}
-                            >
-                                <Text style={linkText}>
-                                    Забыли пароль?
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[linkStyle, {alignItems: 'flex-end'}]}>
-                            <TouchableOpacity
-                                onPress={() => this.setState({isOpen: true})}
-                            >
-                                <Text style={linkText}>
-                                    Регистрация
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </CardItem>
-                <Modal style={styles.modal}
-                       position={"bottom"}
-                       ref={"modal"}
-                       isOpen={this.state.isOpen} onClosed={() => this.setState({isOpen: false})}
-                       >
-                    <ModalCard style={{
-                        flexDirection: 'column',
-                        height: 150
-                    }}>
-                        <TouchableOpacity
-                            onPress={ () => Actions.register()}
-                            style={modalTextContainer}
-                        >
-                            <Text style={modalText}>
-                               Регистрация
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={modalTextContainer}
-                            onPress={() => {Actions.invite()}}
-                        >
-                            <Text style={modalText}>
-                                Приведи друга
-                            </Text>
-                        </TouchableOpacity>
-                    </ModalCard>
-                    <ModalCard style={{
-                        height: 50,
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => this.setState({isOpen: false})}
-                            style={modalTextContainer}>
-                            <Text style={[modalText, {color: '#ffc200'}]}>
-                                Закрыть
-                            </Text>
-                        </TouchableOpacity>
-                    </ModalCard>
-                </Modal>
-            </MainCard>
-        )
-    }
+        <CardItem
+          style={{
+            // backgroundColor: '#282',
+            flex: 0,
+            height: 92 * RATIO,
+          }}>
+          <PasswordInput
+            label={'Пароль'}
+            placeholder={'Пароль'}
+            onChangeText={this.onPasswordChange.bind(this)}
+            value={this.props.password}
+          />
+        </CardItem>
+        <CardItem
+          style={{
+            flex: 0,
+            height: 125 * RATIO,
+          }}>
+          {this.renderButton()}
+        </CardItem>
+        <CardItem>
+          <View style={footerLinksContainer}>
+            <View style={linkStyle}>
+              <TouchableOpacity onPress={Actions.forgot}>
+                <Text style={linkText}>Забыли пароль?</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[linkStyle, {alignItems: 'flex-end'}]}>
+              <TouchableOpacity onPress={() => Actions.register()}>
+                <Text style={linkText}>Регистрация</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </CardItem>
+      </MainCard>
+    );
+  }
 }
 
 const styles = {
-    footerLinksContainer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        flex: 1,
-        height: 50,
-        marginLeft: 45,
-        marginRight: 45,
-    },
-    linkStyle: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
-    linkText: {
-        fontFamily: 'SFUIText-Medium',
-        fontSize: 14,
-        color: '#423486'
-    },
-    modal: {
-        height: 270,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0)'
-    },
-    modalText: {
-        fontFamily: 'SFUIText-Regular',
-        fontSize: 19,
-        color:'#423485'
-    },
-    modalTextContainer: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 50
-    }
-}
+  footerLinksContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flex: 1,
+    height: 50,
+    marginLeft: 45,
+    marginRight: 45,
+  },
+  linkStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  linkText: {
+    fontFamily: 'SFUIText-Medium',
+    fontSize: 14,
+    color: '#423486',
+  },
+  modal: {
+    height: 270,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  modalText: {
+    fontFamily: 'SFUIText-Regular',
+    fontSize: 19,
+    color: '#423485',
+  },
+  modalTextContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+  },
+};
 
 const mapStateToProps = ({auth}) => {
-    const {phone, password, user, error, loginError, loading, pushToken} = auth;
-    return {
-        phone: phone,
-        password: password,
-        user: user,
-        loginError: loginError,
-        error: error,
-        loading: loading,
-        pushToken: pushToken
-    }
-}
+  const {phone, password, user, error, loginError, loading, pushToken} = auth;
+  return {
+    phone: phone,
+    password: password,
+    user: user,
+    loginError: loginError,
+    error: error,
+    loading: loading,
+    pushToken: pushToken,
+  };
+};
 
 export default connect(
-    mapStateToProps,
-    {
-        loginUser,
-        changePass,
-        changePhone,
-        getBrands,
-        getCities,
-        getToken,
-        getPushToken,
-    })(LoginForm);
+  mapStateToProps,
+  {
+    loginUser,
+    changePass,
+    changePhone,
+    getBrands,
+    getCities,
+    getToken,
+    getPushToken,
+  },
+)(LoginForm);

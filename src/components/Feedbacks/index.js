@@ -76,7 +76,7 @@ console.log(phone);
                         marginBottom: 19 * RATIO
                     }}>
                         <Text style={phoneText}>
-                            Телефон службы поддержкии
+                            Телефон службы поддержки
                         </Text>
                     </View>
                     <View style={phoneContainer}>

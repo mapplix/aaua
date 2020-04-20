@@ -7,6 +7,7 @@ import {getMyCard, orderCard} from '../../Actions/AAUA_CardAction';
 import {connect} from 'react-redux';
 import ButtonsScreen from './ButtonsScreen';
 import QRcode from './QRcode';
+import AZSListScreen from './AZSListScreen';
 
 class MainComponent extends Component {
 
@@ -20,7 +21,7 @@ class MainComponent extends Component {
                 <Spiner size={'large'}/>
             )
         } else {
-            if (this.props.myCards != null) {
+            if (this.props.myCards != null && this.props.myCards.card !=null) {
                 return (
                     <QRcode />
                 )

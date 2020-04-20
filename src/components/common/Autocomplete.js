@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, ListView, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, FlatList, TouchableOpacity} from 'react-native';
 import {Spiner} from './'
 import {DEVICE_OS, iOS} from '../../Actions/constants';
 
-var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+// var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 let listHeight = 0;
 
 class Autocomplete extends Component {
@@ -61,14 +61,14 @@ class Autocomplete extends Component {
                     height: listHeight
                 }}
                 >
-                    <ListView
+                    <FlatList
                         style={{
                             height: listHeight,
                             flex: 1
                         }}
-                        enableEmptySections
-                        dataSource={ds.cloneWithRows(this.props.data)}
-                        renderRow={this.renderItem}/>
+                        data={this.props.data}
+                        renderItem={this.renderItem}
+                    />
                 </View>
             )
         }
@@ -123,7 +123,7 @@ const styles = {
     inputStyle: {
         // placeholderTextColor: '#b6b9bf',
         fontFamily:'SFUIText-Regular',
-        color: '#b6b9bf',
+      color: '#111',
         fontSize: 15,
         lineHeight: 25,
         flex:1,
@@ -135,10 +135,10 @@ const styles = {
         marginBottom: 2,
         paddingTop:0,
         height: 20,
-        fontFamily: 'SFUIText-Regular',
-        fontSize: 14,
+      fontFamily: 'SFUIText-Medium',
+      fontSize: 14,
+      color: '#423486',
         alignSelf:'stretch',
-        color: '#3d3e40',
     },
 
 }

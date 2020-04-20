@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image,
+    ScrollView, TouchableOpacity,
+    FlatList
+} from 'react-native';
 import {
     MainCard,
-    CardItem,
     CardComponent,
-    ButtonRoundet,
-    LabelOnInput,
-    ModalCard,
     Spiner,
     Header
 } from '../common';
@@ -15,92 +14,105 @@ import TextComponent from './TextComponent';
 import ButtonComponent from './ButtonComponent';
 import {RATIO} from '../../styles/constants';
 import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
+import {getHistory, getOrderDetails, repeatOrder} from '../../Actions/StoreAction';
+import {connect} from 'react-redux';
 
 class ListComponent extends Component {
 
+
+    componentWillMount() {
+        let {user, getHistory} = this.props;
+        getHistory(user);
+    }
+
+    openDetails(orderId) {
+        console.log(this.props, orderId);
+        let {user, getOrderDetails} = this.props;
+        getOrderDetails(user, orderId);
+        Actions.basketList();
+    }
+
+    addToBasket(productId) {
+        let {user, repeatOrder} = this.props;
+        console.log('repeat order', productId, user);
+        repeatOrder(user.token, user.profile.phone, productId);
+        // Actions.repeatOrder(productId)
+    }
+
+    renderItem({item}) {
+        const {imageStyle, imageContainer, textContainer,componentStyle} = styles;
+
+        let order = item;
+        if (order.status == "completed" || order.status == "processing") {
+            let date = order.date.date.split(' ');
+            return order.products.map( product => {
+                return (
+                    <CardComponent
+                        key={order.ID+product.id}
+                        style={componentStyle}
+                    >
+                        <View style={imageContainer}>
+                            <Image
+                                resizeMode={'contain'}
+                                style={imageStyle}
+                                source={{uri: product.details.photo}}
+                            />
+                        </View>
+                        <View style={textContainer}>
+                            <TextComponent
+                                date={date[0]}
+                                title={product.name}
+                                isPresent
+                            />
+                            <ButtonComponent
+                                onPress={this.addToBasket.bind(this, product)}
+                                price={
+                                    product.details.price * product.qty || 0
+                                }
+                                bonuses={
+                                    product.details.bonus_price * product.qty || 0
+                                }
+                            />
+                        </View>
+                    </CardComponent>
+                )
+            })
+        }
+    }
+
+    renderList() {
+        return (
+            <FlatList
+                    style={{
+                        paddingLeft: 13,
+                        paddingRight: 14,
+                        marginTop: 21
+                    }}
+                data={this.props.orders}
+                renderItem={this.renderItem.bind(this)}
+                keyExtractor={item => item.ID}
+            />
+        )
+    }
+
+    renderContent(){
+        let {loading} = this.props;
+        if (loading ) {
+            return <Spiner size="large"/>
+        } else {
+            return this.renderList()
+        }
+    }
+
     render() {
-        const {imageStyle, imageContainer, textContainer, iconImageStyle, componentStyle, buttonContainer} = styles;
         return (
             <MainCard>
                 <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
                     {"ИСТОРИЯ ЗАКАЗОВ"}
                 </Header>
-                <ScrollView style={{
-                    paddingLeft: 13,
-                    paddingRight: 14,
-                    marginTop: 21
-                }}
-                contentContainerStyle={{
-                    flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                }}
-                >
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../images/shell.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <TextComponent
-                                    title={'Моторное масло Shell Helix HX7 10W-40'}
-                                    isPresent
-                                />
-                                <ButtonComponent
-                                    onPress={Actions.ordering}
-                                    price={1750}
-                                    bonuses={1999}
-                                />
-                            </View>
-                        </CardComponent>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={iconImageStyle}
-                                    source={require('../../images/icons/onroad1.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <TextComponent
-                                    title={'Техническая помощь'}
-
-                                />
-                                <ButtonComponent
-                                    price={1750}
-                                    bonuses={1999}
-                                />
-                            </View>
-                        </CardComponent>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={iconImageStyle}
-                                    source={require('../../images/icons/subscription_box.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <TextComponent
-                                    title={'Годовая подписка'}
-
-                                />
-                                <ButtonComponent
-                                    price={1750}
-                                    bonuses={1999}
-                                />
-                            </View>
-                        </CardComponent>
-                </ScrollView>
+                {
+                    this.renderContent()
+                }
             </MainCard>
         )
     }
@@ -154,4 +166,13 @@ const styles = {
     }
 }
 
-export default ListComponent;
+const mapStateToProps = ({auth, store, basket, history}) => {
+    return {
+        loading: history.loading,
+        user: auth.user,
+        basket: basket.basket,
+        orders: history.orders
+    }
+}
+
+export default connect(mapStateToProps, {getHistory, getOrderDetails, repeatOrder})(ListComponent);

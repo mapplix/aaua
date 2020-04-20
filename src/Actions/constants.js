@@ -38,6 +38,8 @@ export const BID_KASKO_URL = API_URL + 'bidKasko';
 export const BID_OSAGO_URL = API_URL + 'bidOsago';
 export const CALCULATE_OSAGO_URL = API_URL + 'osagoCalc';
 export const WOG_BONUSES_URL = API_URL + 'getWogBonuce';
+export const AZS_URL = API_URL + 'azs';
+export const GET_WOG_QR = API_URL + 'getWogQR';
 
 export const SECRET_KEY = 'hmnc7TGjffdhgjs';
 export const iOS = 2;
@@ -77,6 +79,15 @@ export const STORE_CATEGORIES_URL = STORE_API_URL + 'wp-json/aaua/api/categories
 export const STORE_PRODUCTS_URL = STORE_API_URL + 'wp-json/aaua/api/products/';
 export const STORE_PRODUCT_BY_ID_URL = STORE_API_URL + 'wp-json/aaua/api/product/';
 export const STORE_PRODUCT_SET_COUNTER_URL = STORE_API_URL + 'wp-json/aaua/api/products/set_views';
+export const STORE_PRODUCT_INCREASE_VIEWS_URL = STORE_API_URL + 'wp-json/aaua/api/product/'; //POST - Increase product views counter
+export const STORE_MAKE_ORDER_URL = STORE_API_URL + 'wp-json/aaua/api/orders/'; //POST - Place orders
+export const STORE_HISTORY_URL = STORE_API_URL + 'wp-json/aaua/api/orders/history/'; //GET - Get orders by user id
+export const STORE_ORDER_DETAILS_URL = STORE_API_URL + 'wp-json/aaua/api/orders/'; //GET - Get order details by orderID
+export const STORE_BRANDS_FOR_FILTERS_URL = STORE_API_URL + 'wp-json/aaua/api/brands'; //GET - Get order details by orderID
+export const STORE_FILTER_URL = STORE_API_URL + 'wp-json/aaua/api/products/filters';
+export const STORE_PRODUCT_UPDATE = STORE_API_URL + 'wp-json/aaua/api/products/update';
 
 export const STORE_ORDER_URL = STORE_API_URL + 'wp-json/aaua/api/orders'; // POST - make order | PUT - update order | GET - get order by id
 export const STORE_USER_ORDERS_URL = STORE_API_URL + 'wp-json/aaua/api/orders/history/'; // GET
+
+export const DEFAULT_CITY = "Київ";

@@ -12,8 +12,7 @@ class LeftBarMenuItem extends Component {
                 style={container}>
                 <View style={imageContainer}>
                     <Image
-                        resizeMode={'contain'}
-                        style={imageStyle}
+
                            source={image}
                     />
                 </View>

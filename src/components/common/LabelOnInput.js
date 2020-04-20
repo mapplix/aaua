@@ -47,11 +47,11 @@ const styles = {
     inputStyle: {
         // placeholderTextColor: '#b6b9bf',
         fontFamily:'SFUIText-Regular',
-        color: '#b6b9bf',
+      color: '#111',
         fontSize: 15,
-        lineHeight: 25,
+        lineHeight: 18,
         flex:1,
-        borderBottomWidth: DEVICE_OS == iOS ? 1 : 0,
+        borderBottomWidth: 1,
         borderBottomColor: '#000'
     },
     labelStyle: {
@@ -59,10 +59,10 @@ const styles = {
         marginBottom: 2,
         paddingTop:0,
         height: 20,
-        fontFamily: 'SFUIText-Regular',
-        fontSize: 14,
+      fontFamily: 'SFUIText-Medium',
+      fontSize: 14,
+      color: '#423486',
         alignSelf:'stretch',
-        color: '#3d3e40',
     },
 
 }

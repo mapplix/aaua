@@ -42,12 +42,12 @@ console.log('subscription action', data, obj, signature, SUBSCRIPTION_URL);
     }
 }
 
-export const buySubscription = (token) => {
+export const buySubscription = (token, type = false) => {
     return (dispatch) => {
         const params = {
             token: token
         }
-        const url = BUY_SUBSCRIPTION_URL + '&token=' + token;
+        const url = type ? BUY_SUBSCRIPTION_URL + '&token=' + token + "&product=9" : BUY_SUBSCRIPTION_URL + '&token=' + token;
         Linking.openURL(url);
     }
 }

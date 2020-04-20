@@ -13,7 +13,8 @@ const INITIAL_STATE = {
     NPcities: [],
     NPsklads: [],
     sliderImages: [],
-    bonuses_wog: 0
+    bonuses_wog: 0,
+    bonuses: 0,
 }
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
@@ -28,7 +29,7 @@ export default (state = INITIAL_STATE, action) => {
         case IMAGES_LOADED:
             return {...state, sliderImages: action.payload};
         case WOG_BONUSES_LOADED:
-            return {...state, bonuses_wog: action.payload};
+            return {...state, bonuses_wog: action.payload.data, bonuses: action.payload.data_bonus};
         default: return state;
     }
 }

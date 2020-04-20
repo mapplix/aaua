@@ -19,30 +19,37 @@ import {
 import ImageSlider from 'react-native-image-slider';
 import {BottomMenuItem} from "./common/BottomMenuItem";
 import {Actions} from 'react-native-router-flux';
-import {connect} from 'react-redux';
-import {setUserFromSession, updateStatus} from '../Actions/AuthAction';
 import {getSliderImages, getBonusesWog} from '../Actions/CitiesBrands';
 import {countMessages} from '../Actions/MessagesActions';
 
+import {connect} from 'react-redux';
+
 class MainComponent extends Component {
 
-    componentWillMount() {
-        AsyncStorage.getItem('user').then((user) => {
-            const userObj = JSON.parse(user);
-            this.props.setUserFromSession(userObj)
-            this.props.getSliderImages(userObj.token)
-            this.props.countMessages(userObj.token)
-            this.props.getBonusesWog(userObj.token)
-        })
+    componentDidMount() {
+        console.log(' MainComponent componentDidMount', this.props);
+        if (this.props.user) {
+            console.log('MainComponent componentWillReceiveProps', this.props);
+            let {token} = this.props.user;
+            this.props.getSliderImages(token)
+            this.props.countMessages(token)
+            this.props.getBonusesWog(token)
+        }
     }
 
-    renderImageSlide( item) {
-console.log(item);
-        return (
-            <TouchableOpacity key={item.index} style={{flex: 1}}>
-                <Image source={{ uri: item.item }} style={{flex: 1, width: "100%", height: "100%"}} />
-            </TouchableOpacity>
-        )
+    shouldComponentUpdate(nextProps) {
+        console.log('MainComponent shouldComponentUpdate', nextProps, this.props);
+        return true;
+    }
+
+    componentWillReceiveProps() {
+        if (this.props.user && this.props.images.length < 1) {
+            console.log('MainComponent componentWillReceiveProps', this.props);
+            let {token} = this.props.user;
+            this.props.getSliderImages(token)
+            this.props.countMessages(token)
+            this.props.getBonusesWog(token)
+        }
     }
 
     render() {
@@ -50,7 +57,7 @@ console.log(item);
         this.props.images.map( image => {
             images.push(image.url)
         })
-console.log(images, this.props.images);
+      console.log('render MainComponent', images);
         return (
             <MainCard>
                 <Header burger >
@@ -61,7 +68,8 @@ console.log(images, this.props.images);
                 }}>
                     <ImageSlider
                         onPress={(image) =>{
-                            Actions.imageContent({images: this.props.images, index: image.id});
+                            console.log("ON PRESS IMAGE", image)
+                            Actions.imageContent({images: this.props.images, index: image.index});
                             // this.props.images.map( imgObj => {
                             //     if (imgObj.url == image.image && imgObj.is_content) {
                             //         Actions.imageContent({images: imgObj});
@@ -113,11 +121,13 @@ console.log(images, this.props.images);
 const mapStateToProps = ({auth, citiesBrands, messages}) => {
     return {
         // token: auth.user.token,
-        bonus: auth.user ? auth.user.bonus : 0,
+        user: auth.user,
+        bonus: auth.user ? citiesBrands.bonuses : 0,
         bonus_wog: auth.user ? citiesBrands.bonuses_wog : 0,
         images: citiesBrands.sliderImages,
         messagesCounter: messages.messagesCounter
     }
 }
 
-export default connect(mapStateToProps, {setUserFromSession, getSliderImages, countMessages, getBonusesWog})(MainComponent);
+export default connect(mapStateToProps, { getSliderImages, getBonusesWog,
+    countMessages})(MainComponent);

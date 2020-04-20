@@ -47,26 +47,28 @@ const CardComponent = ({onPress, children, imageSrc, style, imageParentStyle, im
 
 const styles = {
     container: {
-        width: 160 * RATIO,
+        // width: 160,
         height: 180 * WIDTH_RATIO,
+        flex:1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
         borderWidth:1,
         borderRadius:4,
         borderColor: '#bcbcb3',
+        marginHorizontal: 10,
     },
     imageContainer: {
         flex:1,
         // backgroundColor: '#286',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 34 * WIDTH_RATIO,
-        marginTop: 26 * WIDTH_RATIO,
+        // marginBottom: 34 * WIDTH_RATIO,
+        // marginTop: 26 * WIDTH_RATIO,
     },
     imageStyle: {
-        width: 45 * WIDTH_RATIO,
-        height: 64 *RATIO
+        width: 45,
+        height: 64
     },
     textStyle: {
         color:'#1d1d1d',
@@ -76,9 +78,9 @@ const styles = {
     buttonStyle: {
         justifyContent: 'center',
         alignItems: 'center',
-        alignSelf: 'stretch',
-        paddingRight: 10*WIDTH_RATIO,
-        paddingLeft: 10*WIDTH_RATIO,
+        // alignSelf: 'stretch',
+        // paddingRight: 10*WIDTH_RATIO,
+        // paddingLeft: 10*WIDTH_RATIO,
         backgroundColor: '#FFC200',
         borderColor:'#FFC200',
         marginRight: 1,

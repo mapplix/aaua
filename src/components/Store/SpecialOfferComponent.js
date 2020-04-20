@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {
     MainCard,
     CardComponent,
@@ -10,8 +10,40 @@ import {Actions} from 'react-native-router-flux';
 
 class CategoriesComponent extends Component {
 
-    render() {
+    openCategoryGoods(subcategory) {
+        console.log('openCategoryGoods')
+        Actions.goods({category: subcategory});
+    }
+
+    renderSubCategories() {
         const {imageStyle, imageContainer, textContainer, textStyle, componentStyle} = styles;
+        return this.props.subcategories.map( subcategory => {
+            return (
+                <TouchableOpacity
+                    key={subcategory.id}
+                    onPress={
+                        () =>this.openCategoryGoods(subcategory)
+                    }
+                    style={componentStyle}
+                >
+                    <View style={imageContainer}>
+                        <Image
+                            resizeMode={'contain'}
+                            style={imageStyle}
+                            source={{uri: subcategory.image}}
+                        />
+                    </View>
+                    <View style={textContainer}>
+                        <Text style={textStyle}>
+                            {subcategory.name}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        })
+    }
+
+    render() {
         return (
             <MainCard>
                 <Header back basket>
@@ -28,104 +60,9 @@ class CategoriesComponent extends Component {
                     alignItems: 'center',
                 }}
                 >
-                        <CardComponent
-                            onPress={Actions.onroadDetails}
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../images/icons/fuel.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <Text style={textStyle}>
-                                    Топливо
-                                </Text>
-                            </View>
-                        </CardComponent>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../images/icons/auto_goods.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <Text style={textStyle}>
-                                    Товары для авто
-                                </Text>
-                            </View>
-                        </CardComponent>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../images/icons/tyres.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <Text style={textStyle}>
-                                    Шины
-                                </Text>
-                            </View>
-                        </CardComponent>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../images/icons/disks.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <Text style={textStyle}>
-                                    Диски
-                                </Text>
-                            </View>
-                        </CardComponent>
-                        <CardComponentTouchable
-                            onPress={Actions.goods}
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../images/icons/auto_oils.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <Text style={textStyle}>
-                                    Автомасла
-                                </Text>
-                            </View>
-                        </CardComponentTouchable>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../images/icons/auto_cleaning.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <Text style={textStyle}>
-                                    Автохимия
-                                </Text>
-                            </View>
-                        </CardComponent>
+                    {
+                        this.renderSubCategories()
+                    }
                 </ScrollView>
             </MainCard>
         )
@@ -139,7 +76,10 @@ const styles = {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 8
+        marginBottom: 8,
+        borderWidth:1,
+        borderRadius:4,
+        borderColor: '#bcbcb3',
     },
     imageContainer: {
         flex:2,

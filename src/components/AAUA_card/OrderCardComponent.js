@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {View, Text, CheckBox, ScrollView, Alert} from 'react-native';
 import {
-    MainCard,
-    CardItem,
-    LabelOnInput,
-    DropDown,
-    ButtonRoundet,
-    PhoneInput,
-    Icon,
-    Autocomplete,
-    Header} from '../common'
+  MainCard,
+  CardItem,
+  LabelOnInput,
+  DropDown,
+  ButtonRoundet,
+  PhoneInput,
+  Icon,
+  Autocomplete,
+  Header, ClickableTextRow
+} from '../common'
 import {Actions} from 'react-native-router-flux';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants';
 import {
@@ -227,17 +228,12 @@ class OrderCardComponent extends Component {
                     justifyContent: 'flex-end',
                     alignItems: 'flex-start'
                 }}>
-                    <Autocomplete
-                        label={'Город'}
-                        placeholder={'Введите город'}
-                        onChangeText={this.onChangeCity.bind(this)}
-                        onSelect={this.onSelectCity.bind(this)}
-                        data={
-                            this.props.delivery == DELIVERY_CURIER ?
-                            this.state.searchedItems : this.props.NPcities}
-                        value={this.props.city}
-                        listHeight={{height: listHeight}}
-                    />
+                  <ClickableTextRow
+                    onPress={this.props.delivery == DELIVERY_CURIER ? Actions.aauaCitiesScreen : Actions.aauaCitiesScreen}
+                    label={"Город"}
+                    value={this.props.city ? this.props.city : null}
+                    placeholder={"Введите город"}
+                  />
                 </CardItem>
 
                 <CardItem

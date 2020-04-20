@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, FlatList} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -14,109 +14,123 @@ import {Actions} from 'react-native-router-flux';
 import TextComponent from './TextComponent';
 import ButtonComponent from './ButtonComponent';
 import {RATIO} from '../../../styles/constants';
+import {connect} from 'react-redux';
+import {deleteFromBasket, addToBasket, onPaymentSuccess, updateBasketInfo} from '../../../Actions/StoreAction';
+import {showAlert} from '../../Modals'
 
 class ListComponent extends Component {
+    constructor() {
+        super();
+        this.state = {
+            sumPrice: 0,
+            sumBonusPrice: 0
+        };
+    }
 
-    render() {
+    onDeleteItem(id) {
+        this.props.deleteFromBasket(id)
+    }
+
+    onClearBasket(id) {
+        this.props.deleteFromBasket(id, true)
+    }
+
+    onAddToBasket(product) {
+        this.props.addToBasket(product)
+    }
+
+    onBackToStore() {
+        this.props.onPaymentSuccess();
+        Actions.reset('drawer');
+    }
+
+    componentWillMount() {
+        let {token, profile} = this.props.user;
+        this.props.updateBasketInfo(token, profile.phone, this.props.basket)
+    }
+
+    componentDidMount() {
+        if (this.props.isPaymentSuccess) {
+            showAlert(
+                'Спасибо,',
+                'Ваш заказ отправлен в обработку. Наш менеджер свяжется с Вами.',
+                'Закрыть',
+                this.onBackToStore.bind(this)
+            )
+        }
+    }
+
+    renderList() {
         const {
             imageStyle,
             imageContainer,
             textContainer,
-            componentStyle,
+            componentStyle} = styles;
+        if (this.props.loading) {
+            return <Spiner />
+        } else {
+            return (
+                <FlatList
+                    style={{
+                        paddingLeft: 13,
+                        paddingRight: 14,
+                        marginTop: 21,
+                        marginBottom: 60,
+                    }}
+                    data={this.props.basket}
+                    renderItem={({item}) => {
+                        let {product} = item;
+                        return (
+                            <CardComponent
+                                key={item.id}
+                                style={componentStyle}
+                            >
+                                <View style={imageContainer}>
+                                    <Image
+                                        resizeMode={'contain'}
+                                        style={imageStyle}
+                                        source={{uri: product.photo}}
+                                    />
+                                </View>
+                                <View style={textContainer}>
+                                    <TextComponent
+                                        onDelete={this.onClearBasket.bind(this, product)}
+                                        title={product.name}
+                                        isPresent={product.status == "instock"}
+                                    />
+                                    <ButtonComponent
+                                        count={item.counter}
+                                        onAdd={this.onAddToBasket.bind(this, product)}
+                                        onDelete={this.onDeleteItem.bind(this, product)}
+                                        price={product.price || 0}
+                                        bonuses={product.bonus_price || 0}
+                                    />
+                                </View>
+                            </CardComponent>
+                        )
+                    }}
+                    keyExtractor={item => item.id}
+                />
+            )
+        }
+    }
+
+    renderFooter() {
+        const {
             fixedFooterStyle,
             priceText,
             bonusText,
             buttonText} = styles;
-        return (
-            <MainCard>
-                <Header burger >
-                    корзина
-                </Header>
-                <ScrollView style={{
-                    paddingLeft: 13,
-                    paddingRight: 14,
-                    marginTop: 21
-                    }}
-                    contentContainerStyle={{
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                    }}
-                >
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../../images/shell.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <TextComponent
-                                    title={'Моторное масло Shell Helix HX7 10W-40'}
-                                    isPresent
-                                />
-                                <ButtonComponent
-                                    onPress={Actions.ordering}
-                                    price={1750}
-                                    bonuses={1999}
-                                />
-                            </View>
-                        </CardComponent>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../../images/shell.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <TextComponent
-                                    title={'Моторное масло Shell Helix HX7 10W-40'}
-                                    isPresent
-                                />
-                                <ButtonComponent
-                                    onPress={Actions.ordering}
-                                    price={1750}
-                                    bonuses={1999}
-                                />
-                            </View>
-                        </CardComponent>
-                        <CardComponent
-                            style={componentStyle}
-                        >
-                            <View style={imageContainer}>
-                                <Image
-                                    resizeMode={'contain'}
-                                    style={imageStyle}
-                                    source={require('../../../images/shell.png')}
-                                />
-                            </View>
-                            <View style={textContainer}>
-                                <TextComponent
-                                    title={'Моторное масло Shell Helix HX7 10W-40'}
-                                    isPresent
-                                />
-                                <ButtonComponent
-                                    onPress={Actions.ordering}
-                                    price={1750}
-                                    bonuses={1999}
-                                />
-                            </View>
-                        </CardComponent>
-                </ScrollView>
+console.log(this.props.loading, this.props.basket.length)
+        if (this.props.basket.length) {
+            return (
                 <View style={fixedFooterStyle}>
                     <View>
                         <Text style={priceText}>
-                            1750 грн
+                            {this.props.basketSum} грн
                         </Text>
                         <Text style={bonusText}>
-                            1750 бонусов
+                            {this.props.basketBonusSum} бонусов
                         </Text>
                     </View>
                     <View style={{
@@ -124,7 +138,7 @@ class ListComponent extends Component {
                     }}>
                         <ButtonRoundet
                             onPress={Actions.basketOrdering}
-                            style= {{
+                            style={{
                                 backgroundColor: '#ffc200',
                                 borderColor: '#ffc200',
                             }}
@@ -134,6 +148,20 @@ class ListComponent extends Component {
                         </ButtonRoundet>
                     </View>
                 </View>
+            )
+        }
+    }
+
+    render() {
+        return (
+            <MainCard>
+                <Header burger >
+                    корзина
+                </Header>
+                    {
+                        this.renderList()
+                    }
+                { this.renderFooter()}
             </MainCard>
         )
     }
@@ -142,7 +170,7 @@ class ListComponent extends Component {
 const styles = {
     componentStyle: {
         // backgroundColor: '#9f9f96',
-        height: 111,
+        // maxheight: 111,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
@@ -221,4 +249,16 @@ const styles = {
     },
 }
 
-export default ListComponent;
+const mapStateToProps = ({basket, auth}) => {
+    return {
+        user: auth.user,
+        basket: basket.basket,
+        basketSum: basket.basketSum,
+        basketBonusSum: basket.basketBonusSum,
+        countBasket: basket.countBasket,
+        loading: basket.loading
+    }
+}
+
+export default connect(mapStateToProps,
+    {deleteFromBasket, addToBasket, onPaymentSuccess, updateBasketInfo})(ListComponent);

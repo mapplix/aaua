@@ -16,7 +16,7 @@ const TextComponent = (props) => {
                 </View>
                 <View style={dateContainer}>
                     <Text style={dateText}> Дата заказа: </Text>
-                    <Text style={dateText}> 10.10.18 </Text>
+                    <Text style={dateText}> {props.date} </Text>
                 </View>
             </View>
             <View style={isPresentContainer}>

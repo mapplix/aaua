@@ -132,6 +132,7 @@ console.log('onNPCitiesLoaded', cities);
 
 /*GET NP SKLADS*/
 export const getNPsklads = (city) => {
+  console.log("getNPsklads", city)
     return (dispatch) => {
 
         const obj = {
@@ -158,7 +159,7 @@ console.log(NP_SKLADS_URL, data, signature);
                         title : sklads.data.data[sklad]
                     })
                 }
-
+console.log('sklads loaded', skladsArray);
                 onNPSkladsLoaded(dispatch, skladsArray)
             })
     }
@@ -244,14 +245,14 @@ console.log(WOG_BONUSES_URL, data, signature);
         )
             .then(bonuses => {
 console.log(bonuses);
-                onBonusesLoaded(dispatch, bonuses.data.data)
+                onBonusesLoaded(dispatch, bonuses.data)
             })
     }
 }
 
-const onBonusesLoaded = (dispatch, bonuses) => {
+const onBonusesLoaded = (dispatch, data) => {
     dispatch({
         type:WOG_BONUSES_LOADED,
-        payload: bonuses
+        payload: data
     })
 }

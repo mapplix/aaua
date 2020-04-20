@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {
-    MainCard,
-    CardItem,
-    Header,
-    CardComponent,
     Icon,
     ButtonRoundet} from '../common';
 import {WIDTH_RATIO, RATIO} from '../../styles/constants';
@@ -30,7 +26,15 @@ class GoodsComponent extends Component {
             priceText,
             bonusText,
             buttonText} = styles;
-        const {imageSrc, price, children, isPresent, onPress} = this.props;
+        const {
+            imageSrc,
+            price,
+            bonus_price,
+            children,
+            isPresent,
+            onPress,
+            addToBasket
+        } = this.props;
         return (
             <TouchableOpacity
                 onPress={onPress}
@@ -57,16 +61,17 @@ class GoodsComponent extends Component {
                 <View style={footerStyle}>
                     <View>
                         <Text style={priceText}>
-                            {price} грн
+                            {price || 0} грн
                         </Text>
                         <Text style={bonusText}>
-                            {price} бонусов
+                            {bonus_price || 0} бонусов
                         </Text>
                     </View>
                     <View style={{
                         height: 25
                     }}>
                         <ButtonRoundet
+                            onPress={addToBasket}
                             style= {{
                                 backgroundColor: '#ffc200',
                                 borderColor: '#ffc200',
@@ -92,15 +97,17 @@ const styles = {
         marginRight: 12 * WIDTH_RATIO,
     },
     componentStyle: {
-        alignItems: 'flex-start',
+        // backgroundColor: '#279',
+        alignItems: 'center',
         marginRight: WIDTH_RATIO < 1 ? 3 : 6 * WIDTH_RATIO
     },
     iconStyle: {
-        marginLeft: 24 * WIDTH_RATIO,
-        marginRight: 22 * WIDTH_RATIO,
-        marginTop: 19 * RATIO,
+        // marginLeft: 24 * WIDTH_RATIO,
+        // marginRight: 22 * WIDTH_RATIO,
+        // marginTop: 10 * RATIO,
         width: 114 * WIDTH_RATIO,
-        height: 114 * RATIO
+        height: 114 * RATIO,
+        // backgroundColor:'#157'
     },
     titleContainer: {
         flex:1,

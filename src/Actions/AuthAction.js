@@ -21,11 +21,8 @@ import {
     removeItem
 } from './constants';
 import {AsyncStorage, Platform, Alert} from 'react-native';
+import Querystring from 'querystring';
 
-import FCM, { FCMEvent,
-    NotificationType,
-    WillPresentNotificationResult,
-    RemoteNotificationResult } from 'react-native-fcm';
 
 export const changePass = (pass) => {
     return {
@@ -43,30 +40,35 @@ export const changePhone = (phone) => {
 
 export const getPushToken = () => {
     return (dispatch) => {
-        FCM.requestPermissions()
-            .then(
-                () => console.log('granted')
-            )
-            .catch(
-                () => console.log('notification permission rejected')
-            );
-
-        FCM.getFCMToken().then(token => {
-console.log('getFCMToken', token);
-            dispatch({
-                type: TOKEN_GET_SUCCESS,
-                payload: token
-            })
-            // store fcm token in your server
+        let token = Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);;
+//         FCM.requestPermissions()
+//             .then(
+//                 () => console.log('granted')
+//             )
+//             .catch(
+//                 () => console.log('notification permission rejected')
+//             );
+//
+//         FCM.getFCMToken().then(token => {
+// console.log('getFCMToken', token);
+//             dispatch({
+//                 type: TOKEN_GET_SUCCESS,
+//                 payload: token
+//             })
+//             // store fcm token in your server
+//         })
+//         FCM.on(FCMEvent.RefreshToken, (token) => {
+// console.log('RefreshToken', token)
+//             dispatch({
+//                 type: TOKEN_GET_SUCCESS,
+//                 payload: token
+//             })
+//             // fcm token may not be available on first load, catch it here
+//         });
+        dispatch({
+            type: TOKEN_GET_SUCCESS,
+            payload: "token"
         })
-        FCM.on(FCMEvent.RefreshToken, (token) => {
-console.log('RefreshToken', token)
-            dispatch({
-                type: TOKEN_GET_SUCCESS,
-                payload: token
-            })
-            // fcm token may not be available on first load, catch it here
-        });
     }
 }
 
@@ -182,26 +184,29 @@ const onLoginSuccess = (dispatch, user) => {
 console.log('id_token', user);
 
 saveItem('id_token', user.token);
-saveItem('user', JSON.stringify(user));
-    if (user.error == 0) {
-        dispatch({
-            type: LOGIN_USER_SUCCESS,
-            payload: user
-        })
-    } else if (user.error >= 1) {
-        dispatch({
-            type: LOGIN_USER_FAIL,
-            payload: 'Неверный логин или пароль'
-        })
-    }
+saveItem('user', JSON.stringify(user))
+    .then(response => {
+        if (user.error == 0) {
+            dispatch({
+                type: LOGIN_USER_SUCCESS,
+                payload: user
+            })
+        } else if (user.error >= 1) {
+            dispatch({
+                type: LOGIN_USER_FAIL,
+                payload: 'Неверный логин или пароль'
+            })
+        }
+    });
 }
 
 export const logOut = (token) => {
-removeItem('id_token');
-removeItem('user');
-removeItem('sliderImages');
-removeItem('NPcities');
-removeItem('cities');
+// removeItem('id_token');
+// removeItem('user');
+// removeItem('sliderImages')
+// removeItem('NPcities');
+// removeItem('cities');
+    AsyncStorage.clear();
     return {
         type: LOGOUT,
     }

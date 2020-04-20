@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Alert, Linking} from 'react-native';
 import {
     MainCard,
     CardItem,
@@ -13,7 +13,6 @@ import {RATIO, WIDTH_RATIO} from '../../styles/constants'
 import {getMyCard, orderCard} from '../../Actions/AAUA_CardAction';
 import {connect} from 'react-redux';
 import {DEVICE_OS, iOS} from '../../Actions/constants';
-import QRCode from 'react-native-qrcode';
 import Modal from 'react-native-modalbox';
 
 class ButtonsScreen extends Component {
@@ -42,7 +41,6 @@ class ButtonsScreen extends Component {
             "token": this.props.token,
             "isvirtual": 1
         }
-        console.log('order virtual card')
         this.props.orderCard(orderData);
     }
 
@@ -60,7 +58,6 @@ class ButtonsScreen extends Component {
     }
 
     componentWillReceiveProps(nextProp) {
-        console.log('componentWillReceiveProps AAUA main', this.props.orderVirtualCardSuccess, nextProp.orderVirtualCardSuccess)
         if (nextProp.orderVirtualCardSuccess) {
             this.showAlert();
         }
@@ -71,7 +68,7 @@ class ButtonsScreen extends Component {
         const {modal, modalTextContainer, modalText} = styles;
         return (
             <MainCard>
-                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
+                <Header back goToMain={DEVICE_OS == iOS ? true : false}>
                     {"КАРТА AAUA"}
                 </Header>
                 <CardItem style={{
@@ -82,29 +79,18 @@ class ButtonsScreen extends Component {
                     alignItems: 'flex-start'
                 }}>
                     <CardComponent
-                        style={{
-                            marginLeft: 14 * WIDTH_RATIO,
-                            marginRight: 12 * WIDTH_RATIO,
-                        }}
-                        isDisabled={this.props.myCards != null}
+                        isDisabled={this.props.myCards != null && this.props.myCards.card != null}
                         imageSrc={require('../../images/icons/add_card.png')}
                         onPress={this.onAddCardPressed.bind(this)}
                     >
                         Добавить карту
                     </CardComponent>
                     <CardComponent
-                        style={{
-                            marginRight: 14 * WIDTH_RATIO,
-                        }}
-                        imageParentStyle={{
-                            height: 62 * RATIO,
-                            width: 62 * WIDTH_RATIO
-                        }}
-                        isDisabled={this.props.myCards != null}
+                        isDisabled={this.props.myCards != null && this.props.myCards.card != null}
                         imageSrc={require('../../images/icons/order_card.png')}
                         onPress={() => this.setState({isOpen: true})}
                     >
-                        Заказать карту
+                        Виртуальная карта
                     </CardComponent>
                 </CardItem>
                 <CardItem
@@ -112,12 +98,18 @@ class ButtonsScreen extends Component {
                         flex: 5,
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
-                        alignItems: 'center'
+                        alignItems: 'flex-start',
+                        paddingHorizontal: 15
                     }}
                 >
-                    {
-                        // this.renderQR()
-                    }
+                    <Text style={styles.textStyle}>
+                        Для получения скидки добавьте пожалуйста номер Вашей карты
+                        AAUA 7777773xххххххх, или сгенерируйте виртуальную.
+                    </Text>
+                    <Text style={styles.textStyle}>
+                        Для активации виртуальной карты и установки пин-кода
+                        безопасности необходимо зарегистрировать карту на сайте <Text style={{color: 'blue'}} onPress={() => Linking.openURL('https://wog.ua/ua/registration/')}> https://wog.ua/ua/registration/</Text>  или по номеру 0800 300 525.
+                    </Text>
                 </CardItem>
                 <Modal style={modal}
                        position={"bottom"}
@@ -126,18 +118,18 @@ class ButtonsScreen extends Component {
                 >
                     <ModalCard style={{
                         flexDirection: 'column',
-                        height: 150
+                        height: 100
                     }}>
                         <TouchableOpacity
-                            disabled={true}
-                            // onPress={this.orderVirtualCard.bind(this)}
-                            onPress={() => console.log('presed')}
+                            isDisabled={true}
+                            onPress={this.orderVirtualCard.bind(this)}
                             style={modalTextContainer}
                         >
                             <Text style={modalText}>
                                 Заказать виртуальную карту
                             </Text>
                         </TouchableOpacity>
+                        {/*
                         <TouchableOpacity style={modalTextContainer}
                                           onPress={() => {
                                               Actions.order_aaua_card()
@@ -147,6 +139,7 @@ class ButtonsScreen extends Component {
                                 Заказать карту
                             </Text>
                         </TouchableOpacity>
+                        */}
                     </ModalCard>
                     <ModalCard style={{
                         height: 50,
@@ -182,6 +175,12 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         height: 50
+    },
+    textStyle: {
+        color:'#1d1d1d',
+        fontSize: 16,
+        fontWeight: '400',
+        marginBottom: 10
     }
 }
 
