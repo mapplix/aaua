@@ -3,6 +3,7 @@ import {View, Text, Switch, TouchableOpacity, Linking, Share} from 'react-native
 import {MainCard, CardItem, Header, Icon, ButtonRoundet} from '../common';
 import {RATIO} from '../../styles/constants'
 import Permissions from 'react-native-permissions'
+import {feedbackPhone} from '../../services/config';
 
 class SettingsComponent extends Component {
 
@@ -129,7 +130,7 @@ class SettingsComponent extends Component {
                               imageSrc={require('../../images/icons/feedback_phone.png')}
                         />
                         <Text style={phoneNumber}>
-                            0 800 505024
+                            {feedbackPhone}
                         </Text>
                     </View>
                     <View style={{
@@ -146,7 +147,7 @@ class SettingsComponent extends Component {
                                 borderColor:'#FFC200'
                             }}
                             textStyle={{color:'#1B1B1B'}}
-                            onPress={()=> this.callNumber('tel:88005363656')}
+                            onPress={()=> this.callNumber('tel:'+feedbackPhone)}
                         >
                             Позвонить
                         </ButtonRoundet>

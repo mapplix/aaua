@@ -14,6 +14,7 @@ import {showAlert} from '../Modals';
 import {changeMessage, changeSubject, changePhone, submitUserData} from '../../Actions/FeedbackAction';
 import {RATIO} from '../../styles/constants'
 import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
+import {feedbackPhone} from '../../services/config';
 
 class FeedBackComponent extends Component {
 
@@ -86,11 +87,12 @@ console.log(phone);
                         }}
                             imageSrc={require('../../images/icons/feedback_phone.png')}
                         />
+                        {console.log(feedbackPhone)}
                         <TouchableOpacity
-                            onPress={()=> this.callNumber('tel:0800505024')}
+                            onPress={()=> this.callNumber('tel:'+feedbackPhone)}
                         >
                             <Text style={phoneNumber}>
-                                0 800 505024
+                                {feedbackPhone}
                             </Text>
                         </TouchableOpacity>
                     </View>
