@@ -12,8 +12,8 @@ class LeftBarMenuItem extends Component {
                 style={container}>
                 <View style={imageContainer}>
                     <Image
-
-                           source={image}
+                        style={styles.imageStyle}
+                        source={image}
                     />
                 </View>
                 <View style={textContainer}>
@@ -39,8 +39,9 @@ const styles = {
         justifyContent: 'center'
     },
     imageStyle: {
-        width: 25,
-        height: 20
+        width: 32,
+        height: 32,
+        resizeMode: 'contain',
     },
     textContainer: {
         justifyContent: 'center',

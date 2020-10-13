@@ -130,6 +130,7 @@ class LeftBarComponent extends Component {
                         </View>
                     </View>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
                         style={linksContainer}
                         data={this.state.menuItems}
                         renderItem={({item}) => {
