@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -16,7 +17,8 @@ public class MainApplication extends Application implements ReactApplication {
       new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
-          return BuildConfig.DEBUG;
+          // return BuildConfig.DEBUG; // todo uncomment in production
+          return true; // todo comment in production
         }
 
         @Override
@@ -52,7 +54,8 @@ public class MainApplication extends Application implements ReactApplication {
    * @param context
    */
   private static void initializeFlipper(Context context) {
-    if (BuildConfig.DEBUG) {
+    // if (BuildConfig.DEBUG) { // todo uncomment in production
+      if (true) { // todo comment in production
       try {
         /*
          We use reflection here to pick up the class that initializes Flipper,

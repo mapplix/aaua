@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Picker, Text} from 'react-native';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2';
 
 class DropDown extends Component {
 

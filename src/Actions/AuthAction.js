@@ -90,7 +90,9 @@ export const loginUser = (phone, password, fireBaseToken) => {
 
         const data = JSON.stringify(obj);
         const signature = md5(SECRET_KEY + data)
+
 console.log(AUTH_URL, data, signature);
+
         axios.post(AUTH_URL, data, {
                 headers: {
                     'Signature' : signature,

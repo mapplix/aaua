@@ -164,9 +164,6 @@ class SubscriptionComponent extends Component {
                         по страховому случаю.
                     </DetailsItem>
                     <DetailsItem >
-                        Медицинский ассистанс.
-                    </DetailsItem>
-                    <DetailsItem >
                         Бонусная система AAUA.
                     </DetailsItem>
                     <DetailsItem >

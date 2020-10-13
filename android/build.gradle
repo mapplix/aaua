@@ -11,8 +11,9 @@ buildscript {
             androidMapsUtilsVersion = "0.5+"
     }
     repositories {
-        google()
         jcenter()
+        google()
+   
     }
     dependencies {
         classpath("com.android.tools.build:gradle:3.4.2")
