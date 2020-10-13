@@ -124,13 +124,13 @@ const styles = {
     },
     checkboxesContainer: {
         flex: 47,
-        paddingTop: 35,
+        paddingTop: 15,
         paddingRight: 70,
         // height: 280 * RATIO,
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         alignItems: 'flex-start',
-        paddingLeft: 42 * WIDTH_RATIO
+        paddingLeft: 42 * WIDTH_RATIO,
     },
     buttonStyle: {
         flex:0,

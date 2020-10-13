@@ -102,7 +102,8 @@ const styles = {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 8
+        marginBottom: 8,
+        borderColor: '#423486',
     },
     imageContainer: {
         flex:2,
@@ -121,7 +122,7 @@ const styles = {
     },
     textStyle: {
         fontFamily: 'SFUIText-Regular',
-        color:'#1b1b1b',
+        color:'#423486',
         fontSize: 15,
     },
 }
