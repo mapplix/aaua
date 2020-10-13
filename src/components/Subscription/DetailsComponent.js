@@ -16,6 +16,8 @@ import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
 import {Actions} from "react-native-router-flux";
 import CardComponent from "../AAUA_card/CardComponent";
 
+const imgBanner = require('../../images/subscription_banner.png');
+
 class DetailsComponent extends Component {
 
     render() {
@@ -30,10 +32,10 @@ class DetailsComponent extends Component {
                     <Image
                         resizeMode={'contain'}
                         style={{
-                            width: 235,
-                            height: 133
+                            width: 267,
+                            height: 153,
                         }}
-                        source={require('../../images/subscriprion_img.png')}
+                        source={imgBanner}
                     />
 
                 </CardItem>

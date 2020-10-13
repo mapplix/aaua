@@ -42,12 +42,11 @@ console.log('subscription action', data, obj, signature, SUBSCRIPTION_URL);
     }
 }
 
-export const buySubscription = (token, type = false) => {
+export const buySubscription = (token, type = false, number = '') => {
     return (dispatch) => {
-        const params = {
-            token: token
-        }
-        const url = type ? BUY_SUBSCRIPTION_URL + '&token=' + token + "&product=9" : BUY_SUBSCRIPTION_URL + '&token=' + token;
+        const car_number = number.replace( /\s/g, "");
+        const url = type ? BUY_SUBSCRIPTION_URL + '&token=' + token + "&product=9" + '&car_number=' + car_number : BUY_SUBSCRIPTION_URL + '&token=' + token + '&car_number=' + car_number;
+        console.log(url)       
         Linking.openURL(url);
     }
 }
