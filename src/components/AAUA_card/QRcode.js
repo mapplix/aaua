@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, Linking, Platform} from 'react-native';
-import {MainCard, CardItem} from '../common';
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity, Linking, Platform } from "react-native";
+import { MainCard, CardItem } from "../common";
 // import QRCode from 'react-native-qrcode-generator';
-import {connect} from 'react-redux';
-import {Actions} from 'react-native-router-flux';
-import DeviceBrightness from 'react-native-device-brightness';
-import {WIDTH, HEIGHT} from '../../styles/constants';
-import QRcode from 'react-native-qrcode-svg';
+import { connect } from "react-redux";
+import { Actions } from "react-native-router-flux";
+import DeviceBrightness from "react-native-device-brightness";
+import { WIDTH, RATIO, WIDTH_RATIO } from "../../styles/constants";
+import QRcode from "react-native-qrcode-svg";
+import { ButtonRoundet } from "../common";
 
 class QRcodeComponent extends Component {
   state = {
@@ -21,9 +22,9 @@ class QRcodeComponent extends Component {
     DeviceBrightness.setBrightnessLevel(this.state.luminous);
   }
 
-  openUrl = url => {
+  openUrl = (url) => {
     // let url = 'https://wog.ua/ua/registration/';
-    Linking.canOpenURL(url).then(supported => {
+    Linking.canOpenURL(url).then((supported) => {
       if (supported) {
         Linking.openURL(url);
       } else {
@@ -33,20 +34,20 @@ class QRcodeComponent extends Component {
   };
 
   dialCall = () => {
-    let phoneNumber = '';
-    if (Platform.OS === 'android') {
-      phoneNumber = 'tel:0800300525';
+    let phoneNumber = "";
+    if (Platform.OS === "android") {
+      phoneNumber = "tel:0800300525";
     } else {
-      phoneNumber = 'telprompt:0800300525';
+      phoneNumber = "telprompt:0800300525";
     }
 
     this.openUrl(phoneNumber);
   };
 
   renderQr = () => {
-    console.log('RENDER QR WIDTH', WIDTH);
-    const {container, text} = styles;
-    const {card, error} = this.props;
+    console.log("RENDER QR WIDTH", WIDTH);
+    const { container, text } = styles;
+    const { card, error } = this.props;
     const qrWidth = WIDTH < 350 ? WIDTH - 20 : 500;
     return (
       <MainCard
@@ -56,19 +57,22 @@ class QRcodeComponent extends Component {
             paddingLeft: 10,
             paddingRight: 10,
           },
-        ]}>
+        ]}
+      >
         <View
           style={{
-            backgroundColor: '#FFF',
+            backgroundColor: "#FFF",
             height: 100,
             padding: 20,
-          }}>
+          }}
+        >
           <TouchableOpacity onPress={Actions.select_azs}>
             <Text
               style={{
                 fontSize: 30,
-                color: '#1b1b1b',
-              }}>
+                color: "#1b1b1b",
+              }}
+            >
               X
             </Text>
           </TouchableOpacity>
@@ -76,14 +80,16 @@ class QRcodeComponent extends Component {
         <View
           style={{
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <View
             style={{
-              borderColor: '#ffc200',
+              borderColor: "#ffc200",
               borderWidth: 5,
-            }}>
+            }}
+          >
             <QRcode
               value={card.qr.QRCode}
               size={WIDTH * 0.75}
@@ -97,101 +103,124 @@ class QRcodeComponent extends Component {
   };
 
   renderError = () => {
-    const {container, text} = styles;
-    const {card, QrError} = this.props;
+    const { container, text } = styles;
+    const { card, QrError } = this.props;
 
-    let errorMessage = 'Неверный токен партнера';
+    let errorMessage = "Неверный токен партнера";
     if (QrError == 2) {
-      errorMessage = 'Неверный код партнера';
+      errorMessage = "Неверный код партнера";
     } else if (QrError == 3) {
-      errorMessage = 'Неизвестная карта';
+      errorMessage = "Неизвестная карта";
     } else if (QrError == 12) {
-      errorMessage = 'У карты другой номер телефона';
+      errorMessage = "У карты другой номер телефона";
     } else if (QrError == 59) {
-      errorMessage = 'Карту нельзя использовать в приложении';
+      errorMessage = "Карту нельзя использовать в приложении";
     }
     return (
       <MainCard style={container}>
         <CardItem
           style={{
-            backgroundColor: '#FFF',
+            backgroundColor: "#FFF",
             height: 50,
             padding: 20,
-          }}>
+          }}
+        >
           <TouchableOpacity onPress={Actions.select_azs}>
             <Text
               style={{
                 fontSize: 30,
-                color: '#1b1b1b',
-              }}>
+                color: "#1b1b1b",
+              }}
+            >
               X
             </Text>
           </TouchableOpacity>
         </CardItem>
         <View
           style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+            flex: 2,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <CardItem
             style={{
-              backgroundColor: '#FFF',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              backgroundColor: "#FFF",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
               flex: 0,
               paddingBottom: 50,
-            }}>
+            }}
+          >
             <Text
               style={[
                 text,
                 {
                   fontSize: 20,
-                  color: '#db1924',
+                  color: "#db1924",
                   marginHorizontal: 15,
                 },
-              ]}>
+              ]}
+            >
               {errorMessage}
+            </Text>
+            <Text style={[text, { marginTop: 15, marginHorizontal: 15 }]}>
+              Если у Вас не работает QR-код или трудности с регистрацией,
+              оставьте заявку и менеджер Вам поможет.
             </Text>
           </CardItem>
           <CardItem
             style={{
-              backgroundColor: '#fff',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              backgroundColor: "#fff",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
               flex: 0,
               height: 22,
-            }}>
-            <Text style={[text, {fontSize: 22}]}>{card.card}</Text>
+            }}
+          >
+            <Text style={[text, { fontSize: 22 }]}>{card.card}</Text>
           </CardItem>
           <View
             style={{
               paddingTop: 30,
               // backgroundColor: '#158',
               width: WIDTH * 0.8,
-            }}>
+            }}
+          >
             <Text
               style={[
                 text,
                 {
                   fontSize: 16,
                 },
-              ]}>
+              ]}
+            >
               Это Ваша виртуальная карта. Для активации виртуальной карты и
               установки пин-кода безопасности необходимо зарегистрировать карту
-              на сайте{' '}
+              на сайте{" "}
               <Text
-                style={{color: 'blue'}}
-                onPress={() => this.openUrl('https://wog.ua/ua/registration/')}>
-                https://wog.ua/ua/registration/{' '}
+                style={{ color: "blue" }}
+                onPress={() => this.openUrl("https://wog.ua/ua/registration/")}
+              >
+                https://wog.ua/ua/registration/{" "}
               </Text>
-              или по номеру{' '}
-              <Text style={{color: 'blue'}} onPress={this.dialCall}>
+              или по номеру{" "}
+              <Text style={{ color: "blue" }} onPress={this.dialCall}>
                 0800 300 525
               </Text>
             </Text>
+
+            <View style={styles.buttonContainer}>
+              <ButtonRoundet
+                style={styles.buttonStyle}
+                textStyle={{ color: '#fff' }}
+                // onPress={onPress}
+              >
+                Заявка на активацию
+              </ButtonRoundet>
+            </View>
           </View>
         </View>
       </MainCard>
@@ -205,8 +234,8 @@ class QRcodeComponent extends Component {
   }
 }
 
-const mapStateToProps = ({AAUA_Card}) => {
-  console.log('mapStateToProps AAUA_Card', AAUA_Card);
+const mapStateToProps = ({ AAUA_Card }) => {
+  console.log("mapStateToProps AAUA_Card", AAUA_Card);
   return {
     card: AAUA_Card.myCards,
     QrError: AAUA_Card.QrError,
@@ -217,14 +246,29 @@ export default connect(mapStateToProps)(QRcodeComponent);
 
 const styles = {
   container: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     paddingLeft: 30,
     paddingRight: 30,
   },
   text: {
     // backgroundColor: '#294',
-    color: '#1b1b1b',
+    color: "#1b1b1b",
     fontSize: 18,
-    alignSelf: 'center',
+    alignSelf: "center",
+  },
+  buttonContainer: {
+    marginTop: 20,
+    height: 53,
+    paddingTop: 7,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+  },
+  buttonStyle: {
+    marginRight: 45 * WIDTH_RATIO,
+    marginLeft: 45 * WIDTH_RATIO,
+    height: 43,
+    backgroundColor: "#423486",
+    borderColor: "#423486",
   },
 };
