@@ -40,3 +40,14 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
+subprojects {
+    afterEvaluate {subproject ->
+        if((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+            android {
+                compileSdkVersion rootProject.ext.compileSdkVersion
+                buildToolsVersion rootProject.ext.buildToolsVersion
+            }
+        }
+    }
+}
