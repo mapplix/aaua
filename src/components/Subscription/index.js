@@ -101,8 +101,9 @@ class SubscriptionComponent extends Component {
             <Image
               resizeMode={"contain"}
               style={{
-                width: 267,
-                height: 153,
+                width: 316,
+                height: 193,
+                resizeMode: 'contain',
               }}
               source={imgBanner}
             />
