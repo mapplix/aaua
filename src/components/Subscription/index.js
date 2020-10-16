@@ -8,6 +8,7 @@ import {
   BackHandler,
   TouchableOpacity,
   Linking,
+  TextInput,
 } from "react-native";
 import { MainCard, CardItem, ButtonRoundet, Header, Spiner } from "../common";
 import { RATIO, WIDTH_RATIO } from "../../styles/constants";
@@ -31,20 +32,16 @@ class SubscriptionComponent extends Component {
   }
 
   showModalNumber = () => {
-    this.setState({ showModalNumber: true });
+    if (this.props.bought_at != null) {
+      showAlert("Ошибка", "У Вас уже есть активная подписка", "Закрыть");
+    } else {
+      this.setState({ showModalNumber: true });
+    }
   };
 
   addToBalance(number) {
     if (number.length > 0) {
-      if (this.props.bought_at != null) {
-          showAlert(
-              'Ошибка',
-              'У Вас уже есть активная подписка',
-              'Закрыть'
-          )
-      } else {
-          this.props.buySubscription(this.props.token, false, number);
-      }
+      this.props.buySubscription(this.props.token, false, number);
     }
 
     this.setState({ showModalNumber: false });
@@ -87,16 +84,15 @@ class SubscriptionComponent extends Component {
 
   render() {
     console.log("render toplivo - ", this.props);
-    const {showModalNumber} = this.state;
-    const {
-      textStyle,
-      imageContainer,
-      checkboxesContainer,
-    } = styles;
+    const { showModalNumber } = this.state;
+    const { textStyle, imageContainer, checkboxesContainer } = styles;
 
     return (
       <MainCard>
-        <ModalAddAutoNumber show={showModalNumber} callback={this.addToBalance} />
+        <ModalAddAutoNumber
+          show={showModalNumber}
+          callback={this.addToBalance}
+        />
         <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
           {"ПОДПИСКА AAUA"}
         </Header>

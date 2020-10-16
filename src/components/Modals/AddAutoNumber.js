@@ -10,7 +10,6 @@ import {
   TextInput,
 } from "react-native";
 const { width, height } = Dimensions.get("window");
-import { TextInputMask } from 'react-native-masked-text'
 
 const imgNumber = require("../../images/auto_number.png");
 
@@ -43,9 +42,7 @@ class AddAutoNumber extends Component {
             <View style={styles.content}>
               <View style={styles.inputContainer}>
                 <Image source={imgNumber} style={styles.number} />
-                <TextInputMask
-                  type={'custom'}  
-                  options={{mask: 'AA 9999 AA'}}
+                <TextInput
                   style={styles.input}
                   onChangeText={text => this.setState({number: text.toUpperCase()})}
                   value={number}
