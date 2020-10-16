@@ -19,6 +19,7 @@ export const MY_AAUA_CARD_URL = API_URL + 'cardaaua';
 export const ORDER_AAUA_CARD_URL = API_URL + 'bidCardaaua';
 export const ADD_AAUA_CARD_URL = API_URL + 'addCardaaua';
 export const FEEDBACK_URL = API_URL + 'feedback';
+export const ACTIVATION_URL = API_URL + 'bidActivation';
 export const NP_CITIES_URL = API_URL + 'getCitiesNp';
 export const NP_SKLADS_URL = API_URL + 'getSkladsNp';
 export const ON_ROAD_CATEGORIES = API_URL + 'serviceCategories';

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Linking, Platform } from "react-native";
+import { Text, View, TouchableOpacity, Linking, Platform, Alert } from "react-native";
 import { MainCard, CardItem } from "../common";
+import axios from 'axios';
+import md5 from 'js-md5';
 // import QRCode from 'react-native-qrcode-generator';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
@@ -8,6 +10,10 @@ import DeviceBrightness from "react-native-device-brightness";
 import { WIDTH, RATIO, WIDTH_RATIO } from "../../styles/constants";
 import QRcode from "react-native-qrcode-svg";
 import { ButtonRoundet } from "../common";
+import {
+  SECRET_KEY,
+  ACTIVATION_URL,
+} from '../../Actions/constants';
 
 class QRcodeComponent extends Component {
   state = {
@@ -42,6 +48,23 @@ class QRcodeComponent extends Component {
     }
 
     this.openUrl(phoneNumber);
+  };
+
+  activationRequest = () => {
+    const data = JSON.stringify({
+      token: this.props.token,
+    });
+    const signature = md5(SECRET_KEY + data);
+    axios
+      .post(ACTIVATION_URL, data, {
+        headers: {
+          Signature: signature,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        Alert.alert('', 'Запрос успешно отправлен.');
+      });
   };
 
   renderQr = () => {
@@ -215,8 +238,8 @@ class QRcodeComponent extends Component {
             <View style={styles.buttonContainer}>
               <ButtonRoundet
                 style={styles.buttonStyle}
-                textStyle={{ color: '#fff' }}
-                // onPress={onPress}
+                textStyle={{ color: "#fff" }}
+                onPress={this.activationRequest}
               >
                 Заявка на активацию
               </ButtonRoundet>
@@ -234,11 +257,11 @@ class QRcodeComponent extends Component {
   }
 }
 
-const mapStateToProps = ({ AAUA_Card }) => {
-  console.log("mapStateToProps AAUA_Card", AAUA_Card);
+const mapStateToProps = ({ AAUA_Card, auth }) => {
   return {
     card: AAUA_Card.myCards,
     QrError: AAUA_Card.QrError,
+    token: auth.user.token,
   };
 };
 
