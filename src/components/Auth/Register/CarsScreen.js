@@ -1,11 +1,14 @@
 import React from 'react';
-import {View, Text, TextInput, TouchableWithoutFeedback} from 'react-native';
+import {View, Text, TextInput, TouchableWithoutFeedback, StyleSheet, Dimensions, Image} from 'react-native';
 import {MainCard, CardItem, Header, Autocomplete} from '../../common';
 import connect from "react-redux/es/connect/connect";
 import {
   changeCity, onChangeBrand, onSelectBrand, selectCity
 } from "../../../Actions/RegisterAction";
 import {Actions} from "react-native-router-flux";
+
+const {width} = Dimensions.get('window');
+const iconSearch = require('../../../images/search.png');
 
 class CarsScreen extends React.Component{
 
@@ -62,25 +65,8 @@ class CarsScreen extends React.Component{
               key={car.title}
                 onPress={() => this.onSelectCar(car)}
             >
-                <View
-                  style={{
-                      height: 50,
-                      width: '100%',
-                      paddingHorizontal: 15,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    borderBottomWidth: 1,
-                    borderBottomColor: "#333",
-                  }}
-                >
-                  <Text
-                    style={{
-                      width: "100%",
-                      fontFamily: 'SFUIText-Medium',
-                      fontSize: 14,
-                      color: '#222',
-                    }}
-                  >
+                <View style={styles.itemContainer}>
+                  <Text style={styles.itemText}>
                     {car.title}
                   </Text>
                 </View>
@@ -98,22 +84,12 @@ class CarsScreen extends React.Component{
                 <CardItem style={{
                   flexDirection: 'column',
                 }}>
-                    <View style={{
-                        width: '100%',
-                      height: 100,
-                        paddingHorizontal: 15,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      // backgroundColor: "#189"
-                    }}>
+                    <View style={styles.inputContainer}>
+                      <Image source={iconSearch} style={styles.icon} />
                       <TextInput
-                        style={{
-                            width: "100%",
-                            borderBottomColor: "#414244",
-                            borderBottomWidth: 1,
-                        }}
+                        style={styles.input}
                         placeholderTextColor={'#414244'}
-                        placeholder={"Введите марку авто"}
+                        placeholder={"Поиск"}
                         onChangeText={this.onChangeCar.bind(this)}
                         value={this.props.city}
                       />
@@ -127,23 +103,48 @@ class CarsScreen extends React.Component{
     }
 }
 
-const styles = {
-    titleText: {
-        fontSize: 20,
-        fontWeight: '600',
-        color: '#333'
-    },
-    boldText: {
-        marginLeft: 5,
-        marginRight: 5,
-        fontSize: 15,
-        fontWeight: '600',
-        color: '#333'
-    },
-    link: {
-        color: '#2199d8'
-    }
-}
+const styles = StyleSheet.create({
+  inputContainer: {
+    width: width - 10,
+    marginTop: 10,
+    marginHorizontal: 5,
+    marginBottom: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: 'rgba(0,0,0,0.3)',
+    borderWidth: 1,
+    flexDirection: 'row',
+    borderRadius: 8,
+    height: 40,
+  },
+  icon: {
+    width: 15,
+    height: 30,
+    resizeMode: 'contain',
+  },
+  input: {
+    width: "90%",
+    fontSize: 15,
+    height: 40
+  },
+  itemContainer: {
+    height: 50,
+    width: width - 20,
+    paddingHorizontal: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    marginHorizontal: 10,
+    borderColor: 'rgba(0,0,0,0.3)',
+
+  },
+  itemText: {
+    width: "100%",
+    fontFamily: "SFUIText-Bold",
+    fontSize: 14,
+    color: 'rgba(0,0,0,0.5)',
+  },
+});
 
 const mapStateToProps = ({citiesBrands}) => {
   return {
