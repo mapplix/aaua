@@ -94,6 +94,15 @@ class CarsScreen extends React.Component{
                         value={this.props.city}
                       />
                     </View>
+
+       
+                <View style={[styles.top]}>
+                  <Text style={styles.itemText}>
+                    ТОП марки
+                  </Text>
+                </View>
+       
+
                   {
                       this.renderList()
                   }
@@ -108,7 +117,6 @@ const styles = StyleSheet.create({
     width: width - 10,
     marginTop: 10,
     marginHorizontal: 5,
-    marginBottom: 10,
     justifyContent: "center",
     alignItems: "center",
     borderColor: 'rgba(0,0,0,0.3)',
@@ -121,6 +129,18 @@ const styles = StyleSheet.create({
     width: 15,
     height: 30,
     resizeMode: 'contain',
+  },
+  top: {
+    marginTop: 10,
+    // marginBottom: 10,
+    height: 40,
+    width,
+    paddingHorizontal: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderTopWidth: 1,
+    borderColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.1)',
   },
   input: {
     width: "90%",

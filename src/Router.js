@@ -266,7 +266,6 @@ console.log('router else')
                     key="root"
                     titleStyle={{alignSelf: 'center'}}
                 >
-
                     <Stack
                         initial={!this.state.hasToken}
                         key="auth"
