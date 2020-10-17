@@ -29,6 +29,11 @@ class DiscontsListComponent extends Component {
     }
 
     renderRows() {
+
+        if (this.props.cards === undefined) {
+            return null;
+        }
+
         const cards = [...this.props.cards];
         var i = 0;
         var rows = [];
@@ -36,6 +41,7 @@ class DiscontsListComponent extends Component {
             rows.push(cards.slice(i, i + 2))
             i = i + 2;
         }
+
         return rows.map( (row, index) => {
             return (
                 <CardItem style={{
