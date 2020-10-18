@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Linking, Platform, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Linking,
+  Platform,
+  Alert,
+} from "react-native";
 import { MainCard, CardItem } from "../common";
-import axios from 'axios';
-import md5 from 'js-md5';
+import axios from "axios";
+import md5 from "js-md5";
 // import QRCode from 'react-native-qrcode-generator';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
@@ -10,14 +17,12 @@ import { Actions } from "react-native-router-flux";
 import { WIDTH, RATIO, WIDTH_RATIO } from "../../styles/constants";
 import QRcode from "react-native-qrcode-svg";
 import { ButtonRoundet } from "../common";
-import {
-  SECRET_KEY,
-  ACTIVATION_URL,
-} from '../../Actions/constants';
+import { SECRET_KEY, ACTIVATION_URL } from "../../Actions/constants";
 
 class QRcodeComponent extends Component {
   state = {
     luminous: 0.5,
+    sendRequest: false,
   };
 
   componentDidMount() {
@@ -63,7 +68,8 @@ class QRcodeComponent extends Component {
         },
       })
       .then((response) => {
-        Alert.alert('', 'Запрос успешно отправлен.');
+        Alert.alert("", "Запрос успешно отправлен.");
+        this.setState({ sendRequest: true });
       });
   };
 
@@ -128,6 +134,7 @@ class QRcodeComponent extends Component {
   renderError = () => {
     const { container, text } = styles;
     const { card, QrError } = this.props;
+    const { sendRequest } = this.state;
 
     let errorMessage = "Неверный токен партнера";
     if (QrError == 2) {
@@ -236,13 +243,19 @@ class QRcodeComponent extends Component {
             </Text>
 
             <View style={styles.buttonContainer}>
-              <ButtonRoundet
-                style={styles.buttonStyle}
-                textStyle={{ color: "#fff" }}
-                onPress={this.activationRequest}
-              >
-                Заявка на активацию
-              </ButtonRoundet>
+              {sendRequest === false ? (
+                <ButtonRoundet
+                  style={styles.buttonStyle}
+                  textStyle={{ color: "#fff" }}
+                  onPress={() => {
+                    this.activationRequest();
+                  }}
+                >
+                  Заявка на активацию
+                </ButtonRoundet>
+              ) : (
+                <Text style={styles.text}>Заявка на активацию отправлена</Text>
+              )}
             </View>
           </View>
         </View>
