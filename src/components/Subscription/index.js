@@ -4,11 +4,8 @@ import {
   Text,
   Image,
   ScrollView,
-  Platform,
-  BackHandler,
   TouchableOpacity,
-  Linking,
-  TextInput,
+  Dimensions,
 } from "react-native";
 import { MainCard, CardItem, ButtonRoundet, Header, Spiner } from "../common";
 import { RATIO, WIDTH_RATIO } from "../../styles/constants";
@@ -20,6 +17,9 @@ import { DEVICE_OS, iOS, Android } from "../../Actions/constants";
 import { Actions } from "react-native-router-flux";
 import ModalAddAutoNumber from "../../components/Modals/AddAutoNumber";
 
+const {width} = Dimensions.get('window');
+const bannerWidth = width * 0.98;
+const bannerHeight = width * 0.61;
 const imgBanner = require("../../images/subscription_banner.png");
 
 class SubscriptionComponent extends Component {
@@ -101,8 +101,8 @@ class SubscriptionComponent extends Component {
             <Image
               resizeMode={"contain"}
               style={{
-                width: 316,
-                height: 193,
+                width: bannerWidth,
+                height: bannerHeight,
                 resizeMode: 'contain',
               }}
               source={imgBanner}
