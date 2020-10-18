@@ -6,7 +6,7 @@ import md5 from 'js-md5';
 // import QRCode from 'react-native-qrcode-generator';
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import DeviceBrightness from "react-native-device-brightness";
+// import DeviceBrightness from "react-native-device-brightness";
 import { WIDTH, RATIO, WIDTH_RATIO } from "../../styles/constants";
 import QRcode from "react-native-qrcode-svg";
 import { ButtonRoundet } from "../common";
@@ -21,11 +21,11 @@ class QRcodeComponent extends Component {
   };
 
   componentDidMount() {
-    DeviceBrightness.setBrightnessLevel(0.8);
+    // DeviceBrightness.setBrightnessLevel(0.8);
   }
 
   componentWillUnmount() {
-    DeviceBrightness.setBrightnessLevel(this.state.luminous);
+    // DeviceBrightness.setBrightnessLevel(this.state.luminous);
   }
 
   openUrl = (url) => {

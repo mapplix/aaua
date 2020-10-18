@@ -5,6 +5,7 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import org.capslock.RNDeviceBrightness.RNDeviceBrightness;
+import org.capslock.RNDeviceBrightness.RNDeviceBrightness;
 import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
