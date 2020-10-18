@@ -5,11 +5,15 @@ import {WIDTH, HEIGHT} from '../styles/constants';
 import Swiper from 'react-native-swiper';
 import WebView from 'react-native-webview';
 
+
 export default class ImageContent extends Component {
   renderContent() {
+
+console.log(this.props.images);
+
     return this.props.images.map(image => {
-      const INJECTEDJAVASCRIPT =
-        "const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); ";
+      // const INJECTEDJAVASCRIPT =
+      //   "const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); ";
       return (
         <View
           key={image.id}
@@ -25,9 +29,9 @@ export default class ImageContent extends Component {
               height: HEIGHT,
             }}
             scalesPageToFit={Platform.OS == 'android' ? false : true}
-            injectedJavaScript={INJECTEDJAVASCRIPT}
+            // injectedJavaScript={INJECTEDJAVASCRIPT}
             automaticallyAdjustContentInsets={false}
-            source={{html: image.content, baseUrl: ''}}
+            source={{html: image.content}}
           />
         </View>
       );
