@@ -90,9 +90,11 @@ class QRcodeComponent extends Component {
       >
         <View
           style={{
+            position: 'absolute',
+            top: 30,
+            left: 10,
             backgroundColor: "#FFF",
-            height: 100,
-            padding: 20,
+            height: 30,
           }}
         >
           <TouchableOpacity onPress={Actions.select_azs}>
@@ -111,6 +113,7 @@ class QRcodeComponent extends Component {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
+            // backgroundColor: 'orange',
           }}
         >
           <View
@@ -121,7 +124,7 @@ class QRcodeComponent extends Component {
           >
             <QRcode
               value={card.qr.QRCode}
-              size={WIDTH * 0.75}
+              size={WIDTH * 0.6}
               color="#000"
               backgroundColor="white"
             />
