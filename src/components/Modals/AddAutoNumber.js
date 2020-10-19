@@ -29,7 +29,7 @@ class AddAutoNumber extends Component {
   }
 
   render() {
-    const { show, callback } = this.props;
+    const { show, callback, type } = this.props;
     const { number } = this.state;
     return (
       <Modal
@@ -56,10 +56,10 @@ class AddAutoNumber extends Component {
               </View>
             </View>
             <View style={styles.bottom}>
-              <TouchableOpacity style={styles.btnCancel} onPress={()=>{callback('')}}>
+              <TouchableOpacity style={styles.btnCancel} onPress={()=>{callback('', type)}}>
                 <Text style={styles.btnCancelText}>Отмена</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btnPay} onPress={()=>callback(number)}>
+              <TouchableOpacity style={styles.btnPay} onPress={()=>callback(number, type)}>
                 <Text style={styles.btnPayText}>Оплатить</Text>
               </TouchableOpacity>
             </View>

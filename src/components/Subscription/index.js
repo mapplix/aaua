@@ -17,7 +17,7 @@ import { DEVICE_OS, iOS, Android } from "../../Actions/constants";
 import { Actions } from "react-native-router-flux";
 import ModalAddAutoNumber from "../../components/Modals/AddAutoNumber";
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 const bannerWidth = width * 0.98;
 const bannerHeight = width * 0.61;
 const imgBanner = require("../../images/subscription_banner.png");
@@ -28,22 +28,22 @@ class SubscriptionComponent extends Component {
     this.addToBalance = this.addToBalance.bind(this);
     this.state = {
       showModalNumber: false,
+      type: false,
     };
   }
 
-  showModalNumber = () => {
+  showModalNumber = (type) => {
     if (this.props.bought_at != null) {
       showAlert("Ошибка", "У Вас уже есть активная подписка", "Закрыть");
     } else {
-      this.setState({ showModalNumber: true });
+      this.setState({ showModalNumber: true, type });
     }
   };
 
-  addToBalance(number) {
+  addToBalance(number, type) {
     if (number.length > 0) {
-      this.props.buySubscription(this.props.token, false, number);
+      this.props.buySubscription(this.props.token, type, number);
     }
-
     this.setState({ showModalNumber: false });
   }
 
@@ -84,7 +84,7 @@ class SubscriptionComponent extends Component {
 
   render() {
     console.log("render toplivo - ", this.props);
-    const { showModalNumber } = this.state;
+    const { showModalNumber, type } = this.state;
     const { textStyle, imageContainer, checkboxesContainer } = styles;
 
     return (
@@ -92,6 +92,7 @@ class SubscriptionComponent extends Component {
         <ModalAddAutoNumber
           show={showModalNumber}
           callback={this.addToBalance}
+          type={type}
         />
         <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
           {"ПОДПИСКА AAUA"}
@@ -103,7 +104,7 @@ class SubscriptionComponent extends Component {
               style={{
                 width: bannerWidth,
                 height: bannerHeight,
-                resizeMode: 'contain',
+                resizeMode: "contain",
               }}
               source={imgBanner}
             />
@@ -133,37 +134,41 @@ class SubscriptionComponent extends Component {
                 marginLeft: 45,
                 height: 45,
               }}
-              onPress={() => this.showModalNumber()}
+              onPress={() => this.showModalNumber(false)}
             >
               Купить
             </ButtonRoundet>
           </CardItem>
-          {/* <CardItem style={{
-                    flex: 0,
-                    height: 83 * RATIO,
-                    // backgroundColor: '#9f9f96',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                      justifyContent: 'flex-end',
-                      paddingBottom: 10
-                  }}>
-                    {this.renderMonthPrice()}
-                  </CardItem> */}
-          {/* <CardItem style={{
-                    flex: 0,
-                    height: 66 * RATIO,
-                  }}>
-                    <ButtonRoundet
-                      style={{
-                        marginRight: 45,
-                        marginLeft: 45,
-                        height: 45
-                      }}
-                      onPress={() => this.addToBalance(true)}
-                    >
-                      Купить
-                    </ButtonRoundet>
-                  </CardItem> */}
+          <CardItem
+            style={{
+              flex: 0,
+              height: 83 * RATIO,
+              // backgroundColor: '#9f9f96',
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              paddingBottom: 10,
+            }}
+          >
+            {this.renderMonthPrice()}
+          </CardItem>
+          <CardItem
+            style={{
+              flex: 0,
+              height: 66 * RATIO,
+            }}
+          >
+            <ButtonRoundet
+              style={{
+                marginRight: 45,
+                marginLeft: 45,
+                height: 45,
+              }}
+              onPress={() => this.showModalNumber(true)}
+            >
+              Купить
+            </ButtonRoundet>
+          </CardItem>
           <CardItem style={checkboxesContainer}>
             <Text style={textStyle}>В годовую подписку входит:</Text>
             <DetailsItem>
