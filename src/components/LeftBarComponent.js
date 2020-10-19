@@ -112,7 +112,6 @@ class LeftBarComponent extends Component {
                             style={{
                                 width: 119,
                                 height: 119,
-                                marginBottom: 5 * RATIO
                             }}
                             source={require('../images/logo.png')}
                         />
@@ -122,7 +121,6 @@ class LeftBarComponent extends Component {
                         <View style={{
                             width: 66,
                             height: 20,
-                            marginBottom: 22
                         }}>
                             {
                                 this.renderStatus()
@@ -210,7 +208,7 @@ const styles = {
         justifyContent: 'center'
     },
     titleText: {
-        marginBottom: 8,
+        // marginBottom: 8,
         fontSize: 16,
         color: '#423485',
         fontFamily: 'Roboto-Bold'

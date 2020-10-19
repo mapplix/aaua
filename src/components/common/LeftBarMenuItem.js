@@ -31,7 +31,7 @@ const styles = {
         flex:1,
         flexDirection:'row',
         maxHeight: 40,
-        marginBottom: 22
+        marginBottom: 10
     },
     imageContainer: {
         padding: 2,
