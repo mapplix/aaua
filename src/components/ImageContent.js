@@ -26,7 +26,7 @@ console.log(this.props.images);
           <WebView
             style={{
               width: WIDTH,
-              height: HEIGHT,
+              // height: HEIGHT,
             }}
             scalesPageToFit={Platform.OS == 'android' ? false : true}
             // injectedJavaScript={INJECTEDJAVASCRIPT}
