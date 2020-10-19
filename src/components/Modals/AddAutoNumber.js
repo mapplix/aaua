@@ -24,6 +24,10 @@ class AddAutoNumber extends Component {
     };
   }
 
+  onNumberChange = number => {
+    this.setState({number})
+  }
+
   render() {
     const { show, callback } = this.props;
     const { number } = this.state;
@@ -44,7 +48,7 @@ class AddAutoNumber extends Component {
                 <Image source={imgNumber} style={styles.number} />
                 <TextInput
                   style={styles.input}
-                  onChangeText={text => this.setState({number: text.toUpperCase()})}
+                  onChangeText={this.onNumberChange}
                   value={number}
                   placeholderTextColor={'#C8C8CE'}
                   placeholder={'XX 7777 XX'}
