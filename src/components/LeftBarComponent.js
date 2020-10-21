@@ -19,7 +19,7 @@ import {getData} from '../Actions/SubscriptionAction'
 import wallet from '../images/icons/wallet.png';
 import subscription from '../images/icons/subscription.png';
 import store from '../images/icons/store.png';
-import card from '../images/icons/card.png';
+import fuel from '../images/icons/fuel2.png';
 import onroad from '../images/icons/onroad.png';
 import discounts from '../images/icons/discounts.png';
 import insurance from '../images/icons/insurance.png';
@@ -37,7 +37,7 @@ class LeftBarComponent extends Component {
                 {id: 1, title: 'Кошелек', img: wallet, onPress: Actions.wallet},
                 {id: 2, title: 'Подписка AAUA', img: subscription, onPress: Actions.subscriptionStack},
                 {id: 3, title: 'Магазин', img: store, onPress: Actions.categories},
-                {id: 4, title: 'Топливо', img: card, onPress: Actions.AAUA_card},
+                {id: 4, title: 'Топливо', img: fuel, onPress: Actions.AAUA_card},
                 {id: 5, title: 'Поддержка на дороге', img: onroad, onPress: Actions.onroadSupport},
                 {id: 6, title: 'Дисконты', img: discounts, onPress: Actions.discontCards},
                 {id: 7, title: 'Страхование', img: insurance, onPress: Actions.insurance},
