@@ -717,7 +717,7 @@
 			baseConfigurationReference = 89D95448617FB728053F4D0F /* Pods-AAUA.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = PWQ6DC56XW;
 				INFOPLIST_FILE = AAUA/Info.plist;
@@ -739,7 +739,7 @@
 			baseConfigurationReference = D1EE18F38007A3CDAA9A5598 /* Pods-AAUA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = PWQ6DC56XW;
 				INFOPLIST_FILE = AAUA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
