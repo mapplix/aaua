@@ -91,10 +91,11 @@ class QRcodeComponent extends Component {
         <View
           style={{
             position: 'absolute',
-            top: 30,
-            left: 10,
+            top: 70,
+            left: 30,
             backgroundColor: "#FFF",
             height: 30,
+            zIndex: 1000,
           }}
         >
           <TouchableOpacity onPress={Actions.select_azs}>
