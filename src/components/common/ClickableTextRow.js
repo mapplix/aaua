@@ -58,8 +58,6 @@ const styles = {
         fontFamily:'SFUIText-Regular',
         flex:1,
         marginLeft: 4,
-        borderBottomWidth: 1,
-        borderBottomColor: '#000'
     },
     labelStyle: {
         marginBottom: 2,

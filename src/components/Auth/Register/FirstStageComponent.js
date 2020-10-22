@@ -5,7 +5,7 @@ import {
   MainCard,
   CardItem,
   ButtonSquad,
-  LabelOnInput,
+  CustomInput,
   ButtonRoundet,
   PhoneInput,
   Header,
@@ -182,7 +182,7 @@ class FirstStageComponent extends Component {
             alignItems: 'flex-start',
             // paddingLeft: 45
           }}>
-          <LabelOnInput
+          <CustomInput
             secureTextEntry
             label={'Код из СМС'}
             placeholder={'Код из СМС'}

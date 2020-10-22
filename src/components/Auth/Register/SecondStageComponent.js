@@ -18,12 +18,11 @@ import {
   MainCard,
   CardItem,
   ButtonSquad,
-  LabelOnInput,
-  DropDown,
   PasswordInput,
   Header,
-  ClickableTextRow,
   Spiner,
+  CustomInput,
+  CustomTextRow,
 } from '../../common';
 import {showAlert} from '../../Modals';
 import {CITIES} from '../../../Actions/constants';
@@ -224,7 +223,7 @@ class SecondStageComponent extends Component {
               justifyContent: 'flex-end',
               alignItems: 'flex-start',
             }}>
-            <LabelOnInput
+            <CustomInput
               label={'Имя'}
               placeholder={'Введите имя'}
               onChangeText={this.onChangeName.bind(this)}
@@ -239,7 +238,7 @@ class SecondStageComponent extends Component {
               justifyContent: 'flex-end',
               alignItems: 'flex-start',
             }}>
-            <ClickableTextRow
+            <CustomTextRow
               onPress={Actions.AutocompleteScreen}
               label={'Город'}
               value={this.props.city ? this.props.city : null}
@@ -254,7 +253,7 @@ class SecondStageComponent extends Component {
               justifyContent: 'flex-end',
               alignItems: 'flex-start',
             }}>
-            <ClickableTextRow
+            <CustomTextRow
               onPress={Actions.CarsScreen}
               label={'Марка авто'}
               value={this.props.car ? this.props.car : null}
@@ -263,13 +262,13 @@ class SecondStageComponent extends Component {
           </CardItem>
           <CardItem
             style={{
-              marginTop: 18,
+              marginTop: 35,
               flex: 11,
               flexDirection: 'column',
               justifyContent: 'flex-end',
               alignItems: 'flex-start',
             }}>
-            <LabelOnInput
+            <CustomInput
               label={'Год выпуска'}
               placeholder={'0000'}
               maxLength={4}
@@ -280,13 +279,13 @@ class SecondStageComponent extends Component {
           </CardItem>
           <CardItem
             style={{
-              marginTop: 18,
+              marginTop: 35,
               flex: 11,
               flexDirection: 'column',
               justifyContent: 'flex-end',
               alignItems: 'flex-start',
             }}>
-            <LabelOnInput
+            <CustomInput
               keyboardType={'email-address'}
               label={'Email'}
               placeholder={'sample@index.com'}
@@ -311,7 +310,7 @@ class SecondStageComponent extends Component {
           </CardItem>
           <CardItem
             style={{
-              marginTop: 17,
+              marginTop: 25,
               flex: 11,
               flexDirection: 'column',
               justifyContent: 'flex-end',
@@ -327,7 +326,7 @@ class SecondStageComponent extends Component {
           </CardItem>
           <CardItem
             style={{
-              marginTop: 15,
+              marginTop: 25,
               alignItems: 'flex-end',
               justifyContent: 'flex-end',
             }}>

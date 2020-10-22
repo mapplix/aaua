@@ -24,6 +24,7 @@ class PhoneInput extends Component {
   render() {
     const {inputStyle, labelStyle, containerStyle} = styles;
     const {label, placeholder, value, secureTextEntry} = this.props;
+
     return (
       <View style={containerStyle}>
         <Text style={[labelStyle, this.props.labelStyle]}>{label}</Text>
@@ -68,6 +69,8 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
   },
   inputStyle: {
     // placeholderTextColor: '#b6b9bf',
@@ -76,11 +79,10 @@ const styles = {
     fontSize: 15,
     lineHeight: 18,
     flex: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    paddingLeft: 0,
   },
   labelStyle: {
-    marginLeft: 4,
+    // marginLeft: 4,
     marginBottom: 2,
     paddingTop: 0,
     height: 22,

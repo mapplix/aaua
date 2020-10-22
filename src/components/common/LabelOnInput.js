@@ -12,10 +12,10 @@ const LabelOnInput = (props) => {
             </Text>
             <View style={{
                     minHeight: 43,
-                    height: 40,
+                    height: 40, //40
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}
             >
                 <TextInput
@@ -37,12 +37,14 @@ const styles = {
     containerStyle: {
         // backgroundColor: '#909087',
         height: 65,
-        marginLeft: 45,
-        marginRight: 45,
+        marginHorizontal: 45,
+        marginTop: 15,
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
+        borderBottomWidth: 1,
+        borderBottomColor: '#000'
     },
     inputStyle: {
         // placeholderTextColor: '#b6b9bf',
@@ -51,8 +53,6 @@ const styles = {
         fontSize: 15,
         lineHeight: 18,
         flex:1,
-        borderBottomWidth: 1,
-        borderBottomColor: '#000'
     },
     labelStyle: {
         marginLeft: 4,

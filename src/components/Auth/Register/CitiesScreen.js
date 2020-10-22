@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     width: 15,
     height: 30,
     resizeMode: 'contain',
+    marginRight: 5,
   },
   input: {
     width: "90%",
@@ -140,7 +141,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginHorizontal: 10,
     borderColor: 'rgba(0,0,0,0.3)',
-
   },
   itemText: {
     width: "100%",

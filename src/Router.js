@@ -282,7 +282,6 @@ console.log('router else')
                                 key="firstStage"
                                 component={FirstStageComponent}/>
                             <Scene
-                              // initial
                                 hideNavBar
                                 title="Персональные данные"
                                 key="secondStage"
