@@ -15,7 +15,7 @@
     "@react-native-community/netinfo": "^5.5.1",
     "@react-native-community/viewpager": "^3.3.0",
     "@ubaids/react-native-material-textfield": "^0.16.3",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "base-64": "^0.1.0",
     "js-md5": "^0.7.3",
     "patch-package": "^6.2.2",
