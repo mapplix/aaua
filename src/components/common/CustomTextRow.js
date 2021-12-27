@@ -1,24 +1,21 @@
-import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { DEVICE_OS, iOS } from "../../Actions/constants";
+import React from 'react';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {DEVICE_OS, iOS} from '../../actions/constants';
 
-export const CustomTextRow = (props) => {
-  const { inputTextStyle, labelStyle, containerStyle } = styles;
-  const { label, onPress, placeholder, value } = props;
+export const CustomTextRow = props => {
+  const {inputTextStyle, labelStyle, containerStyle} = styles;
+  const {label, onPress, placeholder, value} = props;
   return (
     <TouchableOpacity onPress={onPress} style={containerStyle}>
       <Text style={[labelStyle, props.labelStyle]}>{label}</Text>
-      <View
-        style={styles.inputContainer}
-      >
+      <View style={styles.inputContainer}>
         <Text
           style={[
             styles.input,
             {
-              color: value != null ? "#111" : "#b6b9bf",
+              color: value != null ? '#111' : '#b6b9bf',
             },
-          ]}
-        >
+          ]}>
           {value != null ? value : placeholder}
         </Text>
       </View>
@@ -44,22 +41,22 @@ const styles = {
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
-},
+  },
   input: {
-      // placeholderTextColor: '#b6b9bf',
-      fontFamily:'SFUIText-Regular',
-      color: '#111',
-      fontSize: 15,
-      lineHeight: 18,
-      flex:1,
+    // placeholderTextColor: '#b6b9bf',
+    fontFamily: 'SFUIText-Regular',
+    color: '#111',
+    fontSize: 15,
+    lineHeight: 18,
+    flex: 1,
   },
   labelStyle: {
     marginBottom: 2,
     paddingTop: 0,
     height: 20,
-    fontFamily: "SFUIText-Medium",
+    fontFamily: 'SFUIText-Medium',
     fontSize: 14,
-    color: "#423486",
-    alignSelf: "stretch",
+    color: '#423486',
+    alignSelf: 'stretch',
   },
 };

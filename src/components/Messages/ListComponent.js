@@ -7,7 +7,7 @@ import {
     Header} from '../common';
 import ListItem from './ListItem';
 import {connect} from 'react-redux';
-import {loadMessages} from '../../Actions/MessagesActions'
+import {loadMessages} from '../../actions/MessagesActions'
 import {Actions} from 'react-native-router-flux';
 
 let listener = null

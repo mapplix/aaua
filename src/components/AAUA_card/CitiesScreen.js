@@ -14,9 +14,9 @@ import {
   selectCity,
   selectAddress,
   cleanNPCities
-} from '../../Actions/AAUA_CardAction';
+} from '../../actions/AAUA_CardAction';
 import {Actions} from "react-native-router-flux";
-import {DELIVERY_NP} from "../../Actions/types";
+import {DELIVERY_NP} from "../../actions/types";
 
 class CitiesScreen extends React.Component{
 

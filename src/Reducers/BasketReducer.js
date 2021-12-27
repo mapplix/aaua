@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     ADD_TO_BASKET,
     DELETE_FROM_BASKET,
@@ -6,7 +6,7 @@ import {
     STORE_PAYMENT_SUCCESS,
     STORE_ADD_BASKET_DATA_TO_STORAGE,
     STORE_UPDATE_BASKET_DATA
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     basket: [],

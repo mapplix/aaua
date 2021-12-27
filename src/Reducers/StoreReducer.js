@@ -27,7 +27,7 @@ import {
     STORE_SET_SELECTED_SORTING,
     STORE_PHONE_CHANGE,
     STORE_SET_PAYMENT_TYPE
-} from '../Actions/types';
+} from '../actions/types';
 import {AsyncStorage} from 'react-native';
 
 const INITIAL_STATE = {

@@ -16,7 +16,7 @@ import {
     OSAGO_ORDER_SUCCESS,
     OSAGO_ORDER_FAIL,
     RESET_INSURANCE_DATA
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     volume: null,

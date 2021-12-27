@@ -14,9 +14,9 @@ import {
   selectCity,
   selectAddress,
   cleanNPCities
-} from '../../Actions/AAUA_CardAction';
-import {getCities, getNPCities, getNPsklads} from '../../Actions/CitiesBrands';
-import {DEFAULT_CITY} from "../../Actions/constants";
+} from '../../actions/AAUA_CardAction';
+import {getCities, getNPCities, getNPsklads} from '../../actions/CitiesBrands';
+import {DEFAULT_CITY} from "../../actions/constants";
 import {Actions} from "react-native-router-flux";
 
 class NPCitiesScreen extends React.Component{

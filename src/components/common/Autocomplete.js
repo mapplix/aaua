@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, FlatList, TouchableOpacity} from 'react-native';
 import {Spiner} from './'
-import {DEVICE_OS, iOS} from '../../Actions/constants';
+import {DEVICE_OS, iOS} from '../../actions/constants';
 
 // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 let listHeight = 0;

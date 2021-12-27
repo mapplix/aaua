@@ -8,7 +8,7 @@ import {
     ON_ROAD_ORDER_SUPPORT,
     ON_ROAD_SUPPORT_ORDERED_SUCCESS,
     ON_ROAD_SUPPORT_ORDERED_FAIL,
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     phone: null,

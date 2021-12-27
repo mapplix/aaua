@@ -15,7 +15,7 @@ import {
 import {WIDTH_RATIO, RATIO} from '../../styles/constants';
 import ImageSlider from 'react-native-image-slider';
 import {Actions} from 'react-native-router-flux';
-import {getProductById, addToBasket, increseCounter} from '../../Actions/StoreAction';
+import {getProductById, addToBasket, increseCounter} from '../../actions/StoreAction';
 import {connect} from 'react-redux';
 
 class DetailsComponent extends Component {

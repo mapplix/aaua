@@ -3,7 +3,7 @@ import {View } from 'react-native';
 import WebView from 'react-native-webview';
 import {WIDTH, HEIGHT} from '../../styles/constants';
 import {Spiner} from '../common';
-import {onPaymentSuccess} from '../../Actions/StoreAction';
+import {onPaymentSuccess} from '../../actions/StoreAction';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux'
 

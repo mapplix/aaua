@@ -6,7 +6,7 @@ import {
     MESSAGE_INFO_LOADED_SUCCESS,
     MESSAGE_INFO_LOADING_FAIL,
     MESSAGE_COUNTER_SUCCESS
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     messages: [],

@@ -13,9 +13,9 @@ import {
   changeComment,
   changePhone,
   selectPaymentType
-} from '../../Actions/StoreAction';
+} from '../../actions/StoreAction';
 import {Actions} from "react-native-router-flux";
-import {DELIVERY_NP} from "../../Actions/types";
+import {DELIVERY_NP} from "../../actions/types";
 
 class StoreCitiesScreen extends React.Component{
 

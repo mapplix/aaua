@@ -2,7 +2,7 @@ import {
     SUBSCRIPTION_GET_DATA,
     SUBSCRIPTION_GET_DATA_SUCCESS,
     BUY_SUBSCRIPTION_SUCCESS
-} from '../Actions/types';
+} from '../actions/types';
 import {Actions} from 'react-native-router-flux';
 
 const INITIAL_STATE = {

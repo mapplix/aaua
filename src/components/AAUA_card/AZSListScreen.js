@@ -9,9 +9,9 @@ import {
 } from '../common';
 import {Actions} from 'react-native-router-flux';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants'
-import {getMyCard, orderCard, getAZSList} from '../../Actions/AAUA_CardAction';
+import {getMyCard, orderCard, getAZSList} from '../../actions/AAUA_CardAction';
 import {connect} from 'react-redux';
-import {DEVICE_OS, iOS, BASE_URL} from '../../Actions/constants';
+import {DEVICE_OS, iOS, BASE_URL} from '../../actions/constants';
 import AZSComponent from "./AZSComponent";
 
 class AZSListScreen extends Component {

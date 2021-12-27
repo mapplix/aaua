@@ -8,7 +8,7 @@ import {
     ORDER_ADDRESS_CHANGE,
     ORDER_COMMENT_CHANGE,
     ORDER_PHONE_CHANGE
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     showCities: 'flex',

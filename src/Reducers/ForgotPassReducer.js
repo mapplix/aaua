@@ -3,7 +3,7 @@ import {
     FORGOT_PASS_SUBMIT,
     FORGOT_PASS_SUBMIT_FAIL,
     FORGOT_PASS_SUBMIT_SUCCESS
-} from '../Actions/types';
+} from '../actions/types';
 import {Actions} from 'react-native-router-flux';
 
 const INITIAL_STATE = {

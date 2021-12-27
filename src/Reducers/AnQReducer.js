@@ -1,6 +1,6 @@
 import {
     OPEN_ANSWEAR
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     selectedAnswear: 1,

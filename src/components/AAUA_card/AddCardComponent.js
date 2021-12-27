@@ -8,7 +8,7 @@ import {
     Alert
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {changeCardNumber, addCard} from '../../Actions/AAUA_CardAction';
+import {changeCardNumber, addCard} from '../../actions/AAUA_CardAction';
 import {
     MainCard,
     CardItem,

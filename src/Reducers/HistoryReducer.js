@@ -1,7 +1,7 @@
 import {
     STORE_GET_HISTORY_START,
     STORE_GET_HISTORY_SUCCESS
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     error: null,

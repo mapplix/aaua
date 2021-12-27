@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput} from 'react-native';
-import {DEVICE_OS, iOS} from '../../Actions/constants';
+import {DEVICE_OS, iOS} from '../../actions/constants';
 
 class PhoneInput extends Component {
   state = {

@@ -8,7 +8,7 @@ import {
     Header
 } from '../common';
 import {RATIO, WIDTH_RATIO} from '../../styles/constants';
-import {sendInvitation, changePhone} from '../../Actions/InviteFriendAction';
+import {sendInvitation, changePhone} from '../../actions/InviteFriendAction';
 import {connect} from 'react-redux';
 import {showAlert} from '../Modals';
 

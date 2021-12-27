@@ -9,7 +9,7 @@ import {
     Header,
 } from '../common';
 import {showAlert} from '../Modals';
-import {changePhone, sendData} from '../../Actions/ForgotPassAction';
+import {changePhone, sendData} from '../../actions/ForgotPassAction';
 import {Actions} from 'react-native-router-flux';
 
 class ForgotPassComponent extends Component {

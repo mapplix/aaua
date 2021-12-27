@@ -19,8 +19,8 @@ import {
 import ImageSlider from 'react-native-image-slider';
 import {BottomMenuItem} from "./common/BottomMenuItem";
 import {Actions} from 'react-native-router-flux';
-import {getSliderImages, getBonusesWog} from '../Actions/CitiesBrands';
-import {countMessages} from '../Actions/MessagesActions';
+import {getSliderImages, getBonusesWog} from '../actions/CitiesBrands';
+import {countMessages} from '../actions/MessagesActions';
 
 import {connect} from 'react-redux';
 

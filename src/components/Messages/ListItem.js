@@ -7,7 +7,7 @@ import {
     Icon} from '../common';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import {getMessage} from '../../Actions/MessagesActions';
+import {getMessage} from '../../actions/MessagesActions';
 
 class ListComponent extends Component {
 

@@ -13,17 +13,17 @@ import {Actions} from 'react-native-router-flux';
 import TextComponent from './TextComponent';
 import ButtonComponent from './ButtonComponent';
 import {RATIO} from '../../styles/constants';
-import {DEVICE_OS, iOS, Android} from '../../Actions/constants';
-import {getHistory, getOrderDetails, repeatOrder} from '../../Actions/StoreAction';
+import {DEVICE_OS, iOS, Android} from '../../actions/constants';
+import {getHistory, getOrderDetails, repeatOrder} from '../../actions/StoreAction';
 import {connect} from 'react-redux';
 
 class ListComponent extends Component {
 
 
-    componentWillMount() {
-        let {user, getHistory} = this.props;
-        getHistory(user);
-    }
+    // componentWillMount() {
+    //     let {user, getHistory} = this.props;
+    //     getHistory(user);
+    // }
 
     openDetails(orderId) {
         console.log(this.props, orderId);
@@ -105,15 +105,31 @@ class ListComponent extends Component {
     }
 
     render() {
+        // return (
+        //     <MainCard>
+        //         <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
+        //             {"ИСТОРИЯ ЗАКАЗОВ"}
+        //         </Header>
+        //         {
+        //             this.renderContent()
+        //         }
+        //     </MainCard>
+        // )
         return (
-            <MainCard>
-                <Header burger goToMain={DEVICE_OS == iOS ? true : false}>
-                    {"ИСТОРИЯ ЗАКАЗОВ"}
-                </Header>
-                {
-                    this.renderContent()
-                }
-            </MainCard>
+            <View
+        style={{
+          flex: 1,
+          // backgroundColor: '#194',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text style={{
+          fontSize: 16,
+          fontWeight: '500',
+        }}>
+          Розділ в розробці
+        </Text>
+      </View>
         )
     }
 }

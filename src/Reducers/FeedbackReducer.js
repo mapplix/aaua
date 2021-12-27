@@ -3,7 +3,7 @@ import {
     FEEDBACK_SUBJECT_CHANGE,
     FEEDBACK_PHONE_CHANGE,
     FEEDBACK_SUBMIT_USER_DATA
-} from '../Actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     phone: '',

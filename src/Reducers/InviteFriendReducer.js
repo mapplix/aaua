@@ -2,7 +2,7 @@ import {
     INVITE_FRIEND_CHANGE_PHONE,
     INVITE_SENDED_SUCCESS,
     INVITE_SENDED_FAIL
-} from '../Actions/types';
+} from '../actions/types';
 import {Actions} from 'react-native-router-flux';
 
 const INITIAL_STATE = {

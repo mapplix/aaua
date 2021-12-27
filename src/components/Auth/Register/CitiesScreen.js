@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { MainCard, CardItem, Header, Autocomplete } from "../../common";
 import connect from "react-redux/es/connect/connect";
-import { changeCity, selectCity } from "../../../Actions/RegisterAction";
+import { changeCity, selectCity } from "../../../actions/RegisterAction";
 import { Actions } from "react-native-router-flux";
 
 const { width } = Dimensions.get("window");

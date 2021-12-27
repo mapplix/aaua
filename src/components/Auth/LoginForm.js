@@ -5,8 +5,6 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  Alert,
-  Dimensions,
   Platform,
   BackHandler,
   AsyncStorage,
@@ -18,8 +16,8 @@ import {
   changePass,
   changePhone,
   getPushToken,
-} from '../../Actions/AuthAction';
-import {getBrands, getCities} from '../../Actions/CitiesBrands';
+} from '../../actions/AuthAction';
+import {getBrands, getCities} from '../../actions/CitiesBrands';
 import {
   MainCard,
   CardItem,
@@ -31,7 +29,7 @@ import {
 } from '../common';
 import Modal from 'react-native-modalbox';
 import {MIN_HEIGHT, RATIO} from '../../styles/constants';
-import {getToken} from '../../Actions/constants';
+import {getToken} from '../../actions/constants';
 
 let listener = null;
 
@@ -109,6 +107,7 @@ class LoginForm extends Component {
   }
 
   render() {
+    console.log('render login form');
     const {
       footerLinksContainer,
       linkStyle,
@@ -240,15 +239,12 @@ const mapStateToProps = ({auth}) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    loginUser,
-    changePass,
-    changePhone,
-    getBrands,
-    getCities,
-    getToken,
-    getPushToken,
-  },
-)(LoginForm);
+export default connect(mapStateToProps, {
+  loginUser,
+  changePass,
+  changePhone,
+  getBrands,
+  getCities,
+  getToken,
+  getPushToken,
+})(LoginForm);

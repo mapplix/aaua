@@ -1,51 +1,57 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  AsyncStorage,
-  ActivityIndicator
-} from 'react-native';
-import reducers from './src/Reducers';
+import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
+
+import 'react-native-gesture-handler';
+
+// import i18n from './src/i18n';
+
+import reducers from './src/reducers';
+
 import Router from './src/Router';
 
-export default class App extends Component<{}> {
+import OneSignal from 'react-native-onesignal';
 
+/*******OneSignal******/
+//OneSignal Init Code
+OneSignal.setLogLevel(6, 0);
+OneSignal.setAppId('fbc6d2b3-1fc0-46bb-9a9f-17a546323546');
+//END OneSignal Init Code
 
-  render() {
-      return (
-          <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-            <Router/>
-          </Provider>
-      );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+//Prompt for push on iOS
+OneSignal.promptForPushNotificationsWithUserResponse(response => {
+  console.log('Prompt response:', response);
 });
+
+//Method for handling notifications received while app in foreground
+OneSignal.setNotificationWillShowInForegroundHandler(
+  notificationReceivedEvent => {
+    console.log(
+      'OneSignal: notification will show in foreground:',
+      notificationReceivedEvent,
+    );
+    let notification = notificationReceivedEvent.getNotification();
+    console.log('notification: ', notification);
+    const data = notification.additionalData;
+    console.log('additionalData: ', data);
+    // Complete with null means don't show a notification.
+    notificationReceivedEvent.complete(notification);
+  },
+);
+
+//Method for handling notifications opened
+OneSignal.setNotificationOpenedHandler(notification => {
+  console.log('OneSignal: notification opened:', notification);
+});
+/******OneSignal*****/
+
+const App = () => {
+  return (
+    <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+      <Router />
+    </Provider>
+  );
+};
+
+export default App;

@@ -30,7 +30,7 @@ import {
     ORDER_CARD_SELECT_ADDRESS,
   AZS_LOADED,
     QR_ERROR
-} from '../Actions/types';
+} from '../actions/types';
 import {Actions} from 'react-native-router-flux';
 
 const INITIAL_STATE = {

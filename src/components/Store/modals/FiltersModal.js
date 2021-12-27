@@ -3,15 +3,15 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modalbox';
 import {CheckBox} from '../../common';
 import {connect} from 'react-redux';
-import {getBrandsForFilters} from '../../../Actions/StoreAction';
+import {getBrandsForFilters} from '../../../actions/StoreAction';
 
 class FiltersModal extends React.Component {
 
-    componentWillMount() {
-        let {getBrandsForFilters, phone, token} = this.props;
-console.log(phone, token);
-        getBrandsForFilters(token, phone);
-    }
+//     componentWillMount() {
+//         let {getBrandsForFilters, phone, token} = this.props;
+// console.log(phone, token);
+//         getBrandsForFilters(token, phone);
+//     }
 
     onCheckFilter(filterId) {
         let {checkFilters} = this.props;

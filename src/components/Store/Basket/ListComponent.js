@@ -15,7 +15,7 @@ import TextComponent from './TextComponent';
 import ButtonComponent from './ButtonComponent';
 import {RATIO} from '../../../styles/constants';
 import {connect} from 'react-redux';
-import {deleteFromBasket, addToBasket, onPaymentSuccess, updateBasketInfo} from '../../../Actions/StoreAction';
+import {deleteFromBasket, addToBasket, onPaymentSuccess, updateBasketInfo} from '../../../actions/StoreAction';
 import {showAlert} from '../../Modals'
 
 class ListComponent extends Component {
@@ -44,21 +44,21 @@ class ListComponent extends Component {
         Actions.reset('drawer');
     }
 
-    componentWillMount() {
-        let {token, profile} = this.props.user;
-        this.props.updateBasketInfo(token, profile.phone, this.props.basket)
-    }
+    // componentWillMount() {
+    //     let {token, profile} = this.props.user;
+    //     this.props.updateBasketInfo(token, profile.phone, this.props.basket)
+    // }
 
-    componentDidMount() {
-        if (this.props.isPaymentSuccess) {
-            showAlert(
-                'Спасибо,',
-                'Ваш заказ отправлен в обработку. Наш менеджер свяжется с Вами.',
-                'Закрыть',
-                this.onBackToStore.bind(this)
-            )
-        }
-    }
+    // componentDidMount() {
+    //     if (this.props.isPaymentSuccess) {
+    //         showAlert(
+    //             'Спасибо,',
+    //             'Ваш заказ отправлен в обработку. Наш менеджер свяжется с Вами.',
+    //             'Закрыть',
+    //             this.onBackToStore.bind(this)
+    //         )
+    //     }
+    // }
 
     renderList() {
         const {

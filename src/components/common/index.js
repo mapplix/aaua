@@ -30,5 +30,5 @@ export * from './Checkbox';
 export * from './CreditCardInput';
 export * from './Autocomplete';
 export * from './ClickableTextRow';
-export * from './CustomInput';
+// export * from './Inputs/DefaultTextInput';
 export * from './CustomTextRow';

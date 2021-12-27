@@ -13,9 +13,9 @@ import {
   changeComment,
   changePhone,
   selectPaymentType
-} from '../../Actions/StoreAction';
-import {getCities, getNPCities, getNPsklads} from '../../Actions/CitiesBrands';
-import {DEFAULT_CITY} from "../../Actions/constants";
+} from '../../actions/StoreAction';
+import {getCities, getNPCities, getNPsklads} from '../../actions/CitiesBrands';
+import {DEFAULT_CITY} from "../../actions/constants";
 import {Actions} from "react-native-router-flux";
 
 class StoreCitiesScreen extends React.Component{

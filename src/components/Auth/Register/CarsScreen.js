@@ -4,7 +4,7 @@ import {MainCard, CardItem, Header, Autocomplete} from '../../common';
 import connect from "react-redux/es/connect/connect";
 import {
   changeCity, onChangeBrand, onSelectBrand, selectCity
-} from "../../../Actions/RegisterAction";
+} from "../../../actions/RegisterAction";
 import {Actions} from "react-native-router-flux";
 
 const {width} = Dimensions.get('window');

@@ -13,10 +13,10 @@ import {
 } from '../common'
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import {RATIO, WIDTH_RATIO} from '../../styles/constants';
-import {CITIES, DEFAULT_CITY} from '../../Actions/constants';
+import {CITIES, DEFAULT_CITY} from '../../actions/constants';
 import {DELIVERY_CURIER,
     DELIVERY_NP
-} from '../../Actions/types';
+} from '../../actions/types';
 import {connect} from 'react-redux';
 import {
     makeOrder,
@@ -29,8 +29,8 @@ import {
     changeComment,
     changePhone,
     selectPaymentType
-} from '../../Actions/StoreAction';
-import {getCities, getNPCities, getNPsklads} from '../../Actions/CitiesBrands';
+} from '../../actions/StoreAction';
+import {getCities, getNPCities, getNPsklads} from '../../actions/CitiesBrands';
 import {showAlert} from '../Modals'
 import {Actions} from "react-native-router-flux";
 

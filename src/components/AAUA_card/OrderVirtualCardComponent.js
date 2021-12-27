@@ -24,13 +24,13 @@ import {
     selectCity,
     selectAddress,
     cleanNPCities
-} from '../../Actions/AAUA_CardAction';
+} from '../../actions/AAUA_CardAction';
 import {connect} from 'react-redux';
-import {getCities, getNPCities, getNPsklads} from '../../Actions/CitiesBrands';
+import {getCities, getNPCities, getNPsklads} from '../../actions/CitiesBrands';
 import {DELIVERY_CURIER,
     DELIVERY_NP
-} from '../../Actions/types';
-import {DEVICE_OS, iOS} from '../../Actions/constants';
+} from '../../actions/types';
+import {DEVICE_OS, iOS} from '../../actions/constants';
 
 let listHeight = 0;
 

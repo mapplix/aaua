@@ -9,7 +9,7 @@ import {
 import {WIDTH_RATIO, RATIO} from '../../styles/constants';
 import GoodsComponent from './GoodsComponent';
 import {Actions} from 'react-native-router-flux';
-import {getProductsByCategoriesId, addToBasket, checkFilters, getFilteredProduct, setSelectedSorting} from '../../Actions/StoreAction';
+import {getProductsByCategoriesId, addToBasket, checkFilters, getFilteredProduct, setSelectedSorting} from '../../actions/StoreAction';
 import {connect} from 'react-redux';
 import Filters from './Filters';
 import FiltersModal from './modals/FiltersModal';
